@@ -1,24 +1,18 @@
 <div class="row justify-content-center mt-header">
-    <div class="col-md-12 text-center mt-4">
+    <div class="col-md-12 text-center mt-5">
         <h4>¡Te damos la bienvenida de nuevo!</h4>
         <p>¿Te vas a perder tu siguiente gran oportunidad? Inicia sesión para estar al día de tu entorno profesional.</p>
     </div>
-    <div class="col-md-4">
-        <div class="login-form">
-            <form action="/examples/actions/confirmation.php" method="post">
-                <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Correo Electronico" required="required">
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Contraseña" required="required">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Inicar Sesion</button>
-                </div>
-                <div class="clearfix">
-                    <label class="float-left form-check-label"><input type="checkbox"> Remember me</label>
-                </div>
-            </form>
+    <form name="form" class="col-md-4">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Correo Electronico" name="username" [(ngModel)]="userform.usuario" />
         </div>
-    </div>
+        <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="Contraseña" [(ngModel)]="userform.password" />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary btn-block" (click)="login()">Inicar Sesion</button>
+        </div>
+        <div class="alert-danger">{{msglogin}}</div>
+    </form>
 </div>

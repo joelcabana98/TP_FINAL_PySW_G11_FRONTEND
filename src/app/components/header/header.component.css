@@ -1,0 +1,9 @@
+.fondo {
+    background-color: #283e4a;
+}
+
+.img-login {
+    object-fit: cover;
+    width: 80px;
+    height: 50px;
+}

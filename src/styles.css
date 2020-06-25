@@ -3,3 +3,12 @@
 .mt-header {
     margin-top: 5rem;
 }
+
+.blue {
+    background-color: #0073b1;
+    color: white;
+}
+
+b:hover {
+    background-color: #0e8dd6;
+}
