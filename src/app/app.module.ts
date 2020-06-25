@@ -10,6 +10,9 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ServicioComponent } from './components/servicio/servicio.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
+import { NovedadComponent } from './components/novedad/novedad.component';
+import { PagoComponent } from './components/pago/pago.component';
+import { UsuarioComponent } from './components/usuario/usuario.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { HomeComponent } from './components/home/home.component';
     FooterComponent,
     ServicioComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    NovedadComponent,
+    PagoComponent,
+    UsuarioComponent,
   ],
   imports: [
     BrowserModule,
