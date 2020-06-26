@@ -11,7 +11,7 @@ export class LoginService {
   userIsSocio:boolean = false;
   userIsAdministrativo: boolean = false;
   userIsAdministrador:boolean = false;
-  
+
   userLoggedIn: boolean = false;
   userLogged: Usuario;
  
