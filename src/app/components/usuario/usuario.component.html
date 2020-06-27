@@ -1,4 +1,5 @@
 <div class="row  mt-header">
+    <!--Boton Agregar Usuario-->
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAgregarUsuario">
         <i class="fas fa-user-plus"></i>
       </button>
@@ -12,15 +13,25 @@
           </button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
-                        <div class="form-group">
-                            <input type="email" class="form-control" id="email" [(ngModel)]="usuario.usuario" name="email" placeholder="Correo Electronico">
+                    <form action="" #formAgregarUsuario="ngForm">
+                        <div *ngIf="email.invalid && (email.dirty ||email.touched)" class="">
+                            <div *ngIf="email.errors.pattern">
+                                <p class="text-danger">Formato de Correo Electronico invalido</p>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="password" [(ngModel)]="usuario.password" name="password" placeholder="Contraseña">
+                            <input type="email" class="form-control" id="email" [(ngModel)]="usuario.usuario" name="email" placeholder="Correo Electronico" #email="ngModel" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                        </div>
+                        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="">
+                            <div *ngIf="password.errors.minlength">
+                                <p class="text-danger">El password tiene que tener mas de 4 caracteres</p>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <select id="categoriaModal" name="categoriaModal" class="form-control" [(ngModel)]="usuario.perfil">
+                            <input type="password" class="form-control" id="password" [(ngModel)]="usuario.password" name="password" placeholder="Contraseña" #password="ngModel" required minlength="5">
+                        </div>
+                        <div class="form-group">
+                            <select id="categoriaModal" name="categoriaModal" class="form-control" [(ngModel)]="usuario.perfil" #categoriaModal="ngModel" required>
                                 <option value="" disabled selected>Perfil</option>
                                 <option value="socio">Socio</option>
                                 <option value="administrativo">Administrativo</option>
@@ -33,12 +44,73 @@
                               Activo
                             </label>
                         </div>
-                        {{usuario.activo}}
+                        <div *ngIf="validacion && ((email.invalid && email.touched) || (password.invalid && password.touched))" class="">
+                            <div *ngIf="email.errors.required || password.errors.required">
+                                <p class="text-danger"> Hay campos incompletos</p>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" (click)="agregarUsuario()">Agregar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarCampos()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" [disabled]="formAgregarUsuario.invalid" (click)="agregarUsuario()">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Usuario-->
+    <div class="modal fade" id="modalEditarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalEditarUsuario" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" #formEditarUsuario="ngForm">
+                        <div *ngIf="emailedit.invalid && (emailedit.dirty ||emailedit.touched)" class="">
+                            <div *ngIf="emailedit.errors.pattern">
+                                <p class="text-danger">Formato de Correo Electronico invalido</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="emailedit" [(ngModel)]="usuario.usuario" name="emailedit" placeholder="Correo Electronico" #emailedit="ngModel" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                        </div>
+                        <div *ngIf="passwordedit.invalid && (passwordedit.dirty || passwordedit.touched)" class="">
+                            <div *ngIf="passwordedit.errors.minlength">
+                                <p class="text-danger">El password tiene que tener mas de 4 caracteres</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="passwordedit" [(ngModel)]="usuario.password" name="passwordedit" placeholder="Contraseña" #passwordedit="ngModel" required minlength="5">
+                        </div>
+                        <div class="form-group">
+                            <select id="categoriaModaledit" name="categoriaModaledit" class="form-control" [(ngModel)]="usuario.perfil" #categoriaModaledit="ngModel">
+                                <option value="" disabled selected>Perfil</option>
+                                <option value="socio">Socio</option>
+                                <option value="administrativo">Administrativo</option>
+                                <option value="administrador">Administrador</option>
+                            </select>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="activoedit" [checked]="usuario.activo" (change)="usuario.activo = !usuario.activo">
+                            <label class="form-check-label" for="activo">
+                              Activo
+                            </label>
+                        </div>
+                        <div *ngIf="validacion && ((emailedit.invalid && emailedit.touched) || (passwordedit.invalid && passwordedit.touched))" class="">
+                            <div *ngIf="emailedit.errors.required || passwordedit.errors.required">
+                                <p class="text-danger"> Hay campos incompletos</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarCampos()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" [disabled]="formEditarUsuario.invalid" (click)="actualizarUsuario()">Actualizar</button>
                 </div>
             </div>
         </div>
@@ -62,7 +134,7 @@
                 <td>
                     <button class="btn btn-danger mr-1" (click)="eliminarUsuario(u)"><i class="far fa-trash-alt"></i></button>
 
-                    <button class="btn btn-warning"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-warning" (click)="seleccionarUsuario(u)" data-toggle="modal" data-target="#modalEditarUsuario"><i class="fas fa-edit"></i></button>
                 </td>
             </tr>
             <tr>

@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
                         this.router.navigateByUrl(this.returnUrl);
                       } else {
                         //usuario no encontrado muestro mensaje en la vista
-                        this.msglogin="Credenciales incorrectas..";
+                        this.msglogin="La direccion de correo electronico o la contraseña que has introducido no son correctas";
                       }
      },
     error => {

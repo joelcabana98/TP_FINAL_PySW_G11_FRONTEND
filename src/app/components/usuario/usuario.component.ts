@@ -12,6 +12,7 @@ export class UsuarioComponent implements OnInit {
 
   listaUsuarios:Array<Usuario>;
   usuario : Usuario;
+  validacion: boolean;
 
   constructor(private usuarioService:UsuarioService) {
     this.listaUsuarios = new Array<Usuario>();
@@ -27,6 +28,7 @@ export class UsuarioComponent implements OnInit {
      (result)=>{
         alert("Usuario Guardado");
         this.obtenerUsuarios();
+        this.validacion = false;
      }, 
    (error)=>{
         console.log("error"+ error);
@@ -75,6 +77,17 @@ export class UsuarioComponent implements OnInit {
        console.log(error);
      }
    );
+   this.usuario = new Usuario();
+ }
+
+ seleccionarUsuario(usu:Usuario){
+   var tusu = new Usuario();
+   Object.assign(tusu,usu);
+   this.usuario = tusu;
+ }
+
+ limpiarCampos(){
+   this.validacion = false;
    this.usuario = new Usuario();
  }
 

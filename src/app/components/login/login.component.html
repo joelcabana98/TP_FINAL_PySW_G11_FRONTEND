@@ -3,16 +3,23 @@
         <h4>¡Te damos la bienvenida de nuevo!</h4>
         <p>¿Te vas a perder tu siguiente gran oportunidad? Inicia sesión para estar al día de tu entorno profesional.</p>
     </div>
-    <form name="form" class="col-md-4">
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Correo Electronico" name="username" [(ngModel)]="userform.usuario" />
+    <form name="form" class="col-md-4" #formLoginUsuario="ngForm">
+        <div *ngIf="emailLogin.invalid && (emailLogin.dirty ||emailLogin.touched)" class="">
+            <div *ngIf="emailLogin.errors.pattern">
+                <p class="text-danger">Formato de Correo Electronico invalido</p>
+            </div>
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" name="password" placeholder="Contraseña" [(ngModel)]="userform.password" />
+            <input type="email" class="form-control" placeholder="Correo Electronico" name="emailLogin" [(ngModel)]="userform.usuario" #emailLogin="ngModel" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="Contraseña" [(ngModel)]="userform.password" #passwordLogin="ngModel" required />
         </div>
         <div class="form-group">
             <button class="btn btn-primary btn-block" (click)="login()">Inicar Sesion</button>
         </div>
-        <div class="alert-danger">{{msglogin}}</div>
+        <div class="">
+            <p class="text-danger">{{msglogin}}</p>
+        </div>
     </form>
 </div>
