@@ -1,3 +1,69 @@
 <div class="row mt-header">
-    <p>CONTENIDO DE HOME</p>
+    <!--Boton Agregar Usuario-->
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAgregarUsuario">
+        <i class="fas fa-folder-plus"></i>
+   </button>
+
+    <!-- Modal Agregar Usuario-->
+    <div class="modal fade" id="modalAgregarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalAgregarUsuario" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" #formAgregarUsuario="ngForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-lg" id="titulo" placeholder="Ingresa un titulo" [(ngModel)]="noticia.titulo" name="titulo" />
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="descripcion" placeholder="Ingresa una descripcion" rows="4" [(ngModel)]="noticia.descripcion" name="descripcion"></textarea>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="activoedit" [checked]="noticia.vigente" (change)="noticia.vigente = !noticia.vigente">
+                            <label class="form-check-label" for="activo">
+                              Vigente
+                            </label>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="col-12">Lista de Noticias</h3>
+    <!--Lista de Noticias-->
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Imagen</th>
+                <th scope="col">Titulo</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Vigente</th>
+                <th scope="col">Usuario</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let n of listaAllNoticias">
+                <th>{{n.imagen}}</th>
+                <th>{{n.titulo}}</th>
+                <th>{{n.noticia}}</th>
+                <td>{{n.vigente && 'Si' || 'No'}}</td>
+                <td>{{n.usuario.usuario}}</td>
+                <td>
+                    <button class="btn btn-danger mr-1"><i class="far fa-trash-alt"></i></button>
+
+                    <button class="btn btn-warning" (click)="seleccionarNoticia(n)" data-toggle="modal" data-target="#modalEditarUsuario"><i class="fas fa-edit"></i></button>
+                </td>
+            </tr>
+            <tr>
+        </tbody>
+    </table>
 </div>
