@@ -137,13 +137,15 @@
         <content class="col-md-12">
             <div class="row row-cols-1 row-cols-md-3">
                 <div class="col-md-4 col-sm-6" *ngFor="let item of listaNoticias">
-                    <div class="card"></div>
-                    <img [src]="item.imagen" alt="Responsive image" class="card-img-top img-fluid img">
-                    <div class="card-body text-formato">
-                        <h5 class="card-title titulo-noticia">
-                            {{item.titulo}}
-                        </h5>
-                    </div>
+                    <a [routerLink]="['/noticia', item._id]">
+                        <div class="card"></div>
+                        <img [src]="item.imagen" alt="Responsive image" class="card-img-top img-fluid img">
+                        <div class="card-body text-formato">
+                            <h5 class="card-title titulo-noticia text">
+                                {{item.titulo}}
+                            </h5>
+                        </div>
+                    </a>
                 </div>
             </div>
         </content>

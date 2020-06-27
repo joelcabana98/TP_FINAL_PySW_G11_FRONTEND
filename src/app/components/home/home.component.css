@@ -3,3 +3,11 @@
     height: 250px;
     object-fit: cover;
 }
+
+a:link {
+    text-decoration: none;
+}
+
+.text {
+    color: black;
+}
