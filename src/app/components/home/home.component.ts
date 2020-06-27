@@ -19,6 +19,9 @@ export class HomeComponent implements OnInit {
     this.noticia.vigente = false;
     this.listaNoticias = new Array<Noticia>();
     this.listaAllNoticias = new Array<Noticia>();
+
+    this.obtenerNoticiasSinFiltro();
+    this.obtenerNoticiasPorFecha();
   }
 
 
@@ -28,12 +31,17 @@ export class HomeComponent implements OnInit {
     this.noticiaService.addNoticia(this.noticia).subscribe(
     (result)=>{
         alert("Noticia Guardada");
+        this.obtenerNoticiasSinFiltro();
+        this.obtenerNoticiasPorFecha();
     }, 
   (error)=>{
         console.log("error"+ error);
   });
   this.noticia = new Noticia();
+  this.noticia.vigente = false;
   }
+
+
   ngOnInit(): void {
   }
 
@@ -54,6 +62,19 @@ export class HomeComponent implements OnInit {
         console.log(error);
       }
     )
+  }
+
+  eliminarNoticia(noti:Noticia){  
+    this.noticiaService.deleteNoticia(noti).subscribe(
+      (result)=>{
+        alert("usuario Eliminada");
+        this.obtenerNoticiasSinFiltro();
+        this.obtenerNoticiasPorFecha();
+      },
+      (error)=>{
+        console.log(error);
+      }
+    );
   }
 
   obtenerNoticiasSinFiltro(){
@@ -79,8 +100,31 @@ export class HomeComponent implements OnInit {
     this.noticia = tnoti;
   }
 
+
+  actualizarNoticia(){
+    this.noticia.fecha = new Date();
+    this.noticiaService.updateNoticia(this.noticia).subscribe(
+      (result)=>{
+          alert("Usuario Modificada");
+          this.obtenerNoticiasSinFiltro();
+          this.obtenerNoticiasPorFecha();
+      },
+      (error)=>{
+        console.log(error);
+      }
+    );
+    this.noticia = new Noticia();
+    this.noticia.vigente = false;
+  }
+
   limpiarNoticias(){
     this.noticia = new Noticia();
+    this.noticia.vigente = false;
+  }
+
+  onFileChanges(files){
+    console.log("File has changed:", files);
+    this.noticia.imagen = files[0].base64;
   }
 
 }

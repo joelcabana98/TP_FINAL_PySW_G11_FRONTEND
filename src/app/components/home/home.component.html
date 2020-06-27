@@ -1,10 +1,10 @@
 <div class="row mt-header">
-    <!--Boton Agregar Usuario-->
+    <!--Boton Agregar Noticia-->
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAgregarUsuario">
-        <i class="fas fa-folder-plus"></i>
+        <i class="fas fa-folder-plus"></i> AGREGAR NUEVA NOTICIA
    </button>
 
-    <!-- Modal Agregar Usuario-->
+    <!-- Modal Agregar Noticia-->
     <div class="modal fade" id="modalAgregarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalAgregarUsuario" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -14,16 +14,30 @@
       </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" #formAgregarUsuario="ngForm">
+                    <form action="" #formAgregarNoticia="ngForm">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-lg" id="titulo" placeholder="Ingresa un titulo" [(ngModel)]="noticia.titulo" name="titulo" />
+                            <input id="portada" (onFileChanged)="onFileChanges($event)" class="form-control" type="file" alife-file-to-base64 multiple accept="image/x-png,image/gif,image/jpeg" name="portada" required/>
+                            <img [src]="noticia.imagen" width="800" height="400" class="img-fluid">
+                        </div>
+                        <div *ngIf="titulo.invalid && (titulo.dirty ||titulo.touched)" class="">
+                            <div *ngIf="titulo.errors.minlength">
+                                <p class="text-danger">El titulo tiene que tener al menos 20 caracteres</p>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" id="descripcion" placeholder="Ingresa una descripcion" rows="4" [(ngModel)]="noticia.descripcion" name="descripcion"></textarea>
+                            <input type="text" class="form-control form-control-lg" id="titulo" placeholder="Ingresa un titulo" [(ngModel)]="noticia.titulo" name="titulo" #titulo="ngModel" required minlength="20" />
+                        </div>
+                        <div *ngIf="descripcion.invalid && (descripcion.dirty ||descripcion.touched)" class="">
+                            <div *ngIf="descripcion.errors.minlength">
+                                <p class="text-danger">El titulo tiene que tener al menos 130 caracteres</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="descripcion" placeholder="Ingresa una descripcion" rows="4" [(ngModel)]="noticia.descripcion" name="descripcion" #descripcion="ngModel" required minlength="130"></textarea>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="activoedit" [checked]="noticia.vigente" (change)="noticia.vigente = !noticia.vigente">
-                            <label class="form-check-label" for="activo">
+                            <input class="form-check-input" type="checkbox" value="" id="vigente" [checked]="noticia.vigente" (change)="noticia.vigente=!noticia.vigente">
+                            <label class="form-check-label" for="vigente">
                               Vigente
                             </label>
                         </div>
@@ -31,14 +45,62 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Agregar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarNoticias()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" [disabled]="formAgregarNoticia.invalid" (click)="guardarNoticia()">Agregar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <h3 class="col-12">Lista de Noticias</h3>
+
+    <!-- Modal Editar Noticia-->
+    <div class="modal fade" id="modalEditarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalEditarUsuario" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" #formEditarNoticia="ngForm">
+                        <div class="form-group">
+                            <input id="portadaedit" (onFileChanged)="onFileChanges($event)" class="form-control" type="file" alife-file-to-base64 multiple accept="image/x-png,image/gif,image/jpeg" />
+                            <img [src]="noticia.imagen" width="800" height="400" class="img-fluid">
+                        </div>
+                        <div *ngIf="tituloedit.invalid && (tituloedit.dirty ||tituloedit.touched)" class="">
+                            <div *ngIf="tituloedit.errors.minlength">
+                                <p class="text-danger">El titulo tiene que tener al menos 20 caracteres</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-lg" id="titulo" placeholder="Ingresa un titulo" [(ngModel)]="noticia.titulo" name="tituloedit" #tituloedit="ngModel" required minlength="20" />
+                        </div>
+                        <div *ngIf="descripcionedit.invalid && (descripcionedit.dirty ||descripcionedit.touched)" class="">
+                            <div *ngIf="descripcionedit.errors.minlength">
+                                <p class="text-danger">El titulo tiene que tener al menos 130 caracteres</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="descripcionedit" placeholder="Ingresa una descripcion" rows="4" [(ngModel)]="noticia.descripcion" name="descripcionedit" #descripcionedit="ngModel" required minlength="130"></textarea>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="vigenteedit" [checked]="noticia.vigente" (change)="noticia.vigente=!noticia.vigente">
+                            <label class="form-check-label" for="vigenteedit">
+                              Vigente
+                            </label>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarNoticias()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" (click)="actualizarNoticia()">Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--Lista de Noticias-->
     <table class="table">
         <thead>
@@ -48,17 +110,18 @@
                 <th scope="col">Fecha</th>
                 <th scope="col">Vigente</th>
                 <th scope="col">Usuario</th>
+                <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let n of listaAllNoticias">
-                <th>{{n.imagen}}</th>
+                <th> <img [src]="n.imagen" width="100" height="60" class="img-fluid"></th>
                 <th>{{n.titulo}}</th>
-                <th>{{n.noticia}}</th>
+                <th>{{n.fecha | date :'dd-MM-yyyy, h:mm a'}}</th>
                 <td>{{n.vigente && 'Si' || 'No'}}</td>
                 <td>{{n.usuario.usuario}}</td>
                 <td>
-                    <button class="btn btn-danger mr-1"><i class="far fa-trash-alt"></i></button>
+                    <button class="btn btn-danger mr-1" (click)="eliminarNoticia(n)"><i class="far fa-trash-alt"></i></button>
 
                     <button class="btn btn-warning" (click)="seleccionarNoticia(n)" data-toggle="modal" data-target="#modalEditarUsuario"><i class="fas fa-edit"></i></button>
                 </td>
@@ -66,4 +129,23 @@
             <tr>
         </tbody>
     </table>
+
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>Ultimas Noticias</h1>
+        </div>
+        <content class="col-md-12">
+            <div class="row row-cols-1 row-cols-md-3">
+                <div class="col-md-4 col-sm-6" *ngFor="let item of listaNoticias">
+                    <div class="card"></div>
+                    <img [src]="item.imagen" alt="Responsive image" class="card-img-top img-fluid img">
+                    <div class="card-body text-formato">
+                        <h5 class="card-title titulo-noticia">
+                            {{item.titulo}}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </content>
+    </div>
 </div>

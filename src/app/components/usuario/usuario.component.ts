@@ -29,6 +29,7 @@ export class UsuarioComponent implements OnInit {
         alert("Usuario Guardado");
         this.obtenerUsuarios();
         this.validacion = false;
+        this.usuario.activo = false;
      }, 
    (error)=>{
         console.log("error"+ error);
@@ -59,6 +60,7 @@ export class UsuarioComponent implements OnInit {
      (result)=>{
        alert("usuario Eliminada");
        this.obtenerUsuarios();
+      this.usuario.activo = false;
      },
      (error)=>{
        console.log(error);
@@ -78,6 +80,7 @@ export class UsuarioComponent implements OnInit {
      }
    );
    this.usuario = new Usuario();
+   this.usuario.activo = false;
  }
 
  seleccionarUsuario(usu:Usuario){
@@ -89,6 +92,7 @@ export class UsuarioComponent implements OnInit {
  limpiarCampos(){
    this.validacion = false;
    this.usuario = new Usuario();
+   this.usuario.activo = false;
  }
 
 
