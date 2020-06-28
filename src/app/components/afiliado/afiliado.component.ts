@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Afiliado } from '../../models/afiliado';
 import { AfiliadoService } from '../../services/afiliado.service';
 
+import { DomSanitizer } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-afiliado',
   templateUrl: './afiliado.component.html',
@@ -19,9 +21,11 @@ export class AfiliadoComponent implements OnInit {
   dni: number;
   email:string;
   telefono:number;
+  stringimage:string;
 
-  constructor(private afiliadoService: AfiliadoService) { 
-    this.listaAfiliado = new Array<Afiliado>();
+  constructor(private afiliadoService: AfiliadoService,
+              private _sanititizer: DomSanitizer) { 
+    
     this.afiliado = new Afiliado();
     this.cargarListaAfiliados();
   }
@@ -29,7 +33,13 @@ export class AfiliadoComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onFileChanges(files){
+    console.log("File has changed: ",files);
+    this.stringimage = files[0].base64;
+  }
+
   public cargarListaAfiliados(){
+    this.listaAfiliado = new Array<Afiliado>();
     this.afiliadoService.getAfiliados().subscribe(
       (result) => {
         var aux: Afiliado = new Afiliado();
@@ -44,6 +54,7 @@ export class AfiliadoComponent implements OnInit {
   }
 
   public agregarAfiliado(){
+    this.afiliado.imagen = this.stringimage;
     this.afiliadoService.addAfiliado(this.afiliado).subscribe(
       (result) => {
         alert("Afiliado Agregado");

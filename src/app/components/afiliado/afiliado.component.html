@@ -1,69 +1,75 @@
-<div class="row mt-header">
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAgregarUsuario">
-        <i class="fas fa-user-plus"></i>
-      </button>
-    <!-- Modal Agregar Usuario-->
-    <div class="modal fade" id="modalAgregarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalAgregarUsuario" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    Agregar un nuevo Afiliado
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="apellido" [(ngModel)]="afiliado.apellido" placeholder="Apellido">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="nombre" [(ngModel)]="afiliado.nombres" placeholder="Nombres">
-                        </div>
-                        <div class="form-group">
-                            <input type="number" class="form-control" name="dni" [(ngModel)]="afiliado.dni" placeholder="D.N.I.">
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-control" name="email" [(ngModel)]="afiliado.email" placeholder="Correo Electronico">
-                        </div>
-                        <div class="form-group">
-                            <input type="number" class="form-control" name="telefono" [(ngModel)]="afiliado.telefono" placeholder="Numero de Telefono">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="imagen" [(ngModel)]="afiliado.imagen" placeholder="Imagen">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" (click)="agregarAfiliado()">Agregar</button>
-                </div>
+<!-- Modal Agregar Usuario-->
+<div class="modal fade" id="modalAgregarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalAgregarUsuario" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Agregar un nuevo Afiliado
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="apellido" [(ngModel)]="afiliado.apellido" placeholder="Apellido">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="nombre" [(ngModel)]="afiliado.nombres" placeholder="Nombres">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="dni" [(ngModel)]="afiliado.dni" placeholder="D.N.I.">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" [(ngModel)]="afiliado.email" placeholder="Correo Electronico">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="telefono" [(ngModel)]="afiliado.telefono" placeholder="Numero de Telefono">
+                    </div>
+                    <div class="form-group">
+                        <input type="file" alife-file-to-base64 multiple class="form-control" name="imagen" (onFileChanged)="onFileChanges($event)" accept="image/x-png,image/gif,image/jpeg">
+                        <img [src]="stringimage" width="800" height="400" class="img-fluid">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="agregarAfiliado()">Agregar</button>
             </div>
         </div>
     </div>
+</div>
 
+<div class="row mt-header">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAgregarUsuario">
+        <i class="fas fa-user-plus mr-1"></i><span>Nuevo Afiliado</span>
+      </button>
 
     <!-- TABLA DE AFILIADOS-->
+
     <table class="table">
         <thead>
             <tr>
+                <th scope="col">#</th>
+                <th scope="col">Imagen</th>
                 <th scope="col">Apellido</th>
                 <th scope="col">Nombres</th>
                 <th scope="col">DNI</th>
                 <th scope="col">Email</th>
                 <th scope="col">Telefono</th>
-                <th scope="col">Imagen</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of listaAfiliado">
+            <tr *ngFor="let item of listaAfiliado; index as i">
+                <td> {{i+1}} </td>
+                <td>
+                    <img [src]="item.imagen" width="100" height="50" class="img-fluid"/>
+                </td>
                 <td> {{item.apellido}} </td>
                 <td> {{item.nombres}} </td>
                 <td> {{item.dni}} </td>
                 <td> {{item.email}} </td>
                 <td> {{item.telefono}} </td>
-                <td> {{item.imagen}} </td>
                 <td>
                     <button class="btn btn-danger mr-1" (click)="eliminarAfiliado(item)"><i class="far fa-trash-alt"></i></button>
     
