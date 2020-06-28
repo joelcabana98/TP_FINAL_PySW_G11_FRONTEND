@@ -1,5 +1,5 @@
-<!-- Modal Agregar Usuario-->
-<div class="modal fade" id="modalAgregarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalAgregarUsuario" aria-hidden="true">
+<!-- Modal Agregar Afiliado-->
+<div class="modal fade" id="modalAgregarAfiliado" tabindex="-1" role="dialog" aria-labelledby="modalAgregarAfiliado" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,42 +11,70 @@
             <div class="modal-body">
                 <form action="">
                     <div class="form-group">
+                        <label>Apellido</label>
                         <input type="text" class="form-control" name="apellido" [(ngModel)]="afiliado.apellido" placeholder="Apellido">
                     </div>
                     <div class="form-group">
+                        <label>Nombres</label>
                         <input type="text" class="form-control" name="nombre" [(ngModel)]="afiliado.nombres" placeholder="Nombres">
                     </div>
                     <div class="form-group">
+                        <label>DNI</label>
                         <input type="number" class="form-control" name="dni" [(ngModel)]="afiliado.dni" placeholder="D.N.I.">
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" name="email" [(ngModel)]="afiliado.email" placeholder="Correo Electronico">
+                        <label>Correo Electronico</label>
+                        <input type="email" class="form-control" name="email" [(ngModel)]="afiliado.email" placeholder="Ej. ejemplo@email.com">
                     </div>
                     <div class="form-group">
+                        <label>Teléfono</label>
                         <input type="number" class="form-control" name="telefono" [(ngModel)]="afiliado.telefono" placeholder="Numero de Telefono">
                     </div>
                     <div class="form-group">
+                        <label>Foto</label>
                         <input type="file" alife-file-to-base64 multiple class="form-control" name="imagen" (onFileChanged)="onFileChanges($event)" accept="image/x-png,image/gif,image/jpeg">
-                        <img [src]="stringimage" width="800" height="400" class="img-fluid">
+                        <img [src]="afiliado.imagen" width="800" height="400" class="img-fluid">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="agregarAfiliado()">Agregar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarAfiliado()">Cancelar</button>
+                <button type="button" class="btn btn-primary" *ngIf="afiliado._id == null" data-dismiss="modal" (click)="agregarAfiliado()">Agregar</button>
+                <button type="button" class="btn btn-primary" *ngIf="afiliado._id != null" data-dismiss="modal" (click)="actualizarAfiliado()">Actualizar</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Operaciones CRUD -->
 <div class="row mt-header">
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAgregarUsuario">
-        <i class="fas fa-user-plus mr-1"></i><span>Nuevo Afiliado</span>
-      </button>
+    <div class="col-md-4 col-sm-12 my-1">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAgregarAfiliado">
+            <i class="fas fa-user-plus mr-1"></i><span>Nuevo Afiliado</span>
+        </button>
+    </div>
+    <div class="col-md-4 col-sm-12">
+        <form class="row">
+            <div class="form-group col-10">
+                <input type="number" class="form-control" name="dni" [(ngModel)]="dni" placeholder="Buscar D.N.I.">
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-success" (click)="buscarPorDni()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4 col-sm-12">
+        <button type="button" class="btn btn-success" (click)="limpiarBusqueda()" *ngIf="dni != null">
+            Limpiar Busqueda
+        </button>
+    </div>
+    
 
     <!-- TABLA DE AFILIADOS-->
 
-    <table class="table">
+    <table class="table-responsive">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -73,7 +101,7 @@
                 <td>
                     <button class="btn btn-danger mr-1" (click)="eliminarAfiliado(item)"><i class="far fa-trash-alt"></i></button>
     
-                    <button class="btn btn-warning"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-warning" (click)="mostrarAfiliado(item)" data-toggle="modal" data-target="#modalAgregarAfiliado"><i class="fas fa-edit"></i></button>
                 </td>
             </tr>
         </tbody>

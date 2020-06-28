@@ -49,4 +49,16 @@ export class AfiliadoService {
     var body = JSON.stringify(afiliado);
     return this._http.put(this.urlBase + afiliado._id, body, httpOptions);
   }
+
+  getAfiliadoByDni(dni:number):Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':'application/json'
+      })
+    };
+    var body = {
+      "dni":dni
+    }
+    return this._http.post(this.urlBase+"dni", body, httpOptions);
+  }
 }

@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Afiliado } from '../../models/afiliado';
 import { AfiliadoService } from '../../services/afiliado.service';
 
-import { DomSanitizer } from '@angular/platform-browser';
-
 @Component({
   selector: 'app-afiliado',
   templateUrl: './afiliado.component.html',
@@ -23,8 +21,7 @@ export class AfiliadoComponent implements OnInit {
   telefono:number;
   stringimage:string;
 
-  constructor(private afiliadoService: AfiliadoService,
-              private _sanititizer: DomSanitizer) { 
+  constructor(private afiliadoService: AfiliadoService) { 
     
     this.afiliado = new Afiliado();
     this.cargarListaAfiliados();
@@ -35,7 +32,7 @@ export class AfiliadoComponent implements OnInit {
 
   onFileChanges(files){
     console.log("File has changed: ",files);
-    this.stringimage = files[0].base64;
+    this.afiliado.imagen = files[0].base64;
   }
 
   public cargarListaAfiliados(){
@@ -75,8 +72,8 @@ export class AfiliadoComponent implements OnInit {
     );
   }
 
-  public actualizarAfiliado(afiliado:Afiliado){
-    this.afiliadoService.updateAfiliado(afiliado).subscribe(
+  public actualizarAfiliado(){
+    this.afiliadoService.updateAfiliado(this.afiliado).subscribe(
       (result) => {
         alert("Afiliado Actualizado");
         this.cargarListaAfiliados();
@@ -85,4 +82,30 @@ export class AfiliadoComponent implements OnInit {
     );
   }
 
+  public mostrarAfiliado(item:Afiliado){
+    let auxAfiliado = new Afiliado();
+    Object.assign(auxAfiliado, item);
+    this.afiliado = auxAfiliado;
+  }
+
+  public limpiarAfiliado(){
+    this.afiliado = new Afiliado();
+  }
+
+  public limpiarBusqueda(){
+    this.dni = null;
+    this.cargarListaAfiliados();
+  }
+
+  public buscarPorDni(){
+    this.afiliadoService.getAfiliadoByDni(this.dni).subscribe(
+      (result) => {
+        this.listaAfiliado = new Array<Afiliado>();
+        let aux = new Afiliado;
+        Object.assign(aux, result.result);
+        this.listaAfiliado.push(aux);
+      },
+      error => { (alert("error, Afilido no encontrado"+error));}
+    );
+  }
 }
