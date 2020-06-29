@@ -15,12 +15,14 @@ export class HomeComponent implements OnInit {
   listaNoticias:Array<Noticia>;
   listaAllNoticias:Array<Noticia>;
   
+
+  desde:string;
+  hasta:string;
   constructor(public loginService: LoginService,private noticiaService:NoticiaService,private _toastr:ToastrService) { 
     this.noticia = new Noticia();
     this.noticia.vigente = false;
     this.listaNoticias = new Array<Noticia>();
     this.listaAllNoticias = new Array<Noticia>();
-
     this.obtenerNoticiasSinFiltro();
     this.obtenerNoticiasPorFecha();
   }
@@ -96,6 +98,27 @@ export class HomeComponent implements OnInit {
       }
     )
   }
+
+
+  obtenerNoticiaByFecha(){
+    console.log("ENTROOOOOOOOOOO"+this.desde + this.hasta);
+    this.listaAllNoticias = new Array<Noticia>();
+    this.noticiaService.getNoticiasByTwoDate(this.desde,this.hasta).subscribe(
+      (result)=>{
+        var noti2: Noticia = new Noticia();
+        result.forEach(element => {
+          Object.assign(noti2,element);
+          this.listaAllNoticias.push(noti2);
+          console.log(noti2.titulo);
+          noti2 = new Noticia();
+          });
+      },
+      (error)=>{
+        console.log(error);
+      }
+    )
+  }
+
 
   seleccionarNoticia(noti:Noticia){
     var tnoti = new Noticia();
