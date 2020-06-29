@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Noticia } from 'src/app/models/noticia';
 import { NoticiaService } from 'src/app/services/noticia.service';
 import { LoginService } from 'src/app/services/login.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomeComponent implements OnInit {
   listaNoticias:Array<Noticia>;
   listaAllNoticias:Array<Noticia>;
   
-  constructor(public loginService: LoginService,private noticiaService:NoticiaService) { 
+  constructor(public loginService: LoginService,private noticiaService:NoticiaService,private _toastr:ToastrService) { 
     this.noticia = new Noticia();
     this.noticia.vigente = false;
     this.listaNoticias = new Array<Noticia>();
@@ -30,12 +31,13 @@ export class HomeComponent implements OnInit {
     this.noticia.fecha = new Date();
     this.noticiaService.addNoticia(this.noticia).subscribe(
     (result)=>{
-        alert("Noticia Guardada");
+      this._toastr.success("La noticia ha sido agregada","Exito");
         this.obtenerNoticiasSinFiltro();
         this.obtenerNoticiasPorFecha();
     }, 
   (error)=>{
         console.log("error"+ error);
+        this._toastr.error("Ha ocurrido un error","Error");
   });
   this.noticia = new Noticia();
   this.noticia.vigente = false;
@@ -67,12 +69,13 @@ export class HomeComponent implements OnInit {
   eliminarNoticia(noti:Noticia){  
     this.noticiaService.deleteNoticia(noti).subscribe(
       (result)=>{
-        alert("usuario Eliminada");
+        this._toastr.success("La noticia ha sido eliminada","Exito");
         this.obtenerNoticiasSinFiltro();
         this.obtenerNoticiasPorFecha();
       },
       (error)=>{
         console.log(error);
+        this._toastr.error("Ha ocurrido un error","Error");
       }
     );
   }
@@ -105,12 +108,13 @@ export class HomeComponent implements OnInit {
     this.noticia.fecha = new Date();
     this.noticiaService.updateNoticia(this.noticia).subscribe(
       (result)=>{
-          alert("Usuario Modificada");
+        this._toastr.success("La noticia ha sido modificada","Exito");
           this.obtenerNoticiasSinFiltro();
           this.obtenerNoticiasPorFecha();
       },
       (error)=>{
         console.log(error);
+        this._toastr.error("Ha ocurrido un error","Error");
       }
     );
     this.noticia = new Noticia();

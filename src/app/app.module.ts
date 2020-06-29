@@ -4,7 +4,9 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@Angular/forms';
 import { AlifeFileToBase64Module } from 'alife-file-to-base64';
 import { AppRoutingModule } from './app-routing.module';
-
+import { NgxDataTableModule} from "angular-9-datatable";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -37,7 +39,15 @@ import { NoticiaComponent } from './components/noticia/noticia.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    AlifeFileToBase64Module
+    AlifeFileToBase64Module,
+    NgxDataTableModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      progressBar :true,
+      progressAnimation : 'increasing',
+      timeOut:2000,
+      closeButton:true,
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

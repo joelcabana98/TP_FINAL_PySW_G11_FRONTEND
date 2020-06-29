@@ -3,6 +3,7 @@ import { Usuario } from 'src/app/models/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { AfiliadoService } from 'src/app/services/afiliado.service';
 import { LoginService } from 'src/app/services/login.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-usuario',
@@ -18,7 +19,7 @@ export class UsuarioComponent implements OnInit {
 
   msj:string;
 
-  constructor(private usuarioService:UsuarioService,private afiliadoService: AfiliadoService,public loginService: LoginService) {
+  constructor(private usuarioService:UsuarioService,private afiliadoService: AfiliadoService,public loginService: LoginService,private _toastr : ToastrService) {
     this.listaUsuarios = new Array<Usuario>();
     this.usuario = new Usuario();
      this.usuario.activo = false;
@@ -33,6 +34,7 @@ export class UsuarioComponent implements OnInit {
                   console.log("existe afiliado != false");
            }else {
              this.msj = "El correo electronico no pertence a un afiliado";
+             this._toastr.error("El correo electronico no pertence a un afiliado","Error");
            }
     }else {
       this.agregar();
@@ -45,13 +47,14 @@ export class UsuarioComponent implements OnInit {
  agregar(){
   this.usuarioService.addUsuario(this.usuario).subscribe(
     (result)=>{
-       alert("Usuario Guardado");
+       this._toastr.success("El usuario ha sido agregado","Exito");
        this.obtenerUsuarios();
        this.validacion = false;
        this.usuario.activo = false;
     }, 
   (error)=>{
        console.log("error"+ error);
+       this._toastr.error("Ha ocurrido un error","Error");
   })
  }
 
@@ -67,6 +70,7 @@ export class UsuarioComponent implements OnInit {
       },
       (error)=> {
               console.log("error:"+ error)
+              
       }
     )
     return existe;
@@ -104,12 +108,13 @@ export class UsuarioComponent implements OnInit {
  eliminarUsuario(usuario:Usuario){  
    this.usuarioService.deleteUsuario(usuario).subscribe(
      (result)=>{
-       alert("usuario Eliminada");
+      this._toastr.success("El usuario ha sido eliminado","Exito");
        this.obtenerUsuarios();
       this.usuario.activo = false;
      },
      (error)=>{
        console.log(error);
+       this._toastr.error("Ha ocurrido un error","Error");
      }
    );
  }
@@ -122,6 +127,7 @@ export class UsuarioComponent implements OnInit {
            console.log("existe afiliado != false");
     }else {
       this.msj = "El correo electronico no pertence a un afiliado";
+      this._toastr.error("El correo electronico no pertence a un afiliado","Error");
     }
   }else {
   this.actualizar();
@@ -135,11 +141,12 @@ export class UsuarioComponent implements OnInit {
  actualizar(){
   this.usuarioService.updateUsuario(this.usuario).subscribe(
     (result)=>{
-        alert("Usuario Modificada");
+      this._toastr.success("El usuario ha sido modificado","Exito");
         this.obtenerUsuarios();
     },
     (error)=>{
       console.log(error);
+      this._toastr.error("Ha ocurrido un error","Error");
     }
   );
  }

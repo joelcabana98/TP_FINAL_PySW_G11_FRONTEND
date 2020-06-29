@@ -1,8 +1,8 @@
 <div class="row mt-header">
-    <div *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
+    <div class="col-12" *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
         <!--Boton Agregar Noticia-->
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAgregarUsuario">
-        <i class="fas fa-folder-plus"></i> AGREGAR NUEVA NOTICIA
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarUsuario">
+            <i class="fas fa-plus"></i>  Nueva Noticia
         </button>
 
         <!-- Modal Agregar Noticia-->
@@ -11,8 +11,8 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
+         <span aria-hidden="true">&times;</span>
+          </button>
                     </div>
                     <div class="modal-body">
                         <form action="" #formAgregarNoticia="ngForm">
@@ -102,33 +102,49 @@
             </div>
         </div>
 
-        <!--Lista de Noticias-->
-        <table class="table">
-            <thead>
+        <!--Data Table de Usuarios-->
+        <table class="table table-striped table-responsive mt-3 " [mfData]="listaAllNoticias" #mf="mfDataTable" [mfRowsOnPage]="5">
+            <thead class="thead-dark">
                 <tr>
-                    <th scope="col">Imagen</th>
-                    <th scope="col">Titulo</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Vigente</th>
-                    <th scope="col">Usuario</th>
-                    <th scope="col">Acciones</th>
+                    <th style="width: 10%">
+                        <mfDefaultSorter by="">Imagen</mfDefaultSorter>
+                    </th>
+                    <th style="width: 30%">
+                        <mfDefaultSorter by="titulo">Titulo</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="fecha">Fecha</mfDefaultSorter>
+                    </th>
+                    <th style="width: 3%">
+                        <mfDefaultSorter by="vigente">Vigente</mfDefaultSorter>
+                    </th>
+                    <th style="width: 25%">
+                        <mfDefaultSorter by="usuario">Usuario</mfDefaultSorter>
+                    </th>
+                    <th style="width: 30%">
+                        <mfDefaultSorter by="acciones">Acciones</mfDefaultSorter>
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let n of listaAllNoticias">
-                    <th> <img [src]="n.imagen" width="100" height="60" class="img-fluid"></th>
-                    <th>{{n.titulo}}</th>
-                    <th>{{n.fecha | date :'dd-MM-yyyy, h:mm a'}}</th>
+                <tr *ngFor="let n of mf.data">
+                    <td><img [src]="n.imagen" width="100" height="60" class="img-fluid"></td>
+                    <td>{{n.titulo}}</td>
+                    <td>{{n.fecha | date :'dd-MM-yyyy h:mm a'}}</td>
                     <td>{{n.vigente && 'Si' || 'No'}}</td>
                     <td>{{n.usuario.usuario}}</td>
-                    <td>
-                        <button class="btn btn-danger mr-1" (click)="eliminarNoticia(n)"><i class="far fa-trash-alt"></i></button>
-
-                        <button class="btn btn-warning" (click)="seleccionarNoticia(n)" data-toggle="modal" data-target="#modalEditarUsuario"><i class="fas fa-edit"></i></button>
+                    <td> <button class="btn btn-danger mr-1" (click)="eliminarNoticia(n)"><i class="far fa-trash-alt"></i></button>
+                        <button class="btn btn-info" (click)="seleccionarNoticia(n)" data-toggle="modal" data-target="#modalEditarUsuario"><i class="fas fa-edit"></i></button>
                     </td>
                 </tr>
-                <tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
     <div class="row">
