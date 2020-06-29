@@ -61,4 +61,14 @@ export class AfiliadoService {
     }
     return this._http.post(this.urlBase+"dni", body, httpOptions);
   }
+
+  getAfiliadoByEmail(email:string){
+    const httpOption = {
+      headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+        })
+    }
+    let body = JSON.stringify({ email:email });
+    return this._http.post(this.urlBase+"email", body, httpOption);
+  }
 }

@@ -12,7 +12,7 @@
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="['servicio']">Servicios</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
                 <a class="nav-link" [routerLink]="['usuario']">Usuarios</a>
             </li>
             <li class="nav-item">

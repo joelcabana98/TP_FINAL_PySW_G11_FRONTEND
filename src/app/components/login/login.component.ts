@@ -56,9 +56,11 @@ export class LoginComponent implements OnInit {
       this.loginService.userIsAdministrativo = true;
     }
 
-    if(tipoUsuario = "administrador"){
+    if(tipoUsuario == "administrador"){
       this.loginService.userIsAdministrador = true;
     }
+
+
   }
 
 }
