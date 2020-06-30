@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@Angular/forms';
+import {FormsModule} from '@angular/forms';
 import { AlifeFileToBase64Module } from 'alife-file-to-base64';
 import { AppRoutingModule } from './app-routing.module';
 import { NgxDataTableModule} from "angular-9-datatable";
@@ -19,6 +19,7 @@ import { PagoComponent } from './components/pago/pago.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { AfiliadoComponent } from './components/afiliado/afiliado.component';
 import { NoticiaComponent } from './components/noticia/noticia.component';
+import { ContactoComponent } from './components/contacto/contacto.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { NoticiaComponent } from './components/noticia/noticia.component';
     UsuarioComponent,
     AfiliadoComponent,
     NoticiaComponent,
+    ContactoComponent,
   ],
   imports: [
     BrowserModule,
