@@ -51,7 +51,6 @@ export class AfiliadoComponent implements OnInit {
   }
 
   public agregarAfiliado(){
-    this.afiliado.imagen = this.stringimage;
     this.afiliadoService.addAfiliado(this.afiliado).subscribe(
       (result) => {
         alert("Afiliado Agregado");
