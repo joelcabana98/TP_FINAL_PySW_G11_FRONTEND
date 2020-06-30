@@ -51,6 +51,18 @@ export class NoticiaService {
     return this._http.get(this.urlBase+'noFiltre/', httpOptions );
   }
 
+/////
+  getNoticiasByTwoDate(desde:string,hasta:string):Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+
+      })
+    }  
+    let body = JSON.stringify({ desde: desde, hasta: hasta }); 
+    return this._http.post(this.urlBase+'/byDate',body, httpOptions );
+  }
+
+
 
   deleteNoticia(noticia:Noticia):Observable<any>{
     const httpOptions = {
