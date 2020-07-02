@@ -1,25 +1,25 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top fondo">
 
-    <a class="navbar-brand" href="#">Fixed navbar</a>
+    <a class="navbar-brand" [routerLink]="['home']"><img src="../../../assets/img/logo_osmedica_footer-12.png" width="100" height="50" alt=""></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['home']">Home</a>
+                <a class="nav-link animation" [routerLink]="['home']">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['servicio']">Servicios</a>
+                <a class="nav-link animation" [routerLink]="['servicio']">Servicios</a>
             </li>
             <li class="nav-item" *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
-                <a class="nav-link" [routerLink]="['usuario']">Usuarios</a>
+                <a class="nav-link animation" [routerLink]="['usuario']">Usuarios</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['afiliado']">Afiliados</a>
+                <a class="nav-link animation" [routerLink]="['afiliado']">Afiliados</a>
             </li>
             <li class="nav-item" *ngIf="loginService.userLoggedIn && loginService.userIsAdministrativo">
-                <a class="nav-link" [routerLink]="['pago']">Pagos</a>
+                <a class="nav-link animation" [routerLink]="['pago']">Pagos</a>
             </li>
         </ul>
 

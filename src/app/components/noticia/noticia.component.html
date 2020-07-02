@@ -1,10 +1,21 @@
 <div class="mt-header row">
-    <div class="col-md-12">
-        <h1>{{noticia.titulo}}</h1>
-        <span class="badge badge-danger">{{noticia.fecha | date :'dd-MM-yyyy, h:mm a'}}     </span>
-        <span>   Escrito por : {{noticia.usuario.usuario}}</span>
 
-        <img [src]="noticia.imagen" class="img-fluid mt-2" width="800" height="20" alt="Responsive image">
-        <p class="">{{noticia.descripcion}}</p>
+
+    <div class="col-12">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="col-md-12">
+                    <h1>{{noticia.titulo}}</h1>
+                    <span class="badge badge-danger">{{noticia.fecha | date :'dd-MM-yyyy, h:mm a'}}     </span>
+                    <span>   Escrito por : {{noticia.usuario.usuario}}</span>
+
+                    <img [src]="noticia.imagen" class="img-fluid mt-2" width="800" height="20" alt="Responsive image">
+                    <p class="mt-2">{{noticia.descripcion}}</p>
+                </div>
+            </div>
+            <div class="col-md-4 border text-center">
+                <h5 class="mt-2">Tambien te puede interesar</h5>
+            </div>
+        </div>
     </div>
 </div>

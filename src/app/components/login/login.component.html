@@ -1,9 +1,10 @@
 <div class="row justify-content-center mt-header">
-    <div class="col-md-12 text-center mt-5">
+    <div class="col-md-12 text-center">
+        <div><img src="./../../../assets/img/logo1.png" width="200" height="120" alt=""></div>
         <h4>¡Te damos la bienvenida de nuevo!</h4>
         <p>¿Te vas a perder tu siguiente gran oportunidad? Inicia sesión para estar al día de tu entorno profesional.</p>
     </div>
-    <form name="form" class="col-md-4" #formLoginUsuario="ngForm">
+    <form name="form" class="col-md-4 mb-5" #formLoginUsuario="ngForm">
         <div *ngIf="emailLogin.invalid && (emailLogin.dirty ||emailLogin.touched)" class="">
             <div *ngIf="emailLogin.errors.pattern">
                 <p class="text-danger">Formato de Correo Electronico invalido</p>

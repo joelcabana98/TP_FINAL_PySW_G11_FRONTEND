@@ -5,13 +5,24 @@
             <i class="fas fa-plus"></i>  Nueva Noticia
         </button>
         <!--
-        <form action="" class="form-inline mt-3">
-            De :<input type="date" class="form-control col-2 mr-3" [(ngModel)]="desde"> A : <input type="date" class="form-control col-2 mr-1" [(ngModel)]="hasta">
+        <form action="">
+            <div class="form-group row">
+                <label for="fecha" class="col-md-4">Fecha :</label>
+                <input [(ngModel)]="fecha" class="form-control col-2 mr-3" type="date" name="fecha"> {{fecha}}
+            </div>
             <button type="button" class="btn btn-primary" (click)="obtenerNoticiaByFecha()">
                 <i class="fas fa-search"></i>
             </button>
+        </form>-->
+        <!--
+        <form action="" class="form-inline mt-3">
+            De : <input [(ngModel)]="desde" class="form-control col-2 mr-3" type="date" name="fecha"> A : <input [(ngModel)]="hasta" class="form-control col-2 mr-3" type="date" name="fecha">
+            <button type="button" class="btn btn-primary" (click)="obtenerNoticiaByFecha()">
+                <i class="fas fa-search"></i>
+            </button> {{desde}} {{hasta}}
         </form>
 -->
+
         <!-- Modal Agregar Noticia-->
         <div class="modal fade" id="modalAgregarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalAgregarUsuario" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -53,6 +64,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn facebook-btn" [disabled]="formAgregarNoticia.invalid"><i class="fab fa-facebook-f"></i> Publicar en Facebook</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarNoticias()">Cancelar</button>
                         <button type="button" class="btn btn-primary" [disabled]="formAgregarNoticia.invalid" (click)="guardarNoticia()">Agregar</button>
                     </div>
@@ -155,8 +167,42 @@
         </table>
     </div>
     <div class="row">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="./../../../assets/img/slider/banner1.png" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="./../../../assets/img/slider/banner2.png" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="./../../../assets/img/slider/banner3.png" alt="Third slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="./../../../assets/img/slider/banner4.png" alt="fourth slide">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="row mt-5">
         <div class="col-12 text-center">
-            <h1>Ultimas Noticias</h1>
+            <h1 class="">Ultimas Noticias</h1>
+            <hr>
         </div>
         <content class="col-md-12">
             <div class="row row-cols-1 row-cols-md-3">
@@ -164,8 +210,8 @@
                     <a [routerLink]="['/noticia', item._id]">
                         <div class="card"></div>
                         <img [src]="item.imagen" alt="Responsive image" class="card-img-top img-fluid img">
-                        <div class="card-body text-formato">
-                            <h5 class="card-title titulo-noticia text">
+                        <div class="card-body text-formato p-0">
+                            <h5 class="text">
                                 {{item.titulo}}
                             </h5>
                         </div>

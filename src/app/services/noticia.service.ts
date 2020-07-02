@@ -52,14 +52,17 @@ export class NoticiaService {
   }
 
 /////
-  getNoticiasByTwoDate(desde:string,hasta:string):Observable<any>{
+  getNoticiasByTwoDate(de:string,ha:string):Observable<any>{
+   //console.log("entro serviceeeeee  " + desde +"   "+ hasta);
     const httpOptions = {
       headers: new HttpHeaders({
 
-      })
+      }),
     }  
-    let body = JSON.stringify({ desde: desde, hasta: hasta }); 
-    return this._http.post(this.urlBase+'/byDate',body, httpOptions );
+    
+    let body = JSON.stringify({ desde: de, hasta: ha }); 
+    console.log("JSON" + body);
+    return this._http.post(this.urlBase+'byDate/',body, httpOptions );
   }
 
 
