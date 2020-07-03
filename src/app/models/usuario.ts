@@ -4,7 +4,7 @@ export class Usuario {
     password: string;
     activo: boolean;
     perfil: string;
-   
+
     constructor(usuario?: string, password?: string, activo?: boolean,perfil?: string){
         this.usuario = usuario;
         this.password = password;
