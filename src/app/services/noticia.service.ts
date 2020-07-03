@@ -42,6 +42,16 @@ export class NoticiaService {
     return this._http.get(this.urlBase+id,httpOptions );
   }
 
+
+  getNoticiaNotIdEquals(id):Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+
+      })
+    }   
+    return this._http.get(this.urlBase+"notequals/"+id,httpOptions );
+  }
+
   getAllNoticias():Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
