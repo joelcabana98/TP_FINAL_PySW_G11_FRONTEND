@@ -10,10 +10,13 @@
             </div>
         </div>
         <div class="form-group">
-            <input type="email" class="form-control" placeholder="Correo Electronico" name="emailLogin" [(ngModel)]="userform.usuario" #emailLogin="ngModel" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+            <input type="email" class="form-control" placeholder="Correo Electronico" name="emailLogin" 
+            [(ngModel)]="userform.usuario" #emailLogin="ngModel" 
+            required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" name="password" placeholder="Contraseña" [(ngModel)]="userform.password" #passwordLogin="ngModel" required />
+            <input type="password" class="form-control" name="password" placeholder="Contraseña" 
+            [(ngModel)]="userform.password" #passwordLogin="ngModel" required />
         </div>
         <div class="form-group">
             <button class="btn btn-primary btn-block" (click)="login()">Inicar Sesion</button>
