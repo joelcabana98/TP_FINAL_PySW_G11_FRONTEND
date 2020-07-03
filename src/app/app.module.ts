@@ -8,6 +8,8 @@ import { NgxDataTableModule} from "angular-9-datatable";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { FacebookModule } from 'ngx-fb';
+import * as $ from 'jquery';
+import * as bootstrap from 'bootstrap';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -21,6 +23,7 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { AfiliadoComponent } from './components/afiliado/afiliado.component';
 import { NoticiaComponent } from './components/noticia/noticia.component';
 import { ContactoComponent } from './components/contacto/contacto.component';
+import { ServicioNewComponent } from './components/servicio/servicio-new/servicio-new.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { ContactoComponent } from './components/contacto/contacto.component';
     AfiliadoComponent,
     NoticiaComponent,
     ContactoComponent,
+    ServicioNewComponent,
   ],
   imports: [
     BrowserModule,

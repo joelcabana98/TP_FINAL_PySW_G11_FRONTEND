@@ -1,21 +1,73 @@
 <div class="row mt-header">
-    <div class="row">
-        <section class="col-md-10 offset-md-1">
-            <h3>Servicios Ofrecidos</h3>
-            <div class="card" style="width:400px">
-                <img class="card-img-top" src="img_avatar1.png" alt="Card image">
-                <div class="card-body">
-                    <h4 class="card-title">John Doe</h4>
-                    <p class="card-text">Some example text.</p>
-                    <a href="#" class="btn btn-primary">See Profile</a>
-                </div>
+    <section class="col-md-10 offset-md-1">
+        <h3>Servicios Ofrecidos</h3>
+        <div class="card" style="width:400px">
+            <img class="card-img-top" src="img_avatar1.png" alt="Card image">
+            <div class="card-body">
+                <h4 class="card-title">John Doe</h4>
+                <p class="card-text">Some example text.</p>
+                <a href="#" class="btn btn-primary">See Profile</a>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
+</div>
 
-    <div class="row" *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
-        <div class="col-md-8 offset-md-2">
-
+<div class="row my-2"
+    *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
+    <div class="col-md-10 offset-md-1">
+        <!-- ====== TABLA DE SERVICIOS ====== -->
+        <div class="d-flex bd-highlight my-2">
+            <h3 class="flex-grow-1 text-center text-dark p-2 mb-2">Lista de Servicios</h3>
+            <button type="button" class="btn btn-primary shadow rounded float-right align-self-end"
+                routerLink="/servicioNew"><i class="fas fa-plus"></i> Nuevo Servicio</button>
+        </div>
+        <div class="table-responsive bg-light border-form">
+            <table class="table table-hover table-striped text-center p-0" [mfData]="listaServicios" #mf="mfDataTable"
+                [mfRowsOnPage]="5">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">
+                            <mfDefaultSorter by="nombre">Nombre</mfDefaultSorter>
+                        </th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Activo</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-light" *ngIf="listaServicios">
+                    <tr *ngIf="!listaServicios.length" class="table-secondary">
+                        <td [attr.colspan]="6" class="text-center">No se encontraron Servicios.</td>
+                    </tr>
+                    <tr *ngFor="let item of mf.data; let i=index">
+                        <td>{{i + 1}}</td>
+                        <td>{{item.nombre}}</td>
+                        <td>{{item.imagen}}</td>
+                        <td>{{item.descripcion}}</td>
+                        <td>
+                            <p *ngIf="item.activo">SI</p>
+                            <p *ngIf="!item.activo">NO</p>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-light" data-toggle="modal"
+                                data-target="#modalDelete"><i class="fas fa-trash-alt" style="color: red"></i></button>
+                            <button type="button" class="btn btn-light" data-toggle="modal"
+                                data-target="#modalUpdate"><i class=" fas fa-pencil-alt"
+                                    style="color: green"></i></button>
+                            <button type="button" class="btn btn-light">
+                                <i class="fas fa-eye" style="color: blue"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="align-items-center">
+                        <td colspan="6">
+                            <mfBootstrapPaginator></mfBootstrapPaginator>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
     </div>
 </div>

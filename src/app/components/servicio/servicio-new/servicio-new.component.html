@@ -1,0 +1,86 @@
+<section class="row mt-header">
+    <!-- ====== FORMULARIO DE SERVICIO ====== -->
+    <form class="card col-md-10 offset-md-1 col-lg-8 offset-lg-2 p-0 was-validated 
+        rounded font-weight-bolder" novalidate (ngSubmit)="guardarServicio()" #servicioForm="ngForm">
+
+        <h4 class="card-header text-center font-weight-bold">Alta de Servicio</h4>
+
+        <div class="card-body bg-light">
+
+            <div class="row form-group">
+                <label class="col-sm-12 col-md-4" for="nombre">Nombre: </label>
+                <input type="text" class="form-control col-sm-12 col-md-8" id="nombre" name="nombre"
+                    placeholder="Ingrese nombre del Servicio" [(ngModel)]="servicio.nombre" #nombreServicio="ngModel"
+                    required />
+
+                <!-- Seccion de Error -->
+                <!-- <div *ngIf="dniPasajero.invalid && (dniPasajero.touched)"
+                    class="invalid-feedback row col-md-8 offset-md-4">
+                    <div *ngIf="dniPasajero.errors?.required && dniPasajero.touched">
+                        DNI no puede ser nulo!
+                    </div>
+                    <div *ngIf="dniPasajero.errors?.pattern && dniPasajero.touched">
+                        DNI Invalido!
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="row form-group">
+                <label class="col-sm-12 col-md-4" for="imagen">Imagen: </label>
+                <input type="text" class="form-control col-sm-12 col-md-8" id="imagen" name="imagen"
+                    placeholder="Ingrese una imagen" [(ngModel)]="servicio.imagen" #imagenServicio="ngModel" required />
+            </div>
+
+            <div class="row form-group">
+                <label class="col-sm-12 col-md-4" for="descripcion">Descripción: </label>
+                <input type="text" class="form-control col-sm-12 col-md-8" id="descripcion" name="descripcion"
+                    placeholder="Ingrese una descripción" [(ngModel)]="servicio.descripcion"
+                    #descripcionServicio="ngModel" required />
+            </div>
+
+            <div class="row form-group">
+                <label class="col-sm-12 col-md-4" for="activo">Activo?: </label>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="actSi" name="activo" class="custom-control-input"
+                        [(ngModel)]="servicio.activo" [value]="true" required>
+                    <label class="custom-control-label" for="actSi">SI</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="actNo" name="activo" class="custom-control-input"
+                        [(ngModel)]="servicio.activo" [value]="false" required>
+                    <label class="custom-control-label" for="actNo">NO</label>
+                </div>
+            </div>
+
+            <div class="form-group row text-center">
+                <div class="offset-md-2 col-md-10">
+                    <button type="button" class="btn btn-default" routerLink="/servicio">Cancelar</button>
+                    <button type="button" class="btn btn-primary ml-2" [disabled]="!servicioForm.form.valid"
+                        data-toggle="modal" data-target="#modalNew">Guardar</button>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modalNew" tabindex="-1" role="dialog" aria-labelledby="modalNewServicio"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalNewServicio">Confirmar Servicio</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Seguro que desea añadir el Servicio?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <button type="submit" class="btn btn-primary">Si</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

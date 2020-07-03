@@ -16,7 +16,7 @@ export class ServicioComponent implements OnInit {
   constructor(public loginService: LoginService,
               private servicioService: ServicioService) {
     this.servicio = new Servicio();
-    this.listaServicios = new Array<Servicio>();
+    this.obtenerServicios();
   }
 
   ngOnInit(): void {
@@ -46,30 +46,6 @@ export class ServicioComponent implements OnInit {
     )
   };
 
-  /**
-   * Guardar un Nuevo Servicio a la base de datos
-   */
-  public guardarServicio() {
-    let aux = new Servicio();
-    Object.assign(aux, this.servicio);
-    this.servicioService.addServicio(this.servicio).subscribe(
-      (result) => {
-        // Swal.fire({
-        //   icon: 'success',
-        //   title: 'Pasaje Vendido',
-        //   html:
-        //     'DNI: ' + aux.dniPasajero +
-        //     '<br/>Precio: ' + aux.precioPasaje,
-        //   showCloseButton: true,
-        // });
-        this.obtenerServicios();
-      },
-      (error) => {
-        console.log('Error de petición.');
-      }
-    ),
-    this.limpiarServicio();
-  }
-
+  
 
 }

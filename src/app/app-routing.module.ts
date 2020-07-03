@@ -7,15 +7,17 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { AfiliadoComponent } from './components/afiliado/afiliado.component';
 import { NoticiaComponent } from './components/noticia/noticia.component';
 import { ContactoComponent } from './components/contacto/contacto.component';
+import { ServicioNewComponent } from './components/servicio/servicio-new/servicio-new.component';
 
 const routes: Routes = [
-  {path: 'servicio',component: ServicioComponent},
-  {path: 'login',component: LoginComponent},
-  {path: 'home',component: HomeComponent},
-  {path: 'usuario',component: UsuarioComponent},
-  {path: 'afiliado',component: AfiliadoComponent},
-  {path: 'noticia/:id',component: NoticiaComponent},
-  {path: 'contacto',component: ContactoComponent}
+  { path: 'servicio',component: ServicioComponent },
+  { path: 'servicioNew', component: ServicioNewComponent },
+  { path: 'login',component: LoginComponent},
+  { path: 'home',component: HomeComponent},
+  { path: 'usuario',component: UsuarioComponent},
+  { path: 'afiliado',component: AfiliadoComponent},
+  { path: 'noticia/:id',component: NoticiaComponent},
+  { path: 'contacto',component: ContactoComponent}
 ];
 
 @NgModule({
