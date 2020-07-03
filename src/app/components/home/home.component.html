@@ -66,61 +66,12 @@
                     <div class="modal-footer">
                         <button type="button" class="btn facebook-btn" (click)="postFb()" [disabled]="formAgregarNoticia.invalid"><i class="fab fa-facebook-f"></i> Publicar en Facebook</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarNoticias()">Cancelar</button>
-                        <button type="button" class="btn btn-primary" [disabled]="formAgregarNoticia.invalid" (click)="guardarNoticia()">Agregar</button>
+                        <button type="button" class="btn btn-primary" *ngIf="noticia._id != null" [disabled]="formAgregarNoticia.invalid" (click)="actualizarNoticia()">Actualizar</button>
+                        <button type="button" class="btn btn-primary" *ngIf="noticia._id == null" [disabled]="formAgregarNoticia.invalid" (click)="guardarNoticia()">Agregar</button>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <!-- Modal Editar Noticia-->
-        <div class="modal fade" id="modalEditarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalEditarUsuario" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="" #formEditarNoticia="ngForm">
-                            <div class="form-group">
-                                <input id="portadaedit" (onFileChanged)="onFileChanges($event)" class="form-control" type="file" alife-file-to-base64 multiple accept="image/x-png,image/gif,image/jpeg" />
-                                <img [src]="noticia.imagen" width="800" height="400" class="img-fluid">
-                            </div>
-                            <div *ngIf="tituloedit.invalid && (tituloedit.dirty ||tituloedit.touched)" class="">
-                                <div *ngIf="tituloedit.errors.minlength">
-                                    <p class="text-danger">El titulo tiene que tener al menos 20 caracteres</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control form-control-lg" id="titulo" placeholder="Ingresa un titulo" [(ngModel)]="noticia.titulo" name="tituloedit" #tituloedit="ngModel" required minlength="20" />
-                            </div>
-                            <div *ngIf="descripcionedit.invalid && (descripcionedit.dirty ||descripcionedit.touched)" class="">
-                                <div *ngIf="descripcionedit.errors.minlength">
-                                    <p class="text-danger">El titulo tiene que tener al menos 130 caracteres</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" id="descripcionedit" placeholder="Ingresa una descripcion" rows="4" [(ngModel)]="noticia.descripcion" name="descripcionedit" #descripcionedit="ngModel" required minlength="130"></textarea>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="vigenteedit" [checked]="noticia.vigente" (change)="noticia.vigente=!noticia.vigente">
-                                <label class="form-check-label" for="vigenteedit">
-                              Vigente
-                            </label>
-                            </div>
-
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarNoticias()">Cancelar</button>
-                        <button type="button" class="btn btn-primary" (click)="actualizarNoticia()">Actualizar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!--Data Table de Usuarios-->
         <table class="table table-striped table-responsive mt-3 " [mfData]="listaAllNoticias" #mf="mfDataTable" [mfRowsOnPage]="5">
             <thead class="thead-dark">
@@ -153,7 +104,7 @@
                     <td>{{n.vigente && 'Si' || 'No'}}</td>
                     <td>{{n.usuario.usuario}}</td>
                     <td> <button class="btn btn-danger mr-1" (click)="eliminarNoticia(n)"><i class="far fa-trash-alt"></i></button>
-                        <button class="btn btn-info" (click)="seleccionarNoticia(n)" data-toggle="modal" data-target="#modalEditarUsuario"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-info" (click)="seleccionarNoticia(n)" data-toggle="modal" data-target="#modalAgregarUsuario"><i class="fas fa-edit"></i></button>
                     </td>
                 </tr>
             </tbody>

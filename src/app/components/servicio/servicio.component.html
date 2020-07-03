@@ -1,4 +1,4 @@
-<div class="container-fluid mt-header">
+<div class="row mt-header">
     <div class="row">
         <section class="col-md-10 offset-md-1">
             <h3>Servicios Ofrecidos</h3>
@@ -13,8 +13,7 @@
         </section>
     </div>
 
-    <div class="row"
-        *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
+    <div class="row" *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
         <div class="col-md-8 offset-md-2">
 
         </div>
