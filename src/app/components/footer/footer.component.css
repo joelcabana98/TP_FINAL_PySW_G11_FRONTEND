@@ -1,3 +1,12 @@
 .footer {
     background-color: #283e4a;
 }
+
+.icon {
+    height: 40px;
+    width: 20px;
+}
+
+a {
+    color: white;
+}

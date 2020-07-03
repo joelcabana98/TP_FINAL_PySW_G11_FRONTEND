@@ -42,6 +42,16 @@ export class NoticiaService {
     return this._http.get(this.urlBase+id,httpOptions );
   }
 
+
+  getNoticiaNotIdEquals(id):Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+
+      })
+    }   
+    return this._http.get(this.urlBase+"notequals/"+id,httpOptions );
+  }
+
   getAllNoticias():Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
@@ -52,14 +62,17 @@ export class NoticiaService {
   }
 
 /////
-  getNoticiasByTwoDate(desde:string,hasta:string):Observable<any>{
+  getNoticiasByTwoDate(de:string,ha:string):Observable<any>{
+   //console.log("entro serviceeeeee  " + desde +"   "+ hasta);
     const httpOptions = {
       headers: new HttpHeaders({
 
-      })
+      }),
     }  
-    let body = JSON.stringify({ desde: desde, hasta: hasta }); 
-    return this._http.post(this.urlBase+'/byDate',body, httpOptions );
+    
+    let body = JSON.stringify({ desde: de, hasta: ha }); 
+    console.log("JSON" + body);
+    return this._http.post(this.urlBase+'byDate/',body, httpOptions );
   }
 
 

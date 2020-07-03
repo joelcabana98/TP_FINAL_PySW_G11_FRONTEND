@@ -1,10 +1,29 @@
 <div class="mt-header row">
-    <div class="col-md-12">
-        <h1>{{noticia.titulo}}</h1>
-        <span class="badge badge-danger">{{noticia.fecha | date :'dd-MM-yyyy, h:mm a'}}     </span>
-        <span>   Escrito por : {{noticia.usuario.usuario}}</span>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="col-md-12">
+                    <h1>{{noticia.titulo}}</h1>
+                    <span class="badge badge-danger">{{noticia.fecha | date :'dd-MM-yyyy, h:mm a'}}     </span>
+                    <span>   Escrito por : {{noticia.usuario.usuario}}</span>
 
-        <img [src]="noticia.imagen" class="img-fluid mt-2" width="800" height="20" alt="Responsive image">
-        <p class="">{{noticia.descripcion}}</p>
+                    <img [src]="noticia.imagen" class="img-fluid mt-2" width="800" height="20" alt="Responsive image">
+                    <p class="mt-2">{{noticia.descripcion}}</p>
+                </div>
+            </div>
+            <div class="col-md-4 border text-center">
+                <h4 class="mt-2 color-text">Tambien te puede interesar</h4>
+                <a href="">
+                    <div class="border-top" *ngFor="let n of listaNoticias">
+                        <a [routerLink]="['/noticia', n._id]">
+                            <img class="card-img-top " [src]="n.imagen" alt="Card image cap ">
+                            <div class="card-body p-0">
+                                <h5 class="card-title ">{{n.titulo}}</h5>
+                            </div>
+                        </a>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 </div>

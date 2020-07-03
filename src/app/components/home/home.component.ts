@@ -11,16 +11,14 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class HomeComponent implements OnInit {
 
-  noticia: Noticia;
-  listaNoticias: Array<Noticia>;
-  listaAllNoticias: Array<Noticia>;
-
-  desde: string;
-  hasta: string;
-
-  constructor(public loginService: LoginService,
-              private noticiaService: NoticiaService,
-              private _toastr: ToastrService) {
+  noticia:Noticia;
+  listaNoticias:Array<Noticia>;
+  listaAllNoticias:Array<Noticia>;
+  
+  fecha:Date;
+  desde:string;
+  hasta:string;
+  constructor(public loginService: LoginService,private noticiaService:NoticiaService,private _toastr:ToastrService) { 
     this.noticia = new Noticia();
     this.noticia.vigente = false;
     this.listaNoticias = new Array<Noticia>();
@@ -102,11 +100,12 @@ export class HomeComponent implements OnInit {
   }
 
 
-  obtenerNoticiaByFecha() {
-    console.log("ENTROOOOOOOOOOO" + this.desde + this.hasta);
-    this.listaAllNoticias = new Array<Noticia>();
-    this.noticiaService.getNoticiasByTwoDate(this.desde, this.hasta).subscribe(
-      (result) => {
+  obtenerNoticiaByFecha(){
+    console.log("ENTROOOOOOOOOOO   "+this.desde + "     "+this.hasta); 
+     this.listaAllNoticias = new Array<Noticia>();
+     this.noticiaService.getNoticiasByTwoDate(this.desde,this.hasta).subscribe(
+      (result)=>{
+        console.log("NOTICIA SERVICEEE "+result);
         var noti2: Noticia = new Noticia();
         result.forEach(element => {
           Object.assign(noti2, element);
