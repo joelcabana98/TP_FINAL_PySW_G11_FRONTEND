@@ -4,6 +4,9 @@ import { NoticiaService } from 'src/app/services/noticia.service';
 import { LoginService } from 'src/app/services/login.service';
 import { ToastrService } from 'ngx-toastr';
 
+import { FacebookService, InitParams, LoginResponse } from 'ngx-fb';
+import { ApiMethod } from 'ngx-fb/dist/esm/providers/facebook';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -18,13 +21,14 @@ export class HomeComponent implements OnInit {
   fecha:Date;
   desde:string;
   hasta:string;
-  constructor(public loginService: LoginService,private noticiaService:NoticiaService,private _toastr:ToastrService) { 
+  constructor(public loginService: LoginService,private noticiaService:NoticiaService,private _toastr:ToastrService, private fb: FacebookService) { 
     this.noticia = new Noticia();
     this.noticia.vigente = false;
     this.listaNoticias = new Array<Noticia>();
     this.listaAllNoticias = new Array<Noticia>();
     this.obtenerNoticiasSinFiltro();
     this.obtenerNoticiasPorFecha();
+    this.iniciarFb();
   }
 
 
@@ -153,6 +157,27 @@ export class HomeComponent implements OnInit {
   onFileChanges(files){
     console.log("File has changed:", files);
     this.noticia.imagen = files[0].base64;
+  }
+
+
+  postFb(){
+    var apiMethod: ApiMethod = "post";
+    this.fb.api('/111432347291522/feed', apiMethod,
+    {
+    "message": this.noticia.titulo+"\n\n\n"+ this.noticia.descripcion,
+    "access_token":"EAADzAWsejKsBAHrQNgtkJooyg3vmjdVbnug3ZBeVEZB9wFsdWZCl2ZCBIWEIB2xm82YOK8C0A57rTx1ggJ5XL5p9FH7nQLCZCw1oK3X3ZBthQE24nSLAFOdZBxzG8RKPIck46mJIxC7UYdeti67ZCyHwuJQLPePSXrABxfgr3ZCRB6z6RGhsJMfJsIvE9kgFqQIbsrz9yyqOphAZDZD"
+    });
+    this._toastr.success("La noticia ha sido publicada en Facebook","Exito");
+    }
+   
+  iniciarFb(){
+    let initParams: InitParams = {
+    appId: '267187417681067',
+    autoLogAppEvents : true,
+    xfbml : true,
+    version : 'v7.0'
+    };
+    this.fb.init(initParams);
   }
 
 }

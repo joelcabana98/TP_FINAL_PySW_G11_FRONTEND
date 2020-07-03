@@ -3,6 +3,8 @@ import { Usuario } from 'src/app/models/usuario';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,private router: Router,private loginService:LoginService) { 
     this.userform = new Usuario();
+  
   }
 
   ngOnInit(): void {

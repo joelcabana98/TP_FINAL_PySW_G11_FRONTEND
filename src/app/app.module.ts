@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgxDataTableModule} from "angular-9-datatable";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { FacebookModule } from 'ngx-fb';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -41,6 +42,7 @@ import { ContactoComponent } from './components/contacto/contacto.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    FacebookModule.forRoot(),
     AlifeFileToBase64Module,
     NgxDataTableModule,
     BrowserAnimationsModule,
@@ -49,7 +51,7 @@ import { ContactoComponent } from './components/contacto/contacto.component';
       progressAnimation : 'increasing',
       timeOut:2000,
       closeButton:true,
-    })
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

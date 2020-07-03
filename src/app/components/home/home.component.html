@@ -64,7 +64,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn facebook-btn" [disabled]="formAgregarNoticia.invalid"><i class="fab fa-facebook-f"></i> Publicar en Facebook</button>
+                        <button type="button" class="btn facebook-btn" (click)="postFb()" [disabled]="formAgregarNoticia.invalid"><i class="fab fa-facebook-f"></i> Publicar en Facebook</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarNoticias()">Cancelar</button>
                         <button type="button" class="btn btn-primary" [disabled]="formAgregarNoticia.invalid" (click)="guardarNoticia()">Agregar</button>
                     </div>

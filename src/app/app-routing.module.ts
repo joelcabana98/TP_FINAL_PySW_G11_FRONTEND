@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { AfiliadoComponent } from './components/afiliado/afiliado.component';
 import { NoticiaComponent } from './components/noticia/noticia.component';
+import { ContactoComponent } from './components/contacto/contacto.component';
 
 const routes: Routes = [
   {path: 'servicio',component: ServicioComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'home',component: HomeComponent},
   {path: 'usuario',component: UsuarioComponent},
   {path: 'afiliado',component: AfiliadoComponent},
-  {path: 'noticia/:id',component: NoticiaComponent}
+  {path: 'noticia/:id',component: NoticiaComponent},
+  {path: 'contacto',component: ContactoComponent}
 ];
 
 @NgModule({
