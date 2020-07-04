@@ -4,6 +4,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { AfiliadoService } from 'src/app/services/afiliado.service';
 import { LoginService } from 'src/app/services/login.service';
 import { ToastrService } from 'ngx-toastr';
+import { Afiliado } from 'src/app/models/afiliado';
 
 @Component({
   selector: 'app-usuario',
@@ -24,17 +25,21 @@ export class UsuarioComponent implements OnInit {
     this.usuario = new Usuario();
      this.usuario.activo = false;
     this.msj = "";
+
     this.obtenerUsuarios();
    }
 
    agregarUsuario(){
+     console.log("PERFIL DEL USUARIO ES :"+this.usuario.perfil);
+    // console.log("EXISTE? :" + this.existeAfiliadobyEmail());
     if(this.usuario.perfil == "socio"){
-           if(this.existeAfiliadobyEmail() != false){
-                  this.agregar();
-                  console.log("existe afiliado != false");
+           if(this.existeAfiliadobyEmail() == true){
+              console.log("USUARIO PRONTO A AGREGARSE");
+              this.agregar();
+              console.log("existe afiliado != false");
            }else {
-             this.msj = "El correo electronico no pertence a un afiliado";
-             this._toastr.error("El correo electronico no pertence a un afiliado","Error");
+           this.msj = "El correo electronico no pertence a un afiliado";
+           this._toastr.error("El correo electronico no pertence a un afiliado","Error");
            }
     }else {
       this.agregar();
@@ -60,21 +65,25 @@ export class UsuarioComponent implements OnInit {
 
 
   existeAfiliadobyEmail(): boolean{
-    var existe : boolean = false;
+    var existe:boolean = false;
     this.afiliadoService.getAfiliadoByEmail(this.usuario.usuario).subscribe(
       (result)=>{
         console.log(result);
         if(result["status"] ==1){
-           existe = true
-        }
+          console.log("si existe el afiliado con email :"+ this.usuario.usuario);
+          existe = true;
+        }else{
+          existe = false;
+          console.log("El afiliado con ese email no existe");
+         }
       },
       (error)=> {
               console.log("error:"+ error)
-              
       }
     )
+    console.log("VALOR DE VARIABLE EXISTE ES : "+ existe);
     return existe;
-}
+  }
 
  existeAfiliado(){
    console.log("Esiste afiliado");
