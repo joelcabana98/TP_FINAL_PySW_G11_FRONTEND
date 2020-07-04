@@ -1,1 +1,26 @@
-<p>pago works!</p>
+<div class="row mt-header">
+
+    <!-- tabla de pagos -->
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Monto</th>
+                    <th scope="col">Año</th>
+                    <th scope="col">Mes</th>
+                    <th scope="col">DNI Afiliado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of listaPagos">
+                    <td>{{p.fecha}}</td>
+                    <td>{{p.monto}}</td>
+                    <td>{{p.anio}}</td>
+                    <td>{{p.mes}}</td>
+                    <td>{{p.afiliado.dni}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
