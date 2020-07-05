@@ -24,7 +24,7 @@ export class AfiliadoComponent implements OnInit {
   stringimage:string;
 
   constructor(private afiliadoService: AfiliadoService,
-              private loginService: LoginService,
+              public loginService: LoginService,
               private router: Router) { 
     //contro del ruta por url
     if (!this.loginService.userLoggedIn && (!this.loginService.userIsAdministrador || !this.loginService.userIsAdministrativo)){
