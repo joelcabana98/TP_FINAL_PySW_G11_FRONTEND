@@ -5,6 +5,7 @@ import { AfiliadoService } from 'src/app/services/afiliado.service';
 import { LoginService } from 'src/app/services/login.service';
 import { ToastrService } from 'ngx-toastr';
 import { Afiliado } from 'src/app/models/afiliado';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuario',
@@ -20,13 +21,19 @@ export class UsuarioComponent implements OnInit {
 
   msj:string;
 
-  constructor(private usuarioService:UsuarioService,private afiliadoService: AfiliadoService,public loginService: LoginService,private _toastr : ToastrService) {
+  constructor(private usuarioService:UsuarioService,private afiliadoService: AfiliadoService,public loginService: LoginService,private _toastr : ToastrService,private router: Router) {
     this.listaUsuarios = new Array<Usuario>();
     this.usuario = new Usuario();
      this.usuario.activo = false;
     this.msj = "";
 
     this.obtenerUsuarios();
+
+    //contro del ruta por url
+    if (!this.loginService.userLoggedIn && (!this.loginService.userIsAdministrador || !this.loginService.userIsAdministrativo)){
+      this.router.navigateByUrl('/home');
+    }
+
    }
 
    agregarUsuario(){
