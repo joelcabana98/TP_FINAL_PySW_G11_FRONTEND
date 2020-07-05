@@ -73,7 +73,7 @@
 </div>
 
 <!-- Operaciones CRUD -->
-<div class="row mt-header">
+<div class="row mt-header" *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
     <div class="col-md-4 col-sm-12 my-1">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAgregarAfiliado">
             <i class="fas fa-user-plus mr-1"></i><span>Nuevo Afiliado</span>
