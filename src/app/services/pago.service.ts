@@ -19,4 +19,15 @@ export class PagoService {
     }   
     return this._http.get(this.urlBase , httpOptions );
   }
+
+  public addPago(pago: Pago):Observable<any>{
+    console.log("pago..." + pago);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':'application/json'
+      })
+    }
+    var body = JSON.stringify(pago);
+    return this._http.post(this.urlBase, body, httpOptions);
+  }
 }

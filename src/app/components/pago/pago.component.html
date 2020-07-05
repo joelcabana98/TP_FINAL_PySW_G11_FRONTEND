@@ -1,5 +1,83 @@
-<div class="row mt-header">
+<!-- MODAL PARA CARGAR EL PAGO -->
 
+<div class="row mt-header">
+<!--Boton Agregar Usuario-->
+<div class="col-12">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAgregarPago">
+    <i class="fas fa-plus"></i>  Nuevo Pago
+  </button>
+    <!-- Modal Agregar Pago-->
+    <div class="modal fade" id="modalAgregarPago" tabindex="-1" role="dialog" aria-labelledby="modalAgregarPago" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" #formAgregarPago="ngForm">
+
+                        <!-- dni afiliado -->
+                        <div class="form-group">
+                            <label>DNI del afiliado:</label>
+                            <input type="number" name="dniSocio" class="form-control" [(ngModel)]="dniAfiliado" required #dniAfil="ngModel" (ngModelChange) = "comprobarAfiliado()">
+                        </div>
+                        <div *ngIf="dniAfil.dirty || dniAfil.touched">
+                            <div *ngIf="!pago.afiliado" class="text-danger">
+                                DNI no registrado
+                            </div>
+                            <div *ngIf="pago.afiliado" class="text-success">
+                                DNI Correcto
+                            </div>
+                        </div>
+                        
+                        <!-- fecha-->
+                        <div class="form-group">
+                            <label>Correspondiente a la fecha:</label>
+                            <input type="date" class="form-control" name="fecha" [(ngModel)]="pago.fecha" required>
+                        </div>
+
+                        <!-- Monto -->
+                        <div class="form-group">
+                            <label>Con el Monto:</label>
+                            <input type="number" class="form-control" name="monto" [(ngModel)]="pago.monto" required>
+                        </div>
+
+                        <!-- año -->
+                        <div class="form-group">
+                            <label>Año:</label>
+                            <input type="number" class="form-control" name="anio" [(ngModel)]="pago.anio" required>
+                        </div>
+
+                        <!-- Mes -->
+                        <div class="form-group">
+                            <label>Mes:</label>
+                            <select id="mesModal" name="mesModal" class="form-control" [(ngModel)]="pago.mes" #mesModal="ngModel" required>
+                                <option value="" disabled selected>Mes</option>
+                                <option value="1">Enero</option>
+                                <option value="2">Febrero</option>
+                                <option value="3">Marzo</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Mayo</option>
+                                <option value="6">Junio</option>
+                                <option value="7">Julio</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarPago()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" [disabled]="formAgregarPago.invalid || pago.afiliado == null" (click)="agregarPago()">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- tabla de pagos -->
     <div class="table-responsive">
         <table class="table">
