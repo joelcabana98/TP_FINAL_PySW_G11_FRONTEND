@@ -32,29 +32,24 @@
                             </div>
                         </div>
                         
-                        <!-- fecha-->
+                        <!-- fecha
                         <div class="form-group">
                             <label>Correspondiente a la fecha:</label>
                             <input type="date" class="form-control" name="fecha" [(ngModel)]="pago.fecha" required>
                         </div>
+                        -->
 
-                        <!-- Monto -->
+                        <!-- Corresponde al año -->
                         <div class="form-group">
-                            <label>Con el Monto:</label>
-                            <input type="number" class="form-control" name="monto" [(ngModel)]="pago.monto" required>
-                        </div>
-
-                        <!-- año -->
-                        <div class="form-group">
-                            <label>Año:</label>
+                            <label>Correspondiente al AÑO:</label>
                             <input type="number" class="form-control" name="anio" [(ngModel)]="pago.anio" required>
                         </div>
 
-                        <!-- Mes -->
+                        <!-- Corresponde al Mes -->
                         <div class="form-group">
-                            <label>Mes:</label>
+                            <label>Correspondiente al MES:</label>
                             <select id="mesModal" name="mesModal" class="form-control" [(ngModel)]="pago.mes" #mesModal="ngModel" required>
-                                <option value="" disabled selected>Mes</option>
+                                <option value="" disabled selected>Seleccione el Mes</option>
                                 <option value="1">Enero</option>
                                 <option value="2">Febrero</option>
                                 <option value="3">Marzo</option>
@@ -68,6 +63,12 @@
                                 <option value="11">Noviembre</option>
                                 <option value="12">Diciembre</option>
                             </select>
+                        </div>
+
+                        <!-- Monto -->
+                        <div class="form-group">
+                            <label>La cantidad de:</label>
+                            <input type="number" class="form-control" name="monto" [(ngModel)]="pago.monto" required>
                         </div>
                     </form>
                 </div>
@@ -92,10 +93,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let p of listaPagos">
-                    <td>{{p.fecha}}</td>
-                    <td>{{p.monto}}</td>
+                    <td>{{p.fecha | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{p.monto | currency:'$ ':true:'1.1-2'}}</td>
                     <td>{{p.anio}}</td>
-                    <td>{{p.mes}}</td>
+                    <td>{{p.mes | mes}}</td>
                     <td>{{p.afiliado.dni}}</td>
                 </tr>
             </tbody>

@@ -3,7 +3,7 @@ import { PagoService } from './../../services/pago.service';
 import { Pago } from './../../models/pago';
 import { AfiliadoService } from './../../services/afiliado.service';
 import { Afiliado } from './../../models/afiliado';
-
+import { MesPipe } from './../../pipes/mes.pipe';
 
 @Component({
   selector: 'app-pago',
@@ -63,12 +63,10 @@ export class PagoComponent implements OnInit {
 
   // Agrega un nuevo pago a la base de datos y actuliza la lista de pagos
   agregarPago(){
-    console.log("agregando pago1...")
     if(this.pago.afiliado != null){
-      console.log("agregando pago2...")
+      this.pago.fecha = new Date(); //Carga la fecha de hoy
       this.pagoService.addPago(this.pago).subscribe(
         (result) => {
-          alert("Pago Cargado");
           this.cargarListaPagos();
           this.limpiarPago();
         },
