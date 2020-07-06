@@ -11,6 +11,8 @@ import { FacebookModule } from 'ngx-fb';
 import * as $ from 'jquery';
 import * as bootstrap from 'bootstrap';
 
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -26,6 +28,7 @@ import { ContactoComponent } from './components/contacto/contacto.component';
 import { ServicioNewComponent } from './components/servicio/servicio-new/servicio-new.component';
 import { MesPipe } from './pipes/mes.pipe';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { TokenInterceptorService } from './services/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -61,7 +64,13 @@ import { GoogleMapsModule } from '@angular/google-maps';
     }),
     GoogleMapsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+     }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

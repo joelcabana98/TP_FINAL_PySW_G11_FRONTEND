@@ -39,5 +39,12 @@ export class LoginService {
     this.userIsAdministrador = false;
     this.userIsSocio = false;
     this.userIsAdministrativo = false;
+
+    sessionStorage.removeItem("token");
   }
+
+  getToken():string{
+    return sessionStorage.getItem("token");
+    }
+   
 }

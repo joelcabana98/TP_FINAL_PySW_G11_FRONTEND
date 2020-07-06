@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
           //vbles para mostrar-ocultar cosas en el header
           this.loginService.userLoggedIn = true;
           this.loginService.userLogged = user;
+          sessionStorage.setItem("token", user.token);
           console.log("Service : " + user.perfil);
           this.tipoUsuario(user.perfil);
           //redirigimos a home o a pagina que llamo
