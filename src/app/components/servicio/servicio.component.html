@@ -12,8 +12,8 @@
     </section>
 </div>
 
-<div class="row my-2"
-    *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
+<div class="row my-2">
+    <!-- *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)"> -->
     <div class="col-md-10 offset-md-1">
         <!-- ====== TABLA DE SERVICIOS ====== -->
         <div class="d-flex bd-highlight my-2">
@@ -40,18 +40,18 @@
                     <tr *ngIf="!listaServicios.length" class="table-secondary">
                         <td [attr.colspan]="6" class="text-center">No se encontraron Servicios.</td>
                     </tr>
-                    <tr *ngFor="let item of mf.data; let i=index">
+                    <tr *ngFor="let serv of mf.data; let i=index">
                         <td>{{i + 1}}</td>
-                        <td>{{item.nombre}}</td>
-                        <td>{{item.imagen}}</td>
-                        <td>{{item.descripcion}}</td>
+                        <td>{{serv.nombre}}</td>
+                        <td><img src="{{serv.imagen}}" class="img-responsive img-thumbnail img-fluid w-50" alt="imagen serv"></td>
+                        <td>{{serv.descripcion}}</td>
                         <td>
-                            <p *ngIf="item.activo">SI</p>
-                            <p *ngIf="!item.activo">NO</p>
+                            <p *ngIf="serv.activo">SI</p>
+                            <p *ngIf="!serv.activo">NO</p>
                         </td>
                         <td>
                             <button type="button" class="btn btn-light" data-toggle="modal"
-                                data-target="#modalDelete"><i class="fas fa-trash-alt" style="color: red"></i></button>
+                                data-target="#modalDelete" (click)="seleccionarServicio(serv)"><i class="fas fa-trash-alt" style="color: red"></i></button>
                             <button type="button" class="btn btn-light" data-toggle="modal"
                                 data-target="#modalUpdate"><i class=" fas fa-pencil-alt"
                                     style="color: green"></i></button>
@@ -68,6 +68,28 @@
                     </tr>
                 </tfoot>
             </table>
+        </div>
+    </div>
+
+    <!-- MODAL DELETE-->
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteServicio"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDeleteServicio">Eliminar Servicio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Desea eliminar el Servicio {{servicio?.nombre}}?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" (click)="eliminarServicio()">Si</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
