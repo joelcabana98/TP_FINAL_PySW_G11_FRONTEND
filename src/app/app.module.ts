@@ -25,6 +25,7 @@ import { NoticiaComponent } from './components/noticia/noticia.component';
 import { ContactoComponent } from './components/contacto/contacto.component';
 import { ServicioNewComponent } from './components/servicio/servicio-new/servicio-new.component';
 import { MesPipe } from './pipes/mes.pipe';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { MesPipe } from './pipes/mes.pipe';
       timeOut:2000,
       closeButton:true,
     }),
+    GoogleMapsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
