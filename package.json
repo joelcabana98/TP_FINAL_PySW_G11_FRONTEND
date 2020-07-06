@@ -26,6 +26,8 @@
     "angular-9-datatable": "^0.1.1",
     "bootstrap": "^4.5.0",
     "jquery": "^3.4.0",
+    "jspdf": "^1.5.3",
+    "jspdf-autotable": "^3.5.6",
     "ngx": "^2.4.0",
     "ngx-fb": "^1.0.1",
     "ngx-toastr": "^12.1.0",

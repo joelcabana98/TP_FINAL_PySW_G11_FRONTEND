@@ -4,6 +4,11 @@ import { AfiliadoService } from '../../services/afiliado.service';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 
+import jsPDF from 'jspdf';
+import * as $ from 'jquery';
+import 'jspdf-autotable';
+import { templateJitUrl } from '@angular/compiler';
+
 @Component({
   selector: 'app-afiliado',
   templateUrl: './afiliado.component.html',
@@ -114,4 +119,31 @@ export class AfiliadoComponent implements OnInit {
       error => { (alert("error, Afilido no encontrado"+error));}
     );
   }
+
+  generarPDF(){
+    var datos=[];
+    var i = 0;
+    this.listaAfiliado.forEach(e =>{
+      i++;
+      var temp = [];
+      temp.push(i);
+      temp.push(e.apellido);
+      temp.push(e.nombres);
+      temp.push(e.dni);
+      temp.push(e.email);
+      temp.push(e.telefono);
+      datos.push(temp);
+    });
+    
+    var doc = new jsPDF();
+    doc.text("Reporte de AFILIADOS",10,10);
+    doc.setTextColor(100);
+    
+    doc.autoTable({
+      head: [['#','Apellido', 'Nombres', 'DNI', 'Email', 'Telefono']],
+      body: datos
+    });
+    doc.save("tabla pdf");
+  }
+
 }
