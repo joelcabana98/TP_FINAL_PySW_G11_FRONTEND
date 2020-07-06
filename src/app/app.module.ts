@@ -24,6 +24,7 @@ import { AfiliadoComponent } from './components/afiliado/afiliado.component';
 import { NoticiaComponent } from './components/noticia/noticia.component';
 import { ContactoComponent } from './components/contacto/contacto.component';
 import { ServicioNewComponent } from './components/servicio/servicio-new/servicio-new.component';
+import { ServicioUpdateComponent } from './components/servicio/servicio-update/servicio-update.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ServicioNewComponent } from './components/servicio/servicio-new/servici
     NoticiaComponent,
     ContactoComponent,
     ServicioNewComponent,
+    ServicioUpdateComponent,
   ],
   imports: [
     BrowserModule,

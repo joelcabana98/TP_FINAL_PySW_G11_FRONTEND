@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { Servicio } from 'src/app/models/servicio';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-servicio',
@@ -14,7 +15,8 @@ export class ServicioComponent implements OnInit {
   listaServicios: Array<Servicio>;
 
   constructor(public loginService: LoginService,
-              private servicioService: ServicioService) {
+              private servicioService: ServicioService,
+              private _toastr: ToastrService) {
     this.servicio = new Servicio();
     this.obtenerServicios();
   }
@@ -22,7 +24,16 @@ export class ServicioComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  limpiarServicio() {
+  /**
+   * Selecciono un objeto de tipo Servicio.
+   * @param servicio objeto seleccionado de la Lista de Servicios.
+   */
+  public seleccionarServicio(servicio: Servicio){
+    this.servicio = servicio;
+    console.log(this.servicio);
+  }
+
+  public limpiarServicio() {
     this.servicio = new Servicio();
   }
 
@@ -41,11 +52,30 @@ export class ServicioComponent implements OnInit {
         });
       },
       (error) => {
-        console.log('Error de petición.');
+        this._toastr.error('Error en obtener Servicios.', 'Error!!');
+        console.log('Error de petición: ' + error);
       }
     )
-  };
+  }
 
-  
+  /**
+   * Eliminar un Servicio seleccionado de la Lista
+   * de Servicios.
+   */
+  public eliminarServicio() {
+    console.log("2 - " + this.servicio);
+    this.servicioService.deleteServicio(this.servicio).subscribe(
+      (result) => {
+        this._toastr.success('Servicio eliminado exitosamente.', 'Eliminado!!');
+        $('#modalDelete').modal('hide');
+        this.obtenerServicios();
+      },
+      (error) => {
+        this._toastr.error('Error en eliminar el Servicio.', 'Error!!');
+        console.log('Error de petición: ' + error);
+      }
+    );
+    this.limpiarServicio();
+  }
 
 }

@@ -27,9 +27,19 @@
 
             <div class="row form-group">
                 <label class="col-sm-12 col-md-4" for="imagen">Imagen: </label>
+                <input type="file" alife-file-to-base64 multiple (onFileChanged)="convertirImagen($event)"
+                    class="form-control col-sm-12 col-md-8 p-0" 
+                    accept="image/x-png,image/gif,image/jpeg" id="imagen" name="imagen" required/>
+            </div>
+            <div class="row border-0">
+                <img [src]="servicio.imagen" height="50px" class="img-thumbnail col-sm-12 col-md-6 offset-md-5">
+            </div>
+
+            <!-- <div class="row form-group">
+                <label class="col-sm-12 col-md-4" for="imagen">Imagen: </label>
                 <input type="text" class="form-control col-sm-12 col-md-8" id="imagen" name="imagen"
                     placeholder="Ingrese una imagen" [(ngModel)]="servicio.imagen" #imagenServicio="ngModel" required />
-            </div>
+            </div> -->
 
             <div class="row form-group">
                 <label class="col-sm-12 col-md-4" for="descripcion">Descripción: </label>

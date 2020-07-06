@@ -11,7 +11,7 @@ import { ServicioNewComponent } from './components/servicio/servicio-new/servici
 
 const routes: Routes = [
   { path: 'servicio',component: ServicioComponent },
-  { path: 'servicioNew', component: ServicioNewComponent },
+  { path: 'servicioNew', component: ServicioNewComponent }, 
   { path: 'login',component: LoginComponent},
   { path: 'home',component: HomeComponent},
   { path: 'usuario',component: UsuarioComponent},
