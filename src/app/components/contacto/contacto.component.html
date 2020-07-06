@@ -1,3 +1,38 @@
 <div class="mt-header">
-    <google-map></google-map>
+    <section class="row text-center">
+        <div class="col-12">
+            <img src="./../../../assets/img/atencion-para-afiliados--914x211.png" class="img-fluid" alt="">
+        </div>
+    </section>
+    <section>
+        <div class="container py-3">
+            <div class="card ">
+                <div class="row justify-content-center">
+                    <div class="col-md-4">
+                        <img src="./../../../assets/img/sedeCentral.png" width="800px" height="1200px" class="img-fluid">
+                    </div>
+                    <div class="col-md-8 px-3">
+                        <div class="card-block px-3 ml-4 mt-2">
+                            <h4 class="card-title">SEDE CENTRAL</h4>
+                            <p><i class="fas fa-map-marker-alt"></i> Dirección: Marcelo T. de Alvear 867</p>
+                            <p><i class="fas fa-calendar"></i> Atención: Lunes a Viernes de 8 a 18 hs.</p>
+                            <p><i class="fas fa-phone-alt"></i> Línea Gratuita: 0800-999-5396</p>
+                            <p><i class="fas fa-envelope"></i> Mail: obrasocial@osmedica.com</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="row">
+            <div class="col-12">
+                <google-map [center]="punto.position">
+                    <map-marker [position]="punto.position" [label]="punto.label" [title]="punto.title">
+                    </map-marker>
+                </google-map>
+            </div>
+        </div>
+    </section>
 </div>

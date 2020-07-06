@@ -26,7 +26,6 @@ import { AfiliadoComponent } from './components/afiliado/afiliado.component';
 import { NoticiaComponent } from './components/noticia/noticia.component';
 import { ContactoComponent } from './components/contacto/contacto.component';
 import { ServicioNewComponent } from './components/servicio/servicio-new/servicio-new.component';
-import { ServicioUpdateComponent } from './components/servicio/servicio-update/servicio-update.component';
 import { MesPipe } from './pipes/mes.pipe';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { TokenInterceptorService } from './services/token-interceptor.service';
@@ -46,7 +45,6 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     NoticiaComponent,
     ContactoComponent,
     ServicioNewComponent,
-    ServicioUpdateComponent,
     MesPipe,
   ],
   imports: [
