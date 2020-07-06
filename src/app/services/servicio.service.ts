@@ -21,14 +21,20 @@ export class ServicioService {
     return this._http.get(this.url, httpOptions);
   }
 
+  getServiciobyId(id): Observable<any>{ 
+    const httpOptions = {
+      headers: new HttpHeaders({
+      }),
+    }   
+    return this._http.get(this.url + id, httpOptions);
+  }
+
   addServicio(servicio: Servicio): Observable<any> {
-    console.log('entro servicio.');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     };
-    console.log('servicio: ' + servicio);
     let body = JSON.stringify(servicio);
     return this._http.post(this.url, body, httpOptions);
   }

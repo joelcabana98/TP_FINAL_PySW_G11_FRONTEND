@@ -9,10 +9,12 @@ import { NoticiaComponent } from './components/noticia/noticia.component';
 import { ContactoComponent } from './components/contacto/contacto.component';
 import { ServicioNewComponent } from './components/servicio/servicio-new/servicio-new.component';
 import { PagoComponent } from './components/pago/pago.component';
+import { ServicioUpdateComponent } from './components/servicio/servicio-update/servicio-update.component';
 
 const routes: Routes = [
   { path: 'servicio',component: ServicioComponent },
   { path: 'servicioNew', component: ServicioNewComponent }, 
+  { path: 'servicioUp/:id', component: ServicioUpdateComponent},
   { path: 'login',component: LoginComponent},
   { path: 'home',component: HomeComponent},
   { path: 'usuario',component: UsuarioComponent},

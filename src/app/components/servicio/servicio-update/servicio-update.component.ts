@@ -1,51 +1,62 @@
 import { Component, OnInit } from '@angular/core';
 import { Servicio } from 'src/app/models/servicio';
 import { ServicioService } from 'src/app/services/servicio.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-servicio-new',
-  templateUrl: './servicio-new.component.html',
-  styleUrls: ['./servicio-new.component.css']
+  selector: 'app-servicio-update',
+  templateUrl: './servicio-update.component.html',
+  styleUrls: ['./servicio-update.component.css']
 })
-export class ServicioNewComponent implements OnInit {
+export class ServicioUpdateComponent implements OnInit {
 
   servicio: Servicio;
 
   constructor(private servicioService: ServicioService,
               private router: Router,
               public loginService: LoginService,
-              private _toastr: ToastrService){
-    
+              private _toastr: ToastrService,
+              private activatedRoute: ActivatedRoute) {
     // Controlo que ingrese al componente un Usuario tipo Administrador o Administrativo.
     // En caso contrario redirecciona a la pagina Home
     // if (!this.loginService.userLoggedIn && (!this.loginService.userIsAdministrador || !this.loginService.userIsAdministrativo)){
     //   this.router.navigateByUrl('/home');
     // }
-
     this.servicio = new Servicio();
   }
 
   ngOnInit(): void {
-  }
-
-  /**
-   * Guardar un Nuevo Servicio a la base de datos.
-   */
-  public guardarServicio() {
-    this.servicioService.addServicio(this.servicio).subscribe(
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    console.log(id);
+    this.servicioService.getServiciobyId(id).subscribe(
       (result) => {
-        this._toastr.success('Servicio guardado exitosamente.', 'Exito!!');
-        this.router.navigateByUrl('/servicio');
+        this.servicio = result;
       },
       (error) => {
-        this._toastr.error('Error en guardar Servicio.', 'Error!!');
+        this._toastr.error('Error en obtener el Servicio.', 'Error!!');
         console.log('Error de petición: ' + error);
       }
     );
-    $('#modalNew').modal('hide');
+    console.log(this.servicio);
+  }
+
+  /**
+   * Guardo la modificacion del Servicio.
+   */
+  public modificarServicio(){
+    this.servicioService.updateServicio(this.servicio).subscribe(
+      (result) => {
+        this._toastr.success('Servicio modificado correctamente.', 'Exito!!');
+        this.router.navigateByUrl('/servicio');
+      },
+      (error) => {
+        this._toastr.error('Error en modificar el Servicio.', 'Error!!');
+        console.log('Error de petición: ' + error);
+      }
+    );
+    $('#modalUp').modal('hide');
   }
 
   /**

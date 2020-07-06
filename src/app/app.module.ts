@@ -29,6 +29,7 @@ import { ServicioNewComponent } from './components/servicio/servicio-new/servici
 import { MesPipe } from './pipes/mes.pipe';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { ServicioUpdateComponent } from './components/servicio/servicio-update/servicio-update.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     ContactoComponent,
     ServicioNewComponent,
     MesPipe,
+    ServicioUpdateComponent
   ],
   imports: [
     BrowserModule,

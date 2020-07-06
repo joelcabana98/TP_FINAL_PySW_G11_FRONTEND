@@ -3,6 +3,7 @@ import { LoginService } from 'src/app/services/login.service';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { Servicio } from 'src/app/models/servicio';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-servicio',
@@ -16,7 +17,8 @@ export class ServicioComponent implements OnInit {
 
   constructor(public loginService: LoginService,
               private servicioService: ServicioService,
-              private _toastr: ToastrService) {
+              private _toastr: ToastrService,
+              private router: Router) {
     this.servicio = new Servicio();
     this.obtenerServicios();
   }
@@ -78,4 +80,13 @@ export class ServicioComponent implements OnInit {
     this.limpiarServicio();
   }
 
+  /**
+   * Modificar un Servicio, mando por url el _id del
+   * Servicio a modficar.
+   * @param servicio Servicio que deseo modificar.
+   */
+  public updateServicio(servicio: Servicio) {
+    console.log(servicio._id);
+    this.router.navigateByUrl('servicioUp/' + servicio._id);
+  }
 }
