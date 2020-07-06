@@ -100,22 +100,30 @@
 
     <!-- TABLA DE AFILIADOS-->
     <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover">
+        <table class="table table-striped table-bordered table-hover" [mfData]="listaAfiliado" #mf="mfDataTable" [mfRowsOnPage]="5">
             <caption>Lista de afiliados</caption>
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Imagen</th>
-                    <th scope="col">Apellido</th>
-                    <th scope="col">Nombres</th>
-                    <th scope="col">DNI</th>
-                    <th scope="col">Email</th>
+                    <th scope="col">Foto</th>
+                    <th scope="col">
+                        <mfDefaultSorter by="apellido">Apellido</mfDefaultSorter>
+                    </th>
+                    <th scope="col">
+                        <mfDefaultSorter by="nombres">Nombres</mfDefaultSorter>
+                    </th>
+                    <th scope="col">
+                        <mfDefaultSorter by="dni">DNI</mfDefaultSorter>
+                    </th>
+                    <th scope="col">
+                        <mfDefaultSorter by="email">email</mfDefaultSorter>
+                    </th>
                     <th scope="col">Telefono</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of listaAfiliado; index as i">
+                <tr *ngFor="let item of mf.data; index as i">
                     <th scope="row"> {{i+1}} </th>
                     <td>
                         <img [src]="item.imagen" width="100" height="50" class="img-fluid"/>
@@ -132,6 +140,13 @@
                     </td>
                 </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
     
