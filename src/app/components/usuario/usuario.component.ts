@@ -4,6 +4,8 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { AfiliadoService } from 'src/app/services/afiliado.service';
 import { LoginService } from 'src/app/services/login.service';
 import { ToastrService } from 'ngx-toastr';
+import { Afiliado } from 'src/app/models/afiliado';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuario',
@@ -19,23 +21,39 @@ export class UsuarioComponent implements OnInit {
 
   msj:string;
 
-  constructor(private usuarioService:UsuarioService,private afiliadoService: AfiliadoService,public loginService: LoginService,private _toastr : ToastrService) {
+  constructor(private usuarioService:UsuarioService,private afiliadoService: AfiliadoService,public loginService: LoginService,private _toastr : ToastrService,private router: Router) {
     this.listaUsuarios = new Array<Usuario>();
     this.usuario = new Usuario();
      this.usuario.activo = false;
     this.msj = "";
+
     this.obtenerUsuarios();
+
+    //contro del ruta por url
+    if (!this.loginService.userLoggedIn && (!this.loginService.userIsAdministrador || !this.loginService.userIsAdministrativo)){
+      this.router.navigateByUrl('/home');
+    }
+
    }
 
    agregarUsuario(){
+     console.log("PERFIL DEL USUARIO ES :"+this.usuario.perfil);
+    // console.log("EXISTE? :" + this.existeAfiliadobyEmail());
     if(this.usuario.perfil == "socio"){
-           if(this.existeAfiliadobyEmail() != false){
+            this.afiliadoService.getAfiliadoByEmail(this.usuario.usuario).subscribe(
+              (result)=>{
+                console.log(result);
+                if(result["status"] ==1){
                   this.agregar();
-                  console.log("existe afiliado != false");
-           }else {
-             this.msj = "El correo electronico no pertence a un afiliado";
-             this._toastr.error("El correo electronico no pertence a un afiliado","Error");
-           }
+                }else{
+                  this.msj = "El correo electronico no pertence a un afiliado";
+                  this._toastr.error("El correo electronico no pertence a un afiliado","Error");
+                }
+              },
+              (error)=> {
+                      console.log("error:"+ error)
+              }
+            );
     }else {
       this.agregar();
       this.usuario = new Usuario();
@@ -58,35 +76,6 @@ export class UsuarioComponent implements OnInit {
   })
  }
 
-
-  existeAfiliadobyEmail(): boolean{
-    var existe : boolean = false;
-    this.afiliadoService.getAfiliadoByEmail(this.usuario.usuario).subscribe(
-      (result)=>{
-        console.log(result);
-        if(result["status"] ==1){
-           existe = true
-        }
-      },
-      (error)=> {
-              console.log("error:"+ error)
-              
-      }
-    )
-    return existe;
-}
-
- existeAfiliado(){
-   console.log("Esiste afiliado");
-   this.afiliadoService.getAfiliadoByEmail(this.usuario.usuario).subscribe(
-     (result)=>{
-            console.log(result);
-     },
-     (error)=> {
-             console.log("error:"+ error)
-     }
-   )
- }
 
  obtenerUsuarios(){
    this.listaUsuarios = new Array<Usuario>();
@@ -122,20 +111,27 @@ export class UsuarioComponent implements OnInit {
 
  actualizarUsuario(){
   if(this.usuario.perfil == "socio"){
-    if(this.existeAfiliadobyEmail() != false){
-           this.actualizar();
-           console.log("existe afiliado != false");
-    }else {
-      this.msj = "El correo electronico no pertence a un afiliado";
-      this._toastr.error("El correo electronico no pertence a un afiliado","Error");
-    }
-  }else {
-  this.actualizar();
-  this.usuario = new Usuario();
-  this.usuario.activo = false;
-  this.msj ="";
-  }
 
+    this.afiliadoService.getAfiliadoByEmail(this.usuario.usuario).subscribe(
+      (result)=>{
+        console.log(result);
+        if(result["status"] ==1){
+          this.actualizar();
+        }else{
+          this.msj = "El correo electronico no pertence a un afiliado";
+          this._toastr.error("El correo electronico no pertence a un afiliado","Error");
+        }
+      },
+      (error)=> {
+              console.log("error:"+ error)
+        }
+    );
+  }else {
+    this.actualizar();
+    this.usuario = new Usuario();
+    this.usuario.activo = false;
+    this.msj ="";
+    }
  }
 
  actualizar(){

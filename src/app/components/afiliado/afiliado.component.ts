@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Afiliado } from '../../models/afiliado';
 import { AfiliadoService } from '../../services/afiliado.service';
+import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-afiliado',
@@ -21,8 +23,13 @@ export class AfiliadoComponent implements OnInit {
   telefono:number;
   stringimage:string;
 
-  constructor(private afiliadoService: AfiliadoService) { 
-    
+  constructor(private afiliadoService: AfiliadoService,
+              public loginService: LoginService,
+              private router: Router) { 
+    //contro del ruta por url
+    if (!this.loginService.userLoggedIn && (!this.loginService.userIsAdministrador || !this.loginService.userIsAdministrativo)){
+      this.router.navigateByUrl('/home');
+    }
     this.afiliado = new Afiliado();
     this.cargarListaAfiliados();
   }
