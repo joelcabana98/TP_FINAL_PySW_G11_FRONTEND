@@ -8,6 +8,7 @@ import jsPDF from 'jspdf';
 import * as $ from 'jquery';
 import 'jspdf-autotable';
 import { templateJitUrl } from '@angular/compiler';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-afiliado',
@@ -30,7 +31,8 @@ export class AfiliadoComponent implements OnInit {
 
   constructor(private afiliadoService: AfiliadoService,
               public loginService: LoginService,
-              private router: Router) { 
+              private router: Router,
+              private _toastr : ToastrService) { 
     //contro del ruta por url
     if (!this.loginService.userLoggedIn && (!this.loginService.userIsAdministrador || !this.loginService.userIsAdministrativo)){
       this.router.navigateByUrl('/home');
@@ -65,7 +67,7 @@ export class AfiliadoComponent implements OnInit {
   public agregarAfiliado(){
     this.afiliadoService.addAfiliado(this.afiliado).subscribe(
       (result) => {
-        alert("Afiliado Agregado");
+        this._toastr.success("El Socio se ha sido agregado","Exito");
         this.cargarListaAfiliados();
       },
       (error) => { console.log("error "+error);}
@@ -76,7 +78,7 @@ export class AfiliadoComponent implements OnInit {
   public eliminarAfiliado(afiliado:Afiliado){
     this.afiliadoService.deleteAfiliado(afiliado).subscribe(
       (result) => {
-        alert("Afiliado Eliminado");
+        this._toastr.success("El Socio se ha eliminado","Exito");
         this.cargarListaAfiliados();
       },
       (error) => { console.log("error "+ error);}
@@ -86,7 +88,7 @@ export class AfiliadoComponent implements OnInit {
   public actualizarAfiliado(){
     this.afiliadoService.updateAfiliado(this.afiliado).subscribe(
       (result) => {
-        alert("Afiliado Actualizado");
+        this._toastr.success("El Socio ha sido actualizado","Exito");
         this.cargarListaAfiliados();
       },
       (error) => { console.log("Error " + error)}
@@ -116,7 +118,7 @@ export class AfiliadoComponent implements OnInit {
         Object.assign(aux, result.result);
         this.listaAfiliado.push(aux);
       },
-      error => { (alert("error, Afilido no encontrado"+error));}
+      error => { this._toastr.success("No se ha encontrado resultados","Error");}
     );
   }
 
