@@ -10,6 +10,8 @@ import * as $ from 'jquery';
 import 'jspdf-autotable';
 import { templateJitUrl } from '@angular/compiler';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-pago',
@@ -24,9 +26,14 @@ export class PagoComponent implements OnInit {
   pago: Pago;
   dniAfiliado: number;
 
-  constructor(private pagoService:PagoService, private afiliadoService:AfiliadoService) { 
+  constructor(private pagoService:PagoService,private _toastr : ToastrService, private afiliadoService:AfiliadoService,private router: Router,public loginService: LoginService) { 
     this.pago = new Pago();
     this.cargarListaPagos();
+
+    //contro del ruta por url
+    if (!this.loginService.userLoggedIn && (!this.loginService.userIsAdministrador || !this.loginService.userIsAdministrativo)){
+      this.router.navigateByUrl('/home');
+    }
   }
 
   ngOnInit(): void {
@@ -75,6 +82,7 @@ export class PagoComponent implements OnInit {
         (result) => {
           this.cargarListaPagos();
           this.limpiarPago();
+          this._toastr.success("El Pago se ha registrado","Exito");
         },
         (error) => { console.log("Error al agregar pago");}
       );
