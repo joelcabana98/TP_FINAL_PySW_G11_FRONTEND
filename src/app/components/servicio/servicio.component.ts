@@ -5,6 +5,8 @@ import { Servicio } from 'src/app/models/servicio';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AfiliadoService } from 'src/app/services/afiliado.service';
+import * as jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-servicio',
@@ -159,4 +161,63 @@ export class ServicioComponent implements OnInit {
   public detailServicio(servicio: Servicio) {
     this.router.navigateByUrl('servicioDetail/' + servicio._id);
   }
+
+  /**
+   * Generar un Reporte de todos los Servicios mostrados.
+   * Descarga un PDF con los Servicios.
+   */
+  public generarPDF() {
+
+    var doc = new jsPDF('p', 'mm', 'a4');
+
+    // Agrego un titulo al Reporte
+    doc.setFontType('bold');
+    doc.setTextColor(100);
+    doc.text("Reporte de SERVICIOS", 15, 20);
+
+    // Genero la tabla de Servicios para el Reporte.
+    doc.autoTable({
+      html: '#tableServicios',
+      styles: {
+        halign: 'center'
+      },
+      bodyStyles: {
+        minCellHeight: 25,
+      },
+      columnStyles: {
+        1: { halign: 'left' },
+        3: { halign: 'left' },
+      },
+      margin: { top: 25 },
+      columns: [
+        { header: '#' },
+        { header: 'Nombre', dataKey: 'nombre' },
+        { header: 'Imagen' },
+        { header: 'Descripción', dataKey: 'descripcion' },
+        { header: 'Activo', dataKey: 'activo' }
+      ],
+
+      // Genera las imagenes de los Servicios.
+      didDrawCell: function (data) {
+        if (data.column.index === 2 && data.cell.section === 'body') {
+          var td = data.cell.raw;
+          var img = td.getElementsByTagName('img')[0];
+          var dim = data.cell.height - data.cell.padding('vertical');
+          doc.addImage(img.src, data.cell.x + 2, data.cell.y + 2, dim, dim);
+        }
+      }
+    });
+
+    // Agrego un pie de página al Reporte.
+    doc.setFontSize(14);
+    doc.setTextColor(0);
+    doc.setFontType('normal');
+    doc.text("Programación y Servicios Web 2020", 65, 280);
+
+    doc.setFontSize(11);
+    doc.text("Desarrollado por Grupo 11", 82, 287);
+    
+    doc.save("reporte_servicios");
+  }
+
 }

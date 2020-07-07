@@ -1,7 +1,7 @@
 <div class="row mt-header">
     <section class="col-md-10 offset-md-1">
         <h3>Servicios Ofrecidos</h3>
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-3 align-items-center">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 align-items-center">
             <ng-container *ngFor="let listServ of listaServicios">
                 <div class="col my-1" *ngIf="listServ.activo !== false">
                     <div class="w-100 border rounded" style="height: auto">
@@ -51,14 +51,15 @@
     *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
     <div class="col-md-10 offset-md-1">
         <!-- ====== TABLA DE SERVICIOS ====== -->
-        <div class="d-flex bd-highlight my-2">
-            <h3 class="flex-grow-1 text-center text-dark p-2 mb-2">Lista de Servicios</h3>
-            <button type="button" class="btn btn-primary shadow rounded float-right align-self-end"
+        <div class="d-md-flex bd-highlight my-2">
+            <h3 class="flex-md-grow-1 text-center text-dark p-2 mb-2">Lista de Servicios</h3>
+            <button type="button" class="btn btn-primary shadow rounded float-md-right align-self-end"
                 routerLink="/servicioNew"><i class="fas fa-plus"></i> Nuevo Servicio</button>
+            <button type="button" class="btn btn-warning shadow-lg float-md-right align-self-end ml-2" (click)="generarPDF()"><i class="fas fa-print"></i></button>
         </div>
         <div class="table-responsive bg-light border-form">
             <table class="table table-hover table-striped text-center p-0" [mfData]="listaServicios" #mf="mfDataTable"
-                [mfRowsOnPage]="5">
+                [mfRowsOnPage]="5" id="tableServicios">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
