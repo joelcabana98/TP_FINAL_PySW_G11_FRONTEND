@@ -26,6 +26,10 @@ export class PagoComponent implements OnInit {
   pago: Pago;
   dniAfiliado: number;
 
+  //Filtro de la tabla
+  fechaInicio:Date;
+  fechaFin:Date;
+
   constructor(private pagoService:PagoService,private _toastr : ToastrService, private afiliadoService:AfiliadoService,private router: Router,public loginService: LoginService) { 
     this.pago = new Pago();
     this.cargarListaPagos();
@@ -98,7 +102,37 @@ export class PagoComponent implements OnInit {
     this.dniAfiliado = null;
   }
 
+  //filtra la tabla para mostrar los pagos por rango de fecha
+  filtrarPorFechaFront(){
+    if(this.fechaInicio < this.fechaFin){
+      let listaAux = new Array<Pago>();
+      this.listaPagos.forEach(p => {
+        if(p.fecha >= this.fechaInicio && p.fecha <= this.fechaFin){
+          listaAux.push(p);
+        }
+      });
+      this.listaPagos = new Array<Pago>();
+      this.listaPagos = listaAux;
+      this.limpiarFechas();
+    }
+    else{
+      this._toastr.error("La fecha de inicio debe ser anterior a la de fin.","Error!");
+    }
+  }
+
+  limpiarFechas(){
+    this.fechaInicio = new Date();
+    this.fechaFin = new Date();
+  }
+
+  eliminarPago(){
+
+  }
+  
   generarPDF(){
+    var fecha = new Date();
+    var fechaString = fecha.getDate()+"/" + (fecha.getMonth()+1) +"/"+fecha.getFullYear();
+
     var datos=[];
     var i = 0;
     this.listaPagos.forEach(e =>{
@@ -121,6 +155,6 @@ export class PagoComponent implements OnInit {
       head: [['#','Fecha', 'Monto', 'Año', 'Mes', 'Afiliado']],
       body: datos
     });
-    doc.save("tabla pdf");
+    doc.save("Reporte_de_pagos-"+fechaString);
   }
 }
