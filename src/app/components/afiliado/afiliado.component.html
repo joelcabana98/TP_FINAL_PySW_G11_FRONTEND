@@ -41,7 +41,7 @@
                     <!--EMAIL-->
                     <div class="form-group">
                         <label>Correo Electronico</label>
-                        <input type="email" class="form-control" name="email" [(ngModel)]="afiliado.email" placeholder="Ej. ejemplo@email.com"  #email="ngModel" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                        <input type="email" class="form-control" name="email" [(ngModel)]="afiliado.email" placeholder="Ej. ejemplo@email.com" #email="ngModel" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                     </div>
                     <div *ngIf="email.invalid && (email.dirty ||email.touched)" class="">
                         <div *ngIf="email.errors.pattern">
@@ -75,9 +75,12 @@
 <!-- Operaciones CRUD -->
 <div class="row mt-header" *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
     <div class="col-md-4 col-sm-12 my-1">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAgregarAfiliado">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarAfiliado">
             <i class="fas fa-user-plus mr-1"></i><span>Nuevo Afiliado</span>
         </button>
+        <button type="button" class="btn btn-warning ml-2" (click)="generarPDF()">
+            <i class="far fa-file-pdf"></i>
+</button>
     </div>
     <div class="col-md-4 col-sm-12">
         <form class="row">
@@ -96,7 +99,7 @@
             Limpiar Busqueda
         </button>
     </div>
-    
+
 
     <!-- TABLA DE AFILIADOS-->
     <div class="table-responsive" id="tabla">
@@ -126,7 +129,7 @@
                 <tr *ngFor="let item of mf.data; index as i">
                     <th scope="row"> {{i+1}} </th>
                     <td>
-                        <img [src]="item.imagen" width="100" height="50" class="img-fluid"/>
+                        <img [src]="item.imagen" width="100" height="50" class="img-fluid" />
                     </td>
                     <td> {{item.apellido}} </td>
                     <td> {{item.nombres}} </td>
@@ -135,7 +138,7 @@
                     <td> {{item.telefono}} </td>
                     <td>
                         <button class="btn btn-danger mr-1" (click)="eliminarAfiliado(item)"><i class="far fa-trash-alt"></i></button>
-        
+
                         <button class="btn btn-warning" (click)="mostrarAfiliado(item)" data-toggle="modal" data-target="#modalAgregarAfiliado"><i class="fas fa-edit"></i></button>
                     </td>
                 </tr>
@@ -148,9 +151,6 @@
                 </tr>
             </tfoot>
         </table>
-        <button type="button" class="btn btn-success" (click)="generarPDF()">
-            Imprimir Tabla
-        </button>
     </div>
-    
+
 </div>

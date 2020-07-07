@@ -26,7 +26,7 @@ export class PagoComponent implements OnInit {
   pago: Pago;
   dniAfiliado: number;
 
-  constructor(private pagoService:PagoService, private afiliadoService:AfiliadoService,private router: Router,public loginService: LoginService) { 
+  constructor(private pagoService:PagoService,private _toastr : ToastrService, private afiliadoService:AfiliadoService,private router: Router,public loginService: LoginService) { 
     this.pago = new Pago();
     this.cargarListaPagos();
 
@@ -82,6 +82,7 @@ export class PagoComponent implements OnInit {
         (result) => {
           this.cargarListaPagos();
           this.limpiarPago();
+          this._toastr.success("El Pago se ha registrado","Exito");
         },
         (error) => { console.log("Error al agregar pago");}
       );
