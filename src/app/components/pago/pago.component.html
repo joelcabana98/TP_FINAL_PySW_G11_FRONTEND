@@ -80,7 +80,7 @@
         </div>
     </div>
     <!-- tabla de pagos -->
-    <div class="table-responsive">
+    <div class="table-responsive" id="tabla">
         <table class="table">
             <thead>
                 <tr>
@@ -101,5 +101,8 @@
                 </tr>
             </tbody>
         </table>
+        <button type="button" class="btn btn-success" (click)="generarPDF()">
+            Imprimir Tabla
+        </button>
     </div>
 </div>

@@ -5,6 +5,12 @@ import { AfiliadoService } from './../../services/afiliado.service';
 import { Afiliado } from './../../models/afiliado';
 import { MesPipe } from './../../pipes/mes.pipe';
 
+import jsPDF from 'jspdf';
+import * as $ from 'jquery';
+import 'jspdf-autotable';
+import { templateJitUrl } from '@angular/compiler';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-pago',
   templateUrl: './pago.component.html',
@@ -82,5 +88,31 @@ export class PagoComponent implements OnInit {
   limpiarPago(){
     this.pago = new Pago();
     this.dniAfiliado = null;
+  }
+
+  generarPDF(){
+    var datos=[];
+    var i = 0;
+    this.listaPagos.forEach(e =>{
+      i++;
+      var temp = [];
+      temp.push(i);
+      temp.push(e.fecha);
+      temp.push(e.monto);
+      temp.push(e.anio);
+      temp.push(e.mes);
+      temp.push(e.afiliado.dni);
+      datos.push(temp);
+    });
+    
+    var doc = new jsPDF();
+    doc.text("Reporte de PAGOS",10,10);
+    doc.setTextColor(100);
+    
+    doc.autoTable({
+      head: [['#','Fecha', 'Monto', 'Año', 'Mes', 'Afiliado']],
+      body: datos
+    });
+    doc.save("tabla pdf");
   }
 }
