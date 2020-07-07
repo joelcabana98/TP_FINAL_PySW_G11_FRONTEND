@@ -1,30 +1,55 @@
 <div class="row mt-header">
     <section class="col-md-10 offset-md-1">
+        <!--
         <h3>Servicios Ofrecidos</h3>
+<<<<<<< HEAD
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 align-items-center">
+=======
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-3  bg-warning">
+>>>>>>> 1f9b2bced779bd3afbcaf65d867633d6f67703d3
             <ng-container *ngFor="let listServ of listaServicios">
-                <div class="col my-1" *ngIf="listServ.activo !== false">
-                    <div class="w-100 border rounded" style="height: auto">
-                        <img class="card-img-top img-fluid img-responsive w-100" style="height: 250px;"
-                            src="{{listServ.imagen}}" alt="Card image">
-                        <div class="card-body px-3">
+                <div class="my-1 " *ngIf="listServ.activo !== false">
+                    <div class="border rounded bg-success">
+                        <img class="card-img-top img-fluid img" style="object-fit: cover;width: 500px;
+                        height: 250px;" [src]="listServ.imagen">
+                        <div class="card-body px-3 justify-content-between">
                             <h4 class="card-title">{{listServ.nombre}}</h4>
                             <p class="card-text">{{listServ.descripcion}}</p>
                             <div *ngIf="loginService.userLoggedIn">
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#modalInsc"
-                                    (click)="seleccionarServicio(listServ)">Inscribirse</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalInsc" (click)="seleccionarServicio(listServ)">Inscribirse</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </ng-container>
         </div>
+        -->
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <h1 class="">Servicios Ofrecidos</h1>
+                <hr>
+            </div>
+            <content class="col-md-12">
+                <div class="row row-cols-1 row-cols-md-3">
+                    <div class="col-md-4 col-sm-6" *ngFor="let item of listaServicios">
+                        <img [src]="item.imagen" alt="Responsive image" class="card-img-top img-fluid img">
+                        <div class="card-body text-formato p-0">
+                            <h4 class="text">
+                                {{item.nombre}}
+                            </h4>
+                            <p>{{item.descripcion}}</p>
+                            <div *ngIf="loginService.userLoggedIn" class="align-content-end">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalInsc" (click)="seleccionarServicio(item)">Inscribirse</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </content>
+        </div>
     </section>
 
     <!-- MODAL DE CONFIRMACIÓN DE INSCRIPCIÓN -->
-    <div class="modal fade" id="modalInsc" tabindex="-1" role="dialog" aria-labelledby="modalInscribirServicio"
-        aria-hidden="true">
+    <div class="modal fade" id="modalInsc" tabindex="-1" role="dialog" aria-labelledby="modalInscribirServicio" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -47,10 +72,10 @@
 
 
 <!-- ======== SECCIÓN SOLO PARA ADMINISTRATIVO Y ADMINISTRADOR ======== -->
-<div class="row my-2"
-    *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
+<div class="row my-2" *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
     <div class="col-md-10 offset-md-1">
         <!-- ====== TABLA DE SERVICIOS ====== -->
+<<<<<<< HEAD
         <div class="d-md-flex bd-highlight my-2">
             <h3 class="flex-md-grow-1 text-center text-dark p-2 mb-2">Lista de Servicios</h3>
             <button type="button" class="btn btn-primary shadow rounded float-md-right align-self-end"
@@ -60,6 +85,14 @@
         <div class="table-responsive bg-light border-form">
             <table class="table table-hover table-striped text-center p-0" [mfData]="listaServicios" #mf="mfDataTable"
                 [mfRowsOnPage]="5" id="tableServicios">
+=======
+        <div class="d-flex bd-highlight my-2">
+            <h3 class="flex-grow-1 text-center text-dark p-2 mb-2">Lista de Servicios</h3>
+            <button type="button" class="btn btn-primary shadow rounded float-right align-self-end" routerLink="/servicioNew"><i class="fas fa-plus"></i> Nuevo Servicio</button>
+        </div>
+        <div class="table-responsive bg-light border-form">
+            <table class="table table-hover table-striped text-center p-0" [mfData]="listaServicios" #mf="mfDataTable" [mfRowsOnPage]="5">
+>>>>>>> 1f9b2bced779bd3afbcaf65d867633d6f67703d3
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
@@ -79,16 +112,14 @@
                     <tr *ngFor="let serv of mf.data; let i=index">
                         <td>{{i + 1}}</td>
                         <td>{{serv.nombre}}</td>
-                        <td><img src="{{serv.imagen}}" class="img-responsive img-thumbnail img-fluid w-50"
-                                alt="imagen serv" style="height: 120px;"></td>
+                        <td><img src="{{serv.imagen}}" class="img-responsive img-thumbnail img-fluid w-50" alt="imagen serv" style="height: 120px;"></td>
                         <td class="text-justify">{{serv.descripcion}}</td>
                         <td>
                             <p *ngIf="serv.activo">SI</p>
                             <p *ngIf="!serv.activo">NO</p>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#modalDelete"
-                                (click)="seleccionarServicio(serv)"><i class="fas fa-trash-alt"
+                            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#modalDelete" (click)="seleccionarServicio(serv)"><i class="fas fa-trash-alt"
                                     style="color: red"></i></button>
                             <button type="button" class="btn btn-light" (click)="updateServicio(serv)">
                                 <i class=" fas fa-pencil-alt" style="color: green"></i></button>
@@ -109,8 +140,7 @@
     </div>
 
     <!-- MODAL DELETE-->
-    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteServicio"
-        aria-hidden="true">
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteServicio" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
