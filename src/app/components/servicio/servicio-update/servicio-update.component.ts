@@ -21,15 +21,16 @@ export class ServicioUpdateComponent implements OnInit {
               private activatedRoute: ActivatedRoute) {
     // Controlo que ingrese al componente un Usuario tipo Administrador o Administrativo.
     // En caso contrario redirecciona a la pagina Home
-    // if (!this.loginService.userLoggedIn && (!this.loginService.userIsAdministrador || !this.loginService.userIsAdministrativo)){
-    //   this.router.navigateByUrl('/home');
-    // }
+    if (!this.loginService.userLoggedIn && (!this.loginService.userIsAdministrador || !this.loginService.userIsAdministrativo)){
+      this.router.navigateByUrl('/home');
+    }
     this.servicio = new Servicio();
   }
 
   ngOnInit(): void {
+    // Obtengo la ID de la url
     const id = this.activatedRoute.snapshot.paramMap.get('id');
-    console.log(id);
+    // Obtengo el Servicio a modificar
     this.servicioService.getServiciobyId(id).subscribe(
       (result) => {
         this.servicio = result;
@@ -39,7 +40,6 @@ export class ServicioUpdateComponent implements OnInit {
         console.log('Error de petición: ' + error);
       }
     );
-    console.log(this.servicio);
   }
 
   /**

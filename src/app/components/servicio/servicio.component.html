@@ -2,22 +2,53 @@
     <section class="col-md-10 offset-md-1">
         <h3>Servicios Ofrecidos</h3>
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-3 align-items-center">
-            <div class="col row my-1 card w-100" *ngFor="let listServ of listaServicios" 
-            style="height: 450px;">
-                <img class="card-img-top img-fluid img-responsive w-100" style="height: 250px;" 
-                src="{{listServ.imagen}}" alt="Card image">
-                <div class="card-body px-0">
-                    <h4 class="card-title">{{listServ.nombre}}</h4>
-                    <p class="card-text">{{listServ.descripcion}}</p>
-                    <a href="#" class="btn btn-primary">See Profile</a>
+            <ng-container *ngFor="let listServ of listaServicios">
+                <div class="col my-1" *ngIf="listServ.activo !== false">
+                    <div class="w-100 border rounded" style="height: auto">
+                        <img class="card-img-top img-fluid img-responsive w-100" style="height: 250px;"
+                            src="{{listServ.imagen}}" alt="Card image">
+                        <div class="card-body px-3">
+                            <h4 class="card-title">{{listServ.nombre}}</h4>
+                            <p class="card-text">{{listServ.descripcion}}</p>
+                            <div *ngIf="loginService.userLoggedIn">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#modalInsc"
+                                    (click)="seleccionarServicio(listServ)">Inscribirse</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </section>
+
+    <!-- MODAL DE CONFIRMACIÓN DE INSCRIPCIÓN -->
+    <div class="modal fade" id="modalInsc" tabindex="-1" role="dialog" aria-labelledby="modalInscribirServicio"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalInscribirServicio">Inscribirse al Servicio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Desea inscribirse al Servicio {{servicio?.nombre}}?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" (click)="inscribirAServicio()">Si</button>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 </div>
 
-<div class="row my-2">
-    <!-- *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)"> -->
+
+<!-- ======== SECCIÓN SOLO PARA ADMINISTRATIVO Y ADMINISTRADOR ======== -->
+<div class="row my-2"
+    *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
     <div class="col-md-10 offset-md-1">
         <!-- ====== TABLA DE SERVICIOS ====== -->
         <div class="d-flex bd-highlight my-2">
@@ -34,8 +65,8 @@
                         <th scope="col">
                             <mfDefaultSorter by="nombre">Nombre</mfDefaultSorter>
                         </th>
-                        <th scope="col">Imagen</th>
-                        <th scope="col">Descripción</th>
+                        <th scope="col" style="width: 30%;">Imagen</th>
+                        <th scope="col" style="width: 30%;">Descripción</th>
                         <th scope="col">Activo</th>
                         <th scope="col">Acciones</th>
                     </tr>
@@ -48,8 +79,8 @@
                         <td>{{i + 1}}</td>
                         <td>{{serv.nombre}}</td>
                         <td><img src="{{serv.imagen}}" class="img-responsive img-thumbnail img-fluid w-50"
-                                alt="imagen serv"></td>
-                        <td>{{serv.descripcion}}</td>
+                                alt="imagen serv" style="height: 120px;"></td>
+                        <td class="text-justify">{{serv.descripcion}}</td>
                         <td>
                             <p *ngIf="serv.activo">SI</p>
                             <p *ngIf="!serv.activo">NO</p>
@@ -61,7 +92,7 @@
                             <button type="button" class="btn btn-light" (click)="updateServicio(serv)">
                                 <i class=" fas fa-pencil-alt" style="color: green"></i></button>
                             <button type="button" class="btn btn-light">
-                                <i class="fas fa-eye" style="color: blue"></i></button>
+                                <i class="fas fa-eye" style="color: blue" (click)="detailServicio(serv)"></i></button>
                         </td>
                     </tr>
                 </tbody>

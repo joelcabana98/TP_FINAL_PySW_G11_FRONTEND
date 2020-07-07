@@ -21,10 +21,9 @@ export class ServicioNewComponent implements OnInit {
     
     // Controlo que ingrese al componente un Usuario tipo Administrador o Administrativo.
     // En caso contrario redirecciona a la pagina Home
-    // if (!this.loginService.userLoggedIn && (!this.loginService.userIsAdministrador || !this.loginService.userIsAdministrativo)){
-    //   this.router.navigateByUrl('/home');
-    // }
-
+    if (!this.loginService.userLoggedIn && (!this.loginService.userIsAdministrador || !this.loginService.userIsAdministrativo)){
+      this.router.navigateByUrl('/home');
+    }
     this.servicio = new Servicio();
   }
 

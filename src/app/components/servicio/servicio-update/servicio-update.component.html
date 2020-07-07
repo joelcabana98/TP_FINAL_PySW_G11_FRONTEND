@@ -12,13 +12,21 @@
                 <input type="text" class="form-control col-sm-12 col-md-8" id="nombre" name="nombre"
                     placeholder="Ingrese nombre del Servicio" [(ngModel)]="servicio.nombre" #nombreServicio="ngModel"
                     required />
+
+                <!-- Seccion de Error -->
+                <div *ngIf="nombreServicio.invalid && nombreServicio.touched"
+                    class="invalid-feedback row col-md-8 offset-md-4">
+                    <div *ngIf="nombreServicio.errors?.required && nombreServicio.touched">
+                        Nombre no puede ser nulo!
+                    </div>
+                </div>
             </div>
 
             <div class="row form-group">
                 <label class="col-sm-12 col-md-4" for="imagen">Imagen: </label>
                 <input type="file" alife-file-to-base64 multiple (onFileChanged)="convertirImagen($event)"
-                    class="form-control col-sm-12 col-md-8 p-0" 
-                    accept="image/x-png,image/gif,image/jpeg" id="imagen" name="imagen" required/>
+                    class="form-control col-sm-12 col-md-8 p-0" accept="image/x-png,image/gif,image/jpeg" id="imagen"
+                    name="imagen" required />
             </div>
             <div class="row border-0">
                 <img [src]="servicio.imagen" height="50px" class="img-thumbnail col-sm-12 col-md-6 offset-md-5">
@@ -29,6 +37,14 @@
                 <input type="text" class="form-control col-sm-12 col-md-8" id="descripcion" name="descripcion"
                     placeholder="Ingrese una descripción" [(ngModel)]="servicio.descripcion"
                     #descripcionServicio="ngModel" required />
+
+                <!-- Seccion de Error -->
+                <div *ngIf="descripcionServicio.invalid && descripcionServicio.touched"
+                    class="invalid-feedback row col-md-8 offset-md-4">
+                    <div *ngIf="descripcionServicio.errors?.required && descripcionServicio.touched">
+                        Descripción no puede ser nulo!
+                    </div>
+                </div>
             </div>
 
             <div class="row form-group">
@@ -53,7 +69,7 @@
                 </div>
             </div>
 
-            <!-- Modal -->
+            <!-- MODAL DE CONFIRMACIÓN DE MODIFICACIÓN -->
             <div class="modal fade" id="modalUp" tabindex="-1" role="dialog" aria-labelledby="modalUpServicio"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
