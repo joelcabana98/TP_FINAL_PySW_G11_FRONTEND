@@ -12,6 +12,9 @@
             <li class="nav-item">
                 <a class="nav-link animation" [routerLink]="['servicio']">Servicios</a>
             </li>
+            <li class="nav-item" *ngIf="loginService.userLoggedIn">
+                <a class="nav-link animation" [routerLink]="['novedad']">Novedad</a>
+            </li>
             <li class="nav-item" *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
                 <a class="nav-link animation" [routerLink]="['usuario']">Usuarios</a>
             </li>

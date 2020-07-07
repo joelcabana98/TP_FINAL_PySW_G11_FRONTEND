@@ -31,6 +31,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { ServicioUpdateComponent } from './components/servicio/servicio-update/servicio-update.component';
 import { ServicioDetailComponent } from './components/servicio/servicio-detail/servicio-detail.component';
+import { NovedadDetailComponent } from './components/novedad/novedad-detail/novedad-detail.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ServicioDetailComponent } from './components/servicio/servicio-detail/s
     ServicioNewComponent,
     MesPipe,
     ServicioUpdateComponent,
-    ServicioDetailComponent
+    ServicioDetailComponent,
+    NovedadDetailComponent
   ],
   imports: [
     BrowserModule,
