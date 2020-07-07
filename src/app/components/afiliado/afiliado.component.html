@@ -126,6 +126,9 @@
                 </tr>
             </thead>
             <tbody>
+                <tr *ngIf="!mf.data.length" class="table-secondary">
+                    <td [attr.colspan]="8" class="text-center">No se encontraron Afiliados.</td>
+                </tr>
                 <tr *ngFor="let item of mf.data; index as i">
                     <th scope="row"> {{i+1}} </th>
                     <td>
@@ -145,7 +148,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="4">
+                    <td colspan="8">
                         <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
                     </td>
                 </tr>
