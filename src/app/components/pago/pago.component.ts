@@ -29,6 +29,8 @@ export class PagoComponent implements OnInit {
   //Filtro de la tabla
   fechaInicio:Date;
   fechaFin:Date;
+  tipoBusqueda:string;
+  dniBusqueda:number;
 
   constructor(private pagoService:PagoService,private _toastr : ToastrService, private afiliadoService:AfiliadoService,private router: Router,public loginService: LoginService) { 
     this.pago = new Pago();
@@ -120,13 +122,34 @@ export class PagoComponent implements OnInit {
     }
   }
 
+  filtrarPorDniFront(){
+    if(this.dniBusqueda != null){
+      let listaAux = new Array<Pago>();
+      this.listaPagos.forEach(p =>{
+        if(p.afiliado.dni == this.dniBusqueda){
+          listaAux.push(p);
+        }
+      });
+      this.listaPagos = new Array<Pago>();
+      this.listaPagos = listaAux;
+      this.limpiarFechas();
+    }
+  }
+
   limpiarFechas(){
     this.fechaInicio = new Date();
     this.fechaFin = new Date();
+    this.dniBusqueda = null;
   }
 
-  eliminarPago(){
-
+  eliminarPago(p: Pago){
+    this.pagoService.deletePago(p).subscribe(
+      (result) => {
+        this._toastr.success("El PAGO se ha eliminado","Exito");
+        this.cargarListaPagos();
+      },
+      (error) => {this._toastr.error("Ha ocurrido un error con la solicitud","Error");}
+    );
   }
   
   generarPDF(){

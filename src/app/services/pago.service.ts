@@ -30,4 +30,13 @@ export class PagoService {
     var body = JSON.stringify(pago);
     return this._http.post(this.urlBase, body, httpOptions);
   }
+
+  public deletePago(pago: Pago):Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+
+      })
+    };   
+    return this._http.delete(this.urlBase + pago._id , httpOptions );
+  }
 }

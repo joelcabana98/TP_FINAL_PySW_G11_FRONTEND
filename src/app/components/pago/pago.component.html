@@ -85,22 +85,51 @@
         </div>
         <div class="modal-body">
             <div>
-                Selecciones un rango de fechas para la busqueda.
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="busqueda" id="exampleRadios1" value="porFecha" checked [(ngModel)]="tipoBusqueda">
+                    <label class="form-check-label" for="exampleRadios1">
+                      Busqueda por Fechas.
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="busqueda" id="exampleRadios2" value="porDni" [(ngModel)]="tipoBusqueda">
+                    <label class="form-check-label" for="exampleRadios2">
+                      Busqueda por DNI de un socio.
+                    </label>
+                  </div>
             </div>
-            <form>
-                <div class="form-group">
-                    <label for="fechaInicioInput">Desde:</label>
-                    <input type="date" id="fechaInicioInput" class="form-control" name="fechaInicio" [(ngModel)]="fechaInicio" required>
+            <div *ngIf="tipoBusqueda == 'porFecha'">
+                <div>
+                    Selecciones un rango de fechas para la busqueda.
                 </div>
-                <div class="form-group">
-                    <label for="fechaFinInput">Hasta</label>
-                    <input type="date" id="fechaFinInput" class="form-control" name="fechaFin" [(ngModel)]="fechaFin" required>
+                <form>
+                    <div class="form-group">
+                        <label for="fechaInicioInput">Desde:</label>
+                        <input type="date" id="fechaInicioInput" class="form-control" name="fechaInicio" [(ngModel)]="fechaInicio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaFinInput">Hasta</label>
+                        <input type="date" id="fechaFinInput" class="form-control" name="fechaFin" [(ngModel)]="fechaFin" required>
+                    </div>
+                </form>
+            </div>
+            <div *ngIf="tipoBusqueda == 'porDni'">
+                <div>
+                    Ingrese el DNI de un socio.
                 </div>
-            </form>
+                <form>
+                    <div class="form-group">
+                        <label for="dniInput">N° de DNI</label>
+                        <input type="number" id="dniInput" class="form-control" name="dniSocio" [(ngModel)]="dniBusqueda" required>
+                    </div>
+                </form>
+            </div>
+            
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarFechas()">Cancelar</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="filtrarPorFechaFront()">Buscar</button>
+            <button *ngIf="tipoBusqueda == 'porFecha'" type="button" class="btn btn-primary" data-dismiss="modal" (click)="filtrarPorFechaFront()">Buscar</button>
+            <button *ngIf="tipoBusqueda == 'porDni'" type="button" class="btn btn-primary" data-dismiss="modal" (click)="filtrarPorDniFront()">Buscar</button>
         </div>
         </div>
     </div>
@@ -155,7 +184,7 @@
                     <td>{{p.mes | mes}}</td>
                     <td>{{p.afiliado.dni}}</td>
                     <td>
-                        <button class="btn btn-danger mr-1"><i class="far fa-trash-alt"></i></button>
+                        <button class="btn btn-danger mr-1" (click)="eliminarPago(p)"><i class="far fa-trash-alt"></i></button>
 
                         <button class="btn btn-warning" data-toggle="modal" data-target="#modalAgregarPago"><i class="fas fa-edit"></i></button>
                     </td>
