@@ -63,7 +63,6 @@ export class ServicioUpdateComponent implements OnInit {
    * Convierto la imagen a guardar en la base de datos a String.
    */
   public convertirImagen(files) {
-    console.log("File has changed:", files);
     this.servicio.imagen = files[0].base64;
   }
 

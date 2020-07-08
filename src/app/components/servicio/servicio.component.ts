@@ -30,6 +30,7 @@ export class ServicioComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
   /**
    * Selecciono un objeto de tipo Servicio.
    * @param servicio objeto seleccionado de la Lista de Servicios.
@@ -38,6 +39,7 @@ export class ServicioComponent implements OnInit {
     this.servicio = servicio;
   }
 
+
   /**
    * Reinicio el objeto Servicio.
    */
@@ -45,16 +47,17 @@ export class ServicioComponent implements OnInit {
     this.servicio = new Servicio();
   }
 
+
   /**
    * Realizar la inscripción de un usuario de tipo Socio
    * a un Servicio.
    */
   public inscribirAServicio() {
+    let encontrado = false;
     if (this.loginService.userLogged.perfil == 'socio') {
       this.afiliadoService.getAfiliadoByEmail(this.loginService.userLogged.usuario).subscribe(
         (result) => {
           let user: any = result;
-          let encontrado = false;
           if (user.status == 1) {
             // Averiguo si el usuario ya esta inscripto en el servicio.
             this.servicio.afiliadosInsc.forEach(element => {
@@ -86,6 +89,7 @@ export class ServicioComponent implements OnInit {
     $('#modalInsc').modal('hide');
   }
 
+
   /**
    * Guardar la inscripción del usuario al Servicio.
    */
@@ -99,7 +103,10 @@ export class ServicioComponent implements OnInit {
         console.log('Error de petición: ' + error);
       }
     );
+    this.limpiarServicio();
+    this.obtenerServicios();
   }
+
 
   /**
    * Listar todos los Servicios sin aplicar ningún
@@ -121,6 +128,7 @@ export class ServicioComponent implements OnInit {
       }
     )
   }
+
 
   /**
    * Eliminar un Servicio seleccionado de la Lista
@@ -145,6 +153,7 @@ export class ServicioComponent implements OnInit {
     $('#modalDelete').modal('hide');
   }
 
+
   /**
    * Modificar un Servicio, mando por url el _id del
    * Servicio a modficar.
@@ -154,6 +163,7 @@ export class ServicioComponent implements OnInit {
     this.router.navigateByUrl('servicioUp/' + servicio._id);
   }
 
+
   /**
    * Mostrar detalle del Servicio, inclusive los afiliados inscriptos.
    * @param servicio Servicio que deseo ver detalles.
@@ -161,6 +171,7 @@ export class ServicioComponent implements OnInit {
   public detailServicio(servicio: Servicio) {
     this.router.navigateByUrl('servicioDetail/' + servicio._id);
   }
+
 
   /**
    * Generar un Reporte de todos los Servicios mostrados.
