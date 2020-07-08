@@ -17,7 +17,8 @@
 
             <div class="row form-group">
                 <label class="col-sm-12 col-md-4" for="imagen">Imagen: </label>
-                <img [src]="servicio.imagen" style="max-height: 250px;" class="img-thumbnail col-sm-12 col-md-6 offset-md-1 w-50">
+                <img [src]="servicio.imagen" style="max-height: 250px;"
+                    class="img-thumbnail col-sm-12 col-md-6 offset-md-1 w-50">
             </div>
 
             <div class="row form-group">
@@ -46,8 +47,8 @@
                 <h3 class="flex-grow-1 text-center text-dark p-2 mb-2">Lista de Inscriptos al Servicio</h3>
             </div>
             <div class="table-responsive bg-light border-form">
-                <table class="table table-hover table-striped text-center p-0" [mfData]="servicio.afiliadosInsc"
-                    #mf="mfDataTable" [mfRowsOnPage]="5">
+                <table id="tablaInscriptos" class="table table-hover table-striped text-center p-0"
+                    [mfData]="servicio.afiliadosInsc" #mf="mfDataTable" [mfRowsOnPage]="5">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">#</th>
@@ -97,7 +98,9 @@
 
             <div class="form-group row text-center">
                 <div class="offset-md-2 col-md-10">
-                    <button type="button" class="btn btn-warning" routerLink="/servicio">Volver</button>
+                    <button type="button" class="btn btn-default" routerLink="/servicio">Volver</button>
+                    <button type="button" class="btn btn-warning shadow-lg align-self-end ml-2"
+                        (click)="generarPDF()"><i class="fas fa-print"></i> Imprimir Detalle</button>
                 </div>
             </div>
 
