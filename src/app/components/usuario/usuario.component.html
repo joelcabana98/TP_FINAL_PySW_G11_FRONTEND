@@ -2,8 +2,32 @@
     <!--Boton Agregar Usuario-->
     <div class="col-12">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarUsuario">
-        <i class="fas fa-plus"></i>  Nuevo Usuario
+        <i class="fas fa-plus"></i> Nuevo Usuario
       </button>
+        <!--FILTROS -->
+        <div class="form-row mt-3">
+            <div class="form-group col-md-3">
+                <input type="email" class="form-control" placeholder="Email" [(ngModel)]="emailbuscar">
+            </div>
+            <div class="form-group col-md-2">
+                <select class="form-control" [(ngModel)]="perfil">
+                    <option value="" disabled selected>Perfil</option>
+                    <option value="socio">Socio</option>
+                    <option value="administrativo">Administrativo</option>
+                    <option value="administrador">Administrador</option>
+                </select>
+            </div>
+            <div class="form-group col-md-1">
+                <button type="button" class="btn btn-primary" (click)="filtro()">
+                    <i class="fas fa-search"></i>
+                  </button>
+            </div>
+            <div class="form-group col-md-4">
+                <button type="button" class="btn btn-primary" (click)="verTodos()">
+                    Ver todos
+                  </button>
+            </div>
+        </div>
         <!-- Modal Agregar Usuario-->
         <div class="modal fade" id="modalAgregarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalAgregarUsuario" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -66,7 +90,7 @@
         </div>
 
         <!--Data Table de Usuarios-->
-        <table class="table table-striped table-responsive mt-3 " [mfData]="listaUsuarios" #mf="mfDataTable" [mfRowsOnPage]="5">
+        <table class="table table-striped table-responsive mt-1 " [mfData]="listaFiltrada" #mf="mfDataTable" [mfRowsOnPage]="10">
             <thead class="thead-dark">
                 <tr>
                     <th style="width: 50%">
@@ -96,7 +120,7 @@
             <tfoot>
                 <tr>
                     <td colspan="4">
-                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                        <mfBootstrapPaginator [rowsOnPageSet]="[15,20,25]"></mfBootstrapPaginator>
                     </td>
                 </tr>
             </tfoot>

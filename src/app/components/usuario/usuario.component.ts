@@ -20,20 +20,35 @@ export class UsuarioComponent implements OnInit {
   validacion: boolean;
 
   msj:string;
-
+  listaFiltrada:Array<Usuario>;
+  emailbuscar:string;
+  perfil : string;
   constructor(private usuarioService:UsuarioService,private afiliadoService: AfiliadoService,public loginService: LoginService,private _toastr : ToastrService,private router: Router) {
     this.listaUsuarios = new Array<Usuario>();
     this.usuario = new Usuario();
      this.usuario.activo = false;
     this.msj = "";
-
+    this.listaFiltrada = new Array<Usuario>();
     this.obtenerUsuarios();
+
+   this.verTodos();
 
     //contro del ruta por url
     if (!this.loginService.userLoggedIn && (!this.loginService.userIsAdministrador || !this.loginService.userIsAdministrativo)){
       this.router.navigateByUrl('/home');
     }
 
+   }
+
+   verTodos(){
+     this.listaFiltrada = new Array<Usuario>();
+    this.listaFiltrada = this.listaUsuarios;
+   }
+
+   filtro(){
+     this.listaFiltrada = new Array<Usuario>();
+     this.listaFiltrada = this.listaUsuarios;
+     this.listaFiltrada = this.listaFiltrada.filter(usuario => usuario.usuario === this.emailbuscar || usuario.perfil === this.perfil);
    }
 
    agregarUsuario(){
