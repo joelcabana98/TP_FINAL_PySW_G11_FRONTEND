@@ -17,18 +17,22 @@ export class HomeComponent implements OnInit {
   noticia:Noticia;
   listaNoticias:Array<Noticia>;
   listaAllNoticias:Array<Noticia>;
-  
+  listaFiltrada:Array<Noticia>;
   fecha:Date;
-  desde:string;
-  hasta:string;
+  desde:Date;
+  hasta:Date;
   constructor(public loginService: LoginService,private noticiaService:NoticiaService,private _toastr:ToastrService, private fb: FacebookService) { 
     this.noticia = new Noticia();
+    this.listaFiltrada = new Array<Noticia>();
     this.noticia.vigente = false;
+
     this.listaNoticias = new Array<Noticia>();
     this.listaAllNoticias = new Array<Noticia>();
     this.obtenerNoticiasSinFiltro();
     this.obtenerNoticiasPorFecha();
     this.iniciarFb();
+
+    this.verTodos();
   }
 
 
@@ -40,6 +44,7 @@ export class HomeComponent implements OnInit {
         this._toastr.success("La noticia ha sido agregada", "Exito");
         this.obtenerNoticiasSinFiltro();
         this.obtenerNoticiasPorFecha();
+        this.verTodos();
       },
       (error) => {
         console.log("error" + error);
@@ -49,6 +54,10 @@ export class HomeComponent implements OnInit {
     this.noticia.vigente = false;
   }
 
+  verTodos(){
+    this.listaFiltrada = new Array<Noticia>();
+    this.listaFiltrada = this.listaAllNoticias;
+  }
 
   ngOnInit(): void {
   }
@@ -78,6 +87,7 @@ export class HomeComponent implements OnInit {
         this._toastr.success("La noticia ha sido eliminada", "Exito");
         this.obtenerNoticiasSinFiltro();
         this.obtenerNoticiasPorFecha();
+        this.verTodos();
       },
       (error) => {
         console.log(error);
@@ -103,25 +113,10 @@ export class HomeComponent implements OnInit {
     )
   }
 
-
   obtenerNoticiaByFecha(){
-    console.log("ENTROOOOOOOOOOO   "+this.desde + "     "+this.hasta); 
-     this.listaAllNoticias = new Array<Noticia>();
-     this.noticiaService.getNoticiasByTwoDate(this.desde,this.hasta).subscribe(
-      (result)=>{
-        console.log("NOTICIA SERVICEEE "+result);
-        var noti2: Noticia = new Noticia();
-        result.forEach(element => {
-          Object.assign(noti2, element);
-          this.listaAllNoticias.push(noti2);
-          console.log(noti2.titulo);
-          noti2 = new Noticia();
-        });
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
+    this.listaFiltrada = new Array<Noticia>();
+    this.listaFiltrada = this.listaAllNoticias;
+    this.listaFiltrada = this.listaFiltrada.filter(noticia => (noticia.fecha > this.desde) && (noticia.fecha <= this.hasta));
   }
 
 
@@ -139,6 +134,7 @@ export class HomeComponent implements OnInit {
         this._toastr.success("La noticia ha sido modificada", "Exito");
         this.obtenerNoticiasSinFiltro();
         this.obtenerNoticiasPorFecha();
+        this.verTodos();
       },
       (error) => {
         console.log(error);

@@ -26,7 +26,7 @@ export class UsuarioComponent implements OnInit {
   constructor(private usuarioService:UsuarioService,private afiliadoService: AfiliadoService,public loginService: LoginService,private _toastr : ToastrService,private router: Router) {
     this.listaUsuarios = new Array<Usuario>();
     this.usuario = new Usuario();
-     this.usuario.activo = false;
+    this.usuario.activo = false;
     this.msj = "";
     this.listaFiltrada = new Array<Usuario>();
     this.obtenerUsuarios();
@@ -117,6 +117,7 @@ export class UsuarioComponent implements OnInit {
      (result)=>{
       this._toastr.success("El usuario ha sido eliminado","Exito");
        this.obtenerUsuarios();
+       this.verTodos();
       this.usuario.activo = false;
      },
      (error)=>{
@@ -157,6 +158,7 @@ export class UsuarioComponent implements OnInit {
     (result)=>{
       this._toastr.success("El usuario ha sido modificado","Exito");
         this.obtenerUsuarios();
+        this.verTodos();
     },
     (error)=>{
       console.log(error);
