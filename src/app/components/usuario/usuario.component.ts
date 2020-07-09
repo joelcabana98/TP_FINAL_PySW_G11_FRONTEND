@@ -43,6 +43,8 @@ export class UsuarioComponent implements OnInit {
    verTodos(){
      this.listaFiltrada = new Array<Usuario>();
     this.listaFiltrada = this.listaUsuarios;
+    this.emailbuscar = '';
+    this.perfil = '';
    }
 
    filtro(){
