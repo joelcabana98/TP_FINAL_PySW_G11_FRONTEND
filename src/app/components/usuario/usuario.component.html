@@ -3,7 +3,10 @@
     <div class="col-12">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarUsuario">
         <i class="fas fa-plus"></i> Nuevo Usuario
-      </button>
+        </button>
+        <button type="button" class="btn btn-warning ml-2" (click)="generarPDF()">
+        <i class="far fa-file-pdf"></i> Imprimir
+        </button>
         <!--FILTROS -->
         <div class="form-row mt-3">
             <div class="form-group col-md-3">
@@ -28,6 +31,7 @@
                   </button>
             </div>
         </div>
+
         <!-- Modal Agregar Usuario-->
         <div class="modal fade" id="modalAgregarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalAgregarUsuario" aria-hidden="true">
             <div class="modal-dialog" role="document">

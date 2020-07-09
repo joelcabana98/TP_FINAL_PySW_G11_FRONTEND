@@ -4,8 +4,8 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { AfiliadoService } from 'src/app/services/afiliado.service';
 import { LoginService } from 'src/app/services/login.service';
 import { ToastrService } from 'ngx-toastr';
-import { Afiliado } from 'src/app/models/afiliado';
 import { Router } from '@angular/router';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-usuario',
@@ -31,7 +31,7 @@ export class UsuarioComponent implements OnInit {
     this.listaFiltrada = new Array<Usuario>();
     this.obtenerUsuarios();
 
-   this.verTodos();
+     this.verTodos();
 
     //contro del ruta por url
     if (!this.loginService.userLoggedIn && (!this.loginService.userIsAdministrador || !this.loginService.userIsAdministrativo)){
@@ -86,6 +86,7 @@ export class UsuarioComponent implements OnInit {
        this.obtenerUsuarios();
        this.validacion = false;
        this.usuario.activo = false;
+       this.verTodos();
     }, 
   (error)=>{
        console.log("error"+ error);
@@ -177,6 +178,32 @@ export class UsuarioComponent implements OnInit {
    this.msj = "";
  }
 
+ generarPDF(){
+  var fecha = new Date();
+  var fechaString = fecha.getDate()+"/" + (fecha.getMonth()+1) +"/"+fecha.getFullYear() +"   "+fecha.getHours()+"-"+fecha.getMinutes()+"-"+fecha.getSeconds();
+
+  var datos=[];
+  var i = 0;
+  this.listaFiltrada.forEach(e =>{
+    i++;
+    var temp = [];
+    temp.push(i);
+    temp.push(e.usuario);
+    temp.push(e.activo);
+    temp.push(e.perfil);
+    datos.push(temp);
+  });
+  
+  var doc = new jsPDF();
+  doc.text("Lista de Usuarios",10,10);
+  doc.setTextColor(100);
+  
+  doc.autoTable({
+    head: [['#','Usuario', 'Activo', 'Perfil']],
+    body: datos
+  });
+  doc.save("Reporte_de_Usuarios"+fechaString);
+}
 
   ngOnInit(): void {
   }
