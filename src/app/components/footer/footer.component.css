@@ -1,5 +1,7 @@
 .footer {
     background-color: #283e4a;
+    position: absolute;
+    bottom: 0;
 }
 
 .icon {
