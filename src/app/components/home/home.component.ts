@@ -3,7 +3,7 @@ import { Noticia } from 'src/app/models/noticia';
 import { NoticiaService } from 'src/app/services/noticia.service';
 import { LoginService } from 'src/app/services/login.service';
 import { ToastrService } from 'ngx-toastr';
-
+import jsPDF from 'jspdf';
 import { FacebookService, InitParams, LoginResponse } from 'ngx-fb';
 import { ApiMethod } from 'ngx-fb/dist/esm/providers/facebook';
 
@@ -175,5 +175,39 @@ export class HomeComponent implements OnInit {
     };
     this.fb.init(initParams);
   }
+
+
+  generarPDF(){
+    var fecha = new Date();
+    var fechaString = fecha.getDate()+"/" + (fecha.getMonth()+1) +"/"+fecha.getFullYear() +"   "+fecha.getHours()+"-"+fecha.getMinutes()+"-"+fecha.getSeconds();
+  
+    var datos=[];
+    var i = 0;
+    this.listaFiltrada.forEach(n =>{
+      i++;
+      var temp = [];
+      temp.push(i);
+      temp.push(n.titulo);
+      temp.push(n.fecha);
+      if(n.vigente == true){
+        temp.push("Si");
+      }else{
+        temp.push("No");
+      }
+      temp.push(n.usuario.usuario);
+      datos.push(temp);
+    });
+    
+    var doc = new jsPDF();
+    doc.text("Lista de Noticias",10,10);
+    doc.setTextColor(100);
+    
+    doc.autoTable({
+      head: [['#','Titulo', 'Fecha', 'Vigente','Usuario']],
+      body: datos
+    });
+    doc.save("Reporte_de_Noticias"+fechaString);
+  }
+
 
 }
