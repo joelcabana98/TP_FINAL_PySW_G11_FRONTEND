@@ -21,3 +21,8 @@ a:hover,
 a:focus {
     background-size: 100% 2px;
 }
+
+.efectoLogin:hover {
+    box-shadow: 0px 0px 5px 5px #5ca3f5;
+    -webkit-box-shadow: 0px 0px 5px 5px #5ca3f5;
+}

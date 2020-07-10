@@ -16,14 +16,26 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   msglogin: string;
 
+  showPassword = false;
+  typePass = 'password';
+
   constructor(private route: ActivatedRoute, private router: Router,
-              private loginService: LoginService) {
+    private loginService: LoginService) {
     this.userform = new Usuario();
-  
+
   }
 
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+  }
+
+  typePassword() {
+    this.showPassword = !this.showPassword;
+    if (this.showPassword) {
+      this.typePass = 'texto';
+    } else {
+      this.typePass = 'password';
+    }
   }
 
   login() {

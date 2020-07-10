@@ -1,8 +1,9 @@
-<div class="row justify-content-center mt-header">
+<div class="row justify-content-center mt-header fondoContenido pb-4">
     <div class="col-md-12 text-center">
         <div><img src="./../../../assets/img/logo1.png" width="200" height="120" alt=""></div>
         <h4>¡Te damos la bienvenida de nuevo!</h4>
-        <p>¿Te vas a perder tu siguiente gran oportunidad? Inicia sesión para estar al día de tu entorno profesional.</p>
+        <p>¿Te vas a perder tu siguiente gran oportunidad? Inicia sesión para estar al día de tu entorno profesional.
+        </p>
     </div>
     <form name="form" class="col-md-4 mb-5" #formLoginUsuario="ngForm">
         <div *ngIf="emailLogin.invalid && (emailLogin.dirty ||emailLogin.touched)" class="">
@@ -11,13 +12,19 @@
             </div>
         </div>
         <div class="form-group">
-            <input type="email" class="form-control" placeholder="Correo Electronico" name="emailLogin" 
-            [(ngModel)]="userform.usuario" #emailLogin="ngModel" 
-            required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/>
+            <input type="email" class="form-control" placeholder="Correo Electronico" name="emailLogin"
+                [(ngModel)]="userform.usuario" #emailLogin="ngModel" required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
         </div>
-        <div class="form-group">
-            <input type="password" class="form-control" name="password" placeholder="Contraseña" 
-            [(ngModel)]="userform.password" #passwordLogin="ngModel" required />
+        <div class="form-group d-flex">
+            <input type="{{typePass}}" class="form-control float-right" placeholder="Contraseña" name="password"
+                [(ngModel)]="userform.password" #passwordLogin="ngModel" required>
+            <button type="button" class="btn btn-light bg-transparent float-right" *ngIf="!showPassword" (click)="typePassword()">
+                <i class="fas fa-eye"></i>
+            </button>
+            <button type="button" class="btn btn-light bg-transparent float-right" *ngIf="showPassword" (click)="typePassword()">
+                <i class="fas fa-eye-slash text-danger"></i>
+            </button>
         </div>
         <div class="form-group">
             <button class="btn btn-primary btn-block" (click)="login()">Inicar Sesion</button>

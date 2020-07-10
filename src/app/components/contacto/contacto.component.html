@@ -1,11 +1,15 @@
-<div class="mt-header">
+<div class="mt-header fondoContenido pb-4">
     <section class="row text-center">
+        <div class="col-sm-12 col-md-10 offset-md-1 my-4 px-0 tituloPrincipal separadorTituloP">
+            <h2>Contacto</h2>
+        </div>
         <div class="col-12">
             <img src="./../../../assets/img/atencion-para-afiliados--914x211.png" class="img-fluid" alt="">
         </div>
     </section>
 
     <section class="row justify-content-center mt-4">
+        <h4 class="col-sm-12 col-md-10 my-3"><i class="fas fa-map-marker-alt text-danger"></i> ¿Dónde nos encontramos?</h4>
         <div class="col-sm-12 col-md-6">
             <google-map [center]="punto.position" class="img-fluid">
                 <map-marker [position]="punto.position" [label]="punto.label" [title]="punto.title">

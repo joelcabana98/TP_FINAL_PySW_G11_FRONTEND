@@ -30,7 +30,8 @@
         </ul>
 
         <form class="form-inline mt-2 mt-md-0">
-            <a class="btn btn-outline-light my-2 my-sm-0" *ngIf="!loginService.userLoggedIn" [routerLink]="['login']">Iniciar Sesion</a>
+            <a class="btn btn-outline-light my-2 my-sm-0 efectoLogin" *ngIf="!loginService.userLoggedIn" [routerLink]="['login']">
+                Iniciar Sesion <i class="fas fa-sign-in-alt"></i></a>
 
             <div class="collapse navbar-collapse d-block d-sm-block d-md-none" id="navbar-list-4" *ngIf="loginService.userLoggedIn">
                 <ul class="navbar-nav">
