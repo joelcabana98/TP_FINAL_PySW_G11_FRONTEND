@@ -15,19 +15,22 @@ import { NovedadComponent } from './components/novedad/novedad.component';
 import { NovedadDetailComponent } from './components/novedad/novedad-detail/novedad-detail.component';
 
 const routes: Routes = [
-  { path: 'login',component: LoginComponent},
-  { path: 'home',component: HomeComponent},
-  { path: 'usuario',component: UsuarioComponent},
-  { path: 'afiliado',component: AfiliadoComponent},
-  { path: 'noticia/:id',component: NoticiaComponent},
-  { path: 'contacto',component: ContactoComponent},
-  { path: 'pago',component: PagoComponent },
-  { path: 'servicio',component: ServicioComponent },
-  { path: 'servicioNew', component: ServicioNewComponent }, 
+  { path: "", component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'usuario', component: UsuarioComponent },
+  { path: 'afiliado', component: AfiliadoComponent },
+  { path: 'noticia/:id', component: NoticiaComponent },
+  { path: 'contacto', component: ContactoComponent },
+  { path: 'pago', component: PagoComponent },
+  { path: 'servicio', component: ServicioComponent },
+  { path: 'servicioNew', component: ServicioNewComponent },
   { path: 'servicioUp/:id', component: ServicioUpdateComponent },
   { path: 'servicioDetail/:id', component: ServicioDetailComponent },
   { path: 'novedad', component: NovedadComponent },
-  { path: 'novedadDetail/:id', component: NovedadDetailComponent}
+  { path: 'novedadDetail/:id', component: NovedadDetailComponent },
+  { path: "404", component: HomeComponent },
+  { path: "**", redirectTo: "/404" },
 ];
 
 @NgModule({

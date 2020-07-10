@@ -1,12 +1,21 @@
-<div class="row mt-header">
-    <div class="col-12" *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
+<div class="row mt-header fondoContenido pb-4">
+    <div class="col-sm-12 col-md-10 offset-md-1"
+        *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
+        <div class="mt-1">
+            <h3 class="text-left my-3 font-weight-bolder badge badge-danger">SECCIÓN ADMINISTRATIVA</h3>
+        </div>
+
+        <div class="d-md-flex my-3 separadorTituloP">
+            <h3 class="flex-md-grow-1 tituloPrincipal text-center p-2 mb-2">Administración de Noticias</h3>
+        </div>
+
         <!--Boton Agregar Noticia-->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarUsuario">
-            <i class="fas fa-plus"></i>  Nueva Noticia
+            <i class="fas fa-plus"></i> Nueva Noticia
         </button>
         <button type="button" class="btn btn-warning ml-2" (click)="generarPDF()">
             <i class="far fa-file-pdf"></i> Imprimir
-            </button>
+        </button>
 
         <!--FILTROS -->
         <div class="form-row mt-3">
@@ -24,22 +33,31 @@
             <div class="form-group col-md-4">
                 <button type="button" class="btn btn-primary" (click)="verTodos()">
                     Ver todos
-                  </button>
+                </button>
             </div>
         </div>
         <!-- Modal Agregar Noticia-->
-        <div class="modal fade" id="modalAgregarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalAgregarUsuario" aria-hidden="true">
+        <div class="modal fade" id="modalAgregarUsuario" tabindex="-1" role="dialog"
+            aria-labelledby="modalAgregarUsuario" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <h5 *ngIf="noticia._id != null" class="modal-title" id="modalInscribirServicio">
+                            Modificar Noticia
+                        </h5>
+                        <h5 *ngIf="noticia._id == null" class="modal-title" id="modalInscribirServicio">
+                            Agregar una nueva Noticia
+                        </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-         <span aria-hidden="true">&times;</span>
-          </button>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
                         <form action="" #formAgregarNoticia="ngForm">
                             <div class="form-group">
-                                <input id="portada" (onFileChanged)="onFileChanges($event)" class="form-control" type="file" alife-file-to-base64 multiple accept="image/x-png,image/gif,image/jpeg" name="portada" required/>
+                                <input id="portada" (onFileChanged)="onFileChanges($event)" class="form-control"
+                                    type="file" alife-file-to-base64 multiple accept="image/x-png,image/gif,image/jpeg"
+                                    name="portada" required />
                                 <img [src]="noticia.imagen" width="800" height="400" class="img-fluid">
                             </div>
                             <div *ngIf="titulo.invalid && (titulo.dirty ||titulo.touched)" class="">
@@ -48,7 +66,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-lg" id="titulo" placeholder="Ingresa un titulo" [(ngModel)]="noticia.titulo" name="titulo" #titulo="ngModel" required minlength="20" />
+                                <input type="text" class="form-control form-control-lg" id="titulo"
+                                    placeholder="Ingresa un titulo" [(ngModel)]="noticia.titulo" name="titulo"
+                                    #titulo="ngModel" required minlength="20" />
                             </div>
                             <div *ngIf="descripcion.invalid && (descripcion.dirty ||descripcion.touched)" class="">
                                 <div *ngIf="descripcion.errors.minlength">
@@ -56,28 +76,37 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" id="descripcion" placeholder="Ingresa una descripcion" rows="4" [(ngModel)]="noticia.descripcion" name="descripcion" #descripcion="ngModel" required minlength="130"></textarea>
+                                <textarea class="form-control" id="descripcion" placeholder="Ingresa una descripcion"
+                                    rows="4" [(ngModel)]="noticia.descripcion" name="descripcion" #descripcion="ngModel"
+                                    required minlength="130"></textarea>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="vigente" [checked]="noticia.vigente" (change)="noticia.vigente=!noticia.vigente">
+                                <input class="form-check-input" type="checkbox" value="" id="vigente"
+                                    [checked]="noticia.vigente" (change)="noticia.vigente=!noticia.vigente">
                                 <label class="form-check-label" for="vigente">
-                              Vigente
-                            </label>
+                                    Vigente
+                                </label>
                             </div>
 
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn facebook-btn" (click)="postFb()" [disabled]="formAgregarNoticia.invalid"><i class="fab fa-facebook-f"></i> Publicar en Facebook</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarNoticias()">Cancelar</button>
-                        <button type="button" class="btn btn-primary" *ngIf="noticia._id != null" [disabled]="formAgregarNoticia.invalid" (click)="actualizarNoticia()">Actualizar</button>
-                        <button type="button" class="btn btn-primary" *ngIf="noticia._id == null" [disabled]="formAgregarNoticia.invalid" (click)="guardarNoticia()">Agregar</button>
+                        <button type="button" class="btn facebook-btn" (click)="postFb()"
+                            [disabled]="formAgregarNoticia.invalid"><i class="fab fa-facebook-f"></i> Publicar en
+                            Facebook</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            (click)="limpiarNoticias()">Cancelar</button>
+                        <button type="button" class="btn btn-primary" *ngIf="noticia._id != null"
+                            [disabled]="formAgregarNoticia.invalid" (click)="actualizarNoticia()">Actualizar</button>
+                        <button type="button" class="btn btn-primary" *ngIf="noticia._id == null"
+                            [disabled]="formAgregarNoticia.invalid" (click)="guardarNoticia()">Agregar</button>
                     </div>
                 </div>
             </div>
         </div>
-        <!--Data Table de Usuarios-->
-        <table class="table table-striped table-responsive mt-3 " [mfData]="listaFiltrada" #mf="mfDataTable" [mfRowsOnPage]="5">
+        <!--Data Table de Noticias-->
+        <table class="table table-striped table-responsive mt-3 " [mfData]="listaFiltrada" #mf="mfDataTable"
+            [mfRowsOnPage]="5">
             <thead class="thead-dark">
                 <tr>
                     <th style="width: 10%">
@@ -110,8 +139,10 @@
                     <td>{{n.fecha | date :'dd-MM-yyyy h:mm a'}}</td>
                     <td>{{n.vigente && 'Si' || 'No'}}</td>
                     <td>{{n.usuario.usuario}}</td>
-                    <td> <button class="btn btn-danger mr-1" (click)="eliminarNoticia(n)"><i class="far fa-trash-alt"></i></button>
-                        <button class="btn btn-info" (click)="seleccionarNoticia(n)" data-toggle="modal" data-target="#modalAgregarUsuario"><i class="fas fa-edit"></i></button>
+                    <td> <button class="btn btn-danger mr-1" (click)="eliminarNoticia(n)"><i
+                                class="far fa-trash-alt"></i></button>
+                        <button class="btn btn-info" (click)="seleccionarNoticia(n)" data-toggle="modal"
+                            data-target="#modalAgregarUsuario"><i class="fas fa-edit"></i></button>
                     </td>
                 </tr>
             </tbody>
@@ -124,7 +155,19 @@
             </tfoot>
         </table>
     </div>
-    <div class="row img-thumbnail shadow-lg">
+
+
+    <div class="col-sm-12 col-md-10 offset-md-1 mt-5"
+        *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
+        <div class="mt-5 separadorAdministrativa">
+            <h3 class="text-left my-3 font-weight-bolder badge badge-danger">
+                SECCIÓN PÚBLICA
+            </h3>
+        </div>
+    </div>
+    
+    <!-- SLIDER DE PRESENTACIÓN -->
+    <div class="col-12 img-thumbnail shadow-lg">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -157,21 +200,22 @@
         </div>
     </div>
 
-    <div class="row mt-5">
-        <div class="col-12 text-center">
-            <h1 class="">Ultimas Noticias</h1>
-            <hr>
+    <!-- SECCIÓN PUBLICA DE NOTICIAS -->
+    <div class="col-sm-12 col-md-10 offset-md-1 mt-5">
+        <div class="col-12 text-center tituloPrincipal separadorTituloP">
+            <h1 class="">Últimas Noticias</h1>
         </div>
         <content class="col-md-12">
             <div class="row row-cols-1 row-cols-md-3">
                 <div class="col-md-4 col-sm-6" *ngFor="let item of listaNoticias">
                     <a [routerLink]="['/noticia', item._id]">
-                        <div class="card"></div>
-                        <img [src]="item.imagen" alt="Responsive image" class="card-img-top img-fluid img">
-                        <div class="card-body text-formato p-0">
-                            <h5 class="text">
-                                {{item.titulo}}
-                            </h5>
+                        <div class="card bg-light estiloCar">
+                            <img [src]="item.imagen" alt="Responsive image" class="card-img-top img-fluid img">
+                            <div class="card-body text-formato px-3">
+                                <h5 class="text">
+                                    {{item.titulo}}
+                                </h5>
+                            </div>
                         </div>
                     </a>
                 </div>

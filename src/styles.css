@@ -5,22 +5,68 @@ html {
 }
 
 body {
+    background-color: darkgrey;
     background-image: url(assets/img/fondo4.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
+    color: black;
 }
 
 .mt-header {
     margin-top: 6rem;
 }
 
-.blue {
+.fondoContenido{
+    background-color:rgba(230, 230, 230, .85);
+    border-radius: 4%;
+    box-shadow: 0px 0px 5px 1px rgb(134, 133, 133);
+}
+
+.tituloPrincipal {
+    font-family: Arial Black; 
+    font-weight: bold;
+    font-size: 30px; 
+    background: #141414; 
+    -webkit-background-clip: text; 
+    -moz-background-clip: text; 
+    background-clip: text; 
+    color: transparent; 
+    text-shadow: 0px 3px 3px rgba(177, 176, 176, 0.4),0px -1px 1px rgba(0,0,0,0.3);
+}
+
+.separadorTituloP { 
+    border-bottom: solid 2px rgba(68, 66, 66, 0.74);
+}
+
+.tituloSecundario {
+    background: linear-gradient(#ffffff, #619adb, #ffffff);
+    color: black;
+    border-radius: 2%;
+}
+
+.separadorAdministrativa {
+    border-top: solid 3px rgba(0, 0, 0, 0.904);
+}
+
+p {
+    color: black;
+    font-family: 'Verdana', sans-serif;
+    font-weight: 500;
+}
+
+.estiloCar {
+    border-radius: 4%;
+    box-shadow: 0px 0px 5px 1px rgb(105, 105, 105);
+}
+
+
+/* .blue {
     background-color: #0073b1;
     color: white;
 }
 
 b:hover {
     background-color: #0e8dd6;
-}
+} */

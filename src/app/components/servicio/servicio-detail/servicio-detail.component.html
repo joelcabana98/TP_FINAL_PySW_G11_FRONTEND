@@ -1,129 +1,133 @@
-<section class="row mt-header">
+<section class="mt-header fondoContenido pb-4">
+    <div class="row">
+        <div class="col-md-10 offset-md-1 col-lg-10 offset-lg-1">
+            <h3 class="text-left my-3 font-weight-bolder badge badge-danger">SECCIÓN ADMINISTRATIVA</h3>
+            <!-- ====== FORMULARIO DE SERVICIO A MOSTRAR ====== -->
+            <form class="card bg-light-gray p-3 was-validated estiloCar font-weight-bolder" novalidate>
 
-    <!-- ====== FORMULARIO DE SERVICIO A MOSTRAR ====== -->
-    <form class="card col-md-10 offset-md-1 col-lg-10 offset-lg-1 p-0 was-validated 
-        rounded font-weight-bolder" novalidate>
+                <h4 class="card-header text-center font-weight-bold">Detalle del Servicio</h4>
 
-        <h4 class="card-header text-center font-weight-bold">Detalle del Servicio</h4>
+                <div class="card-body">
 
-        <div class="card-body bg-light">
+                    <div class="row form-group">
+                        <label class="col-sm-12 col-md-4" for="nombre">Nombre: </label>
+                        <input type="text" class="form-control col-sm-12 col-md-8" id="nombre" name="nombre"
+                            placeholder="Ingrese nombre del Servicio" readonly [(ngModel)]="servicio.nombre"
+                            #nombreServicio="ngModel" required />
+                    </div>
 
-            <div class="row form-group">
-                <label class="col-sm-12 col-md-4" for="nombre">Nombre: </label>
-                <input type="text" class="form-control col-sm-12 col-md-8" id="nombre" name="nombre"
-                    placeholder="Ingrese nombre del Servicio" readonly [(ngModel)]="servicio.nombre"
-                    #nombreServicio="ngModel" required />
-            </div>
+                    <div class="row form-group">
+                        <label class="col-sm-12 col-md-4" for="imagen">Imagen: </label>
+                        <img [src]="servicio.imagen" style="max-height: 250px;"
+                            class="img-thumbnail col-sm-12 col-md-6 offset-md-1">
+                    </div>
 
-            <div class="row form-group">
-                <label class="col-sm-12 col-md-4" for="imagen">Imagen: </label>
-                <img [src]="servicio.imagen" style="max-height: 250px;"
-                    class="img-thumbnail col-sm-12 col-md-6 offset-md-1 w-50">
-            </div>
+                    <div class="row form-group">
+                        <label class="col-sm-12 col-md-4" for="descripcion">Descripción: </label>
+                        <input type="text" class="form-control col-sm-12 col-md-8" id="descripcion" name="descripcion"
+                            placeholder="Ingrese una descripción" readonly [(ngModel)]="servicio.descripcion"
+                            #descripcionServicio="ngModel" required />
+                    </div>
 
-            <div class="row form-group">
-                <label class="col-sm-12 col-md-4" for="descripcion">Descripción: </label>
-                <input type="text" class="form-control col-sm-12 col-md-8" id="descripcion" name="descripcion"
-                    placeholder="Ingrese una descripción" readonly [(ngModel)]="servicio.descripcion"
-                    #descripcionServicio="ngModel" required />
-            </div>
+                    <div class="row form-group">
+                        <label class="col-sm-12 col-md-4" for="activo">Activo: </label>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="actSi" name="activo" class="custom-control-input"
+                                [(ngModel)]="servicio.activo" [value]="true" disabled required>
+                            <label class="custom-control-label" for="actSi">SI</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="actNo" name="activo" class="custom-control-input"
+                                [(ngModel)]="servicio.activo" [value]="false" disabled required>
+                            <label class="custom-control-label" for="actNo">NO</label>
+                        </div>
+                    </div>
 
-            <div class="row form-group">
-                <label class="col-sm-12 col-md-4" for="activo">Activo: </label>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="actSi" name="activo" class="custom-control-input"
-                        [(ngModel)]="servicio.activo" [value]="true" readonly required>
-                    <label class="custom-control-label" for="actSi">SI</label>
+                    <!-- ========== TABLA LOS AFILIADOS INSCRIPTOS AL SERVICIO ========== -->
+                    <div class="d-flex bd-highlight my-2">
+                        <h4 class="flex-grow-1 text-center text-dark font-weight-bold p-2 mb-2">Lista de Inscriptos al Servicio</h4>
+                    </div>
+                    <div class="table-responsive bg-light">
+                        <table id="tablaInscriptos" class="table table-hover table-striped text-center p-0"
+                            [mfData]="servicio.afiliadosInsc" #mf="mfDataTable" [mfRowsOnPage]="10">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">
+                                        <mfDefaultSorter by="apellido">Apellido</mfDefaultSorter>
+                                    </th>
+                                    <th scope="col">
+                                        <mfDefaultSorter by="nombres">Nombres</mfDefaultSorter>
+                                    </th>
+                                    <th scope="col" style="width: 20%;">Imagen</th>
+                                    <th scope="col">DNI</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Teléfono</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-light" *ngIf="servicio.afiliadosInsc">
+                                <tr *ngIf="!servicio.afiliadosInsc.length" class="table-secondary">
+                                    <td [attr.colspan]="8" class="text-center">No se encontraron Afiliados inscriptos.
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let afil of mf.data; let i=index">
+                                    <td>{{i + 1}}</td>
+                                    <td>{{afil.apellido}}</td>
+                                    <td>{{afil.nombres}}</td>
+                                    <td><img src="{{afil.imagen}}" class="img-thumbnail img-fluid w-auto"
+                                            alt="imagen serv" style="height: 120px;"></td>
+                                    <td class="text-justify">{{afil.dni}}</td>
+                                    <td class="text-justify">{{afil.email}}</td>
+                                    <td class="text-justify">{{afil.telefono}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-light" data-toggle="modal"
+                                            data-target="#modalDeleteAfi" (click)="selectAfiliado(afil, i)">
+                                            <i class="fas fa-trash-alt" style="color: red"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="align-items-center">
+                                    <td colspan="6">
+                                        <mfBootstrapPaginator></mfBootstrapPaginator>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="form-group row text-center mt-2">
+                        <div class="offset-md-2 col-md-10">
+                            <button type="button" class="btn btn-default" routerLink="/servicio">Volver</button>
+                            <button type="button" class="btn btn-warning shadow-lg align-self-end ml-2"
+                                (click)="generarPDF()"><i class="fas fa-print"></i> Imprimir Detalle</button>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="actNo" name="activo" class="custom-control-input"
-                        [(ngModel)]="servicio.activo" [value]="false" readonly required>
-                    <label class="custom-control-label" for="actNo">NO</label>
-                </div>
-            </div>
+            </form>
 
-            <!-- ========== TABLA LOS AFILIADOS INSCRIPTOS AL SERVICIO ========== -->
-            <div class="d-flex bd-highlight my-2">
-                <h3 class="flex-grow-1 text-center text-dark p-2 mb-2">Lista de Inscriptos al Servicio</h3>
-            </div>
-            <div class="table-responsive bg-light border-form">
-                <table id="tablaInscriptos" class="table table-hover table-striped text-center p-0"
-                    [mfData]="servicio.afiliadosInsc" #mf="mfDataTable" [mfRowsOnPage]="5">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">
-                                <mfDefaultSorter by="apellido">Apellido</mfDefaultSorter>
-                            </th>
-                            <th scope="col">
-                                <mfDefaultSorter by="nombres">Nombres</mfDefaultSorter>
-                            </th>
-                            <th scope="col" style="width: 20%;">Imagen</th>
-                            <th scope="col">DNI</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Teléfono</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-light" *ngIf="servicio.afiliadosInsc">
-                        <tr *ngIf="!servicio.afiliadosInsc.length" class="table-secondary">
-                            <td [attr.colspan]="8" class="text-center">No se encontraron Afiliados inscriptos.</td>
-                        </tr>
-                        <tr *ngFor="let afil of mf.data; let i=index">
-                            <td>{{i + 1}}</td>
-                            <td>{{afil.apellido}}</td>
-                            <td>{{afil.nombres}}</td>
-                            <td><img src="{{afil.imagen}}" class="img-responsive img-thumbnail img-fluid w-100"
-                                    alt="imagen serv" style="height: 120px;"></td>
-                            <td class="text-justify">{{afil.dni}}</td>
-                            <td class="text-justify">{{afil.email}}</td>
-                            <td class="text-justify">{{afil.telefono}}</td>
-                            <td>
-                                <button type="button" class="btn btn-light" data-toggle="modal"
-                                    data-target="#modalDeleteAfi" (click)="selectAfiliado(afil, i)">
-                                    <i class="fas fa-trash-alt" style="color: red"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr class="align-items-center">
-                            <td colspan="6">
-                                <mfBootstrapPaginator></mfBootstrapPaginator>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-
-            <div class="form-group row text-center">
-                <div class="offset-md-2 col-md-10">
-                    <button type="button" class="btn btn-default" routerLink="/servicio">Volver</button>
-                    <button type="button" class="btn btn-warning shadow-lg align-self-end ml-2"
-                        (click)="generarPDF()"><i class="fas fa-print"></i> Imprimir Detalle</button>
-                </div>
-            </div>
-
-        </div>
-    </form>
-
-    <!-- MODAL DELETE AFILIADO-->
-    <div class="modal fade" id="modalDeleteAfi" tabindex="-1" role="dialog" aria-labelledby="modalDeleteAfiliado"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalDeleteAfiliado">Eliminar Afiliado del Servicio</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Desea eliminar el afiliado {{afiliado?.apellido}} del Servicio?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="button" class="btn btn-primary" (click)="eliminarAfiliado()">Si</button>
+            <!-- MODAL DELETE AFILIADO-->
+            <div class="modal fade" id="modalDeleteAfi" tabindex="-1" role="dialog"
+                aria-labelledby="modalDeleteAfiliado" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalDeleteAfiliado">Eliminar Afiliado del Servicio</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Desea eliminar el afiliado {{afiliado?.apellido}} del Servicio?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-primary" (click)="eliminarAfiliado()">Si</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
