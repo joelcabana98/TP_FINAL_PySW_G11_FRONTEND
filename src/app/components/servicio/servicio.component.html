@@ -1,30 +1,36 @@
-<div class="row mt-header">
-
-    <!-- SECCIÓN PUBLICA -->
-    <section class="col-md-10 offset-md-1">
-        <div class="col-12 text-center mt-2 px-0">
-            <h2>Servicios Ofrecidos</h2>
-            <hr>
-        </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
-            <ng-container *ngFor="let listServ of listaServicios">
-                <div class="col my-1" *ngIf="listServ.activo !== false">
-                    <div class="car border rounded">
-                        <img class="card-img-top img-fluid img" [src]="listServ.imagen" alt="imagen-servicio">
-                        <div class="card-body px-3 justify-content-between">
-                            <h4 class="card-title">{{listServ.nombre}}</h4>
-                            <p class="card-text">{{listServ.descripcion}}</p>
-                            <div *ngIf="loginService.userLoggedIn">
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#modalInsc"
-                                    (click)="seleccionarServicio(listServ)">Inscribirse</button>
+<div class="mt-header fondoContenido pb-4">
+    <div class="row">
+        <!-- SECCIÓN PUBLICA -->
+        <section class="col-sm-12 col-md-10 offset-md-1">
+            <h3 class="text-left my-3 font-weight-bolder badge badge-danger"
+                *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
+                SECCIÓN PÚBLICA
+            </h3>
+            <div class="col-12 text-center my-4 px-0 tituloPrincipal">
+                <h2>Servicios de nuestra Obra Social</h2>
+            </div>
+            <p> Aquí encontrara los diferentes servicios que ofrece nuestra obra social a todos sus afiliados.
+                Todos nuestros servicios son dictados de forma <strong>gratuita</strong>.</p>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+                <ng-container *ngFor="let listServ of listaServicios">
+                    <div class="col my-1" *ngIf="listServ.activo !== false">
+                        <div class="car bg-light estiloCar">
+                            <img class="card-img-top img-fluid img" [src]="listServ.imagen" alt="imagen-servicio">
+                            <div class="card-body px-3 justify-content-between">
+                                <h4 class="card-title py-1 tituloSecundario">{{listServ.nombre}}</h4>
+                                <p class="card-text">{{listServ.descripcion}}</p>
+                                <div *ngIf="loginService.userLoggedIn">
+                                    <button type="button" class="btn btn-primary estiloBoton" data-toggle="modal"
+                                        data-target="#modalInsc"
+                                        (click)="seleccionarServicio(listServ)">Inscribirse</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </ng-container>
-        </div>
-    </section>
+                </ng-container>
+            </div>
+        </section>
+    </div>
 
     <!-- MODAL DE CONFIRMACIÓN DE INSCRIPCIÓN -->
     <div class="modal fade" id="modalInsc" tabindex="-1" role="dialog" aria-labelledby="modalInscribirServicio"
@@ -47,115 +53,120 @@
             </div>
         </div>
     </div>
-</div>
 
 
-<!-- ======== SECCIÓN SOLO PARA ADMINISTRATIVO Y ADMINISTRADOR ======== -->
-<div class="row my-2"
-    *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
-    <div class="col-md-10 offset-md-1">
-        <!-- ====== TABLA DE SERVICIOS ====== -->
-        <div class="d-md-flex bd-highlight my-2">
-            <h3 class="flex-md-grow-1 text-center text-dark p-2 mb-2">Lista de Servicios</h3>
-            <button type="button" class="btn btn-primary shadow rounded float-md-right align-self-end"
-                routerLink="/servicioNew"><i class="fas fa-plus"></i> Nuevo Servicio</button>
-            <button type="button" class="btn btn-warning shadow-lg float-md-right align-self-end ml-2"
-                (click)="generarPDF()"><i class="fas fa-print"></i></button>
+
+    <!-- ======== SECCIÓN SOLO PARA ADMINISTRATIVO Y ADMINISTRADOR ======== -->
+    <div class="row my-2"
+        *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
+        <div class="col-sm-12 col-md-10 offset-md-1">
+            <div class="mt-5 seccionAdministrativa">
+                <h3 class="text-left my-3 font-weight-bolder badge badge-danger">SECCIÓN ADMINISTRATIVA</h3>
+            </div>
+            <!-- ====== TABLA DE SERVICIOS ====== -->
+            <div class="d-md-flex my-2">
+                <h3 class="flex-md-grow-1 tituloAdmin text-center p-2 mb-2">Lista de Servicios</h3>
+                <button type="button" class="btn btn-primary estiloBoton float-md-right align-self-end"
+                    routerLink="/servicioNew"><i class="fas fa-plus"></i> Nuevo Servicio</button>
+                <button type="button" class="btn btn-warning estiloBoton shadow-lg float-md-right align-self-end ml-2"
+                    (click)="generarPDF()"><i class="fas fa-print"></i></button>
+            </div>
+            <div class="table-responsive-sm bg-light border-form">
+                <table class="table table-hover table-striped text-center p-0" [mfData]="listaServicios"
+                    #mf="mfDataTable" [mfRowsOnPage]="10" id="tableServicios">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">
+                                <mfDefaultSorter by="nombre">Nombre</mfDefaultSorter>
+                            </th>
+                            <th scope="col" style="width: 30%;">Imagen</th>
+                            <th scope="col" style="width: 30%;">Descripción</th>
+                            <th scope="col">Activo</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-light" *ngIf="listaServicios">
+                        <tr *ngIf="!listaServicios.length" class="table-secondary">
+                            <td [attr.colspan]="6" class="text-center">No se encontraron Servicios.</td>
+                        </tr>
+                        <tr *ngFor="let serv of mf.data; let i=index">
+                            <td>{{i + 1}}</td>
+                            <td>{{serv.nombre}}</td>
+                            <td><img src="{{serv.imagen}}" class="img-fluid img-thumbnail w-auto"
+                                    alt="imagen serv" style="height: 120px;"></td>
+                            <td class="text-justify">{{serv.descripcion}}</td>
+                            <td>
+                                <p *ngIf="serv.activo">SI</p>
+                                <p *ngIf="!serv.activo">NO</p>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-light" data-toggle="modal"
+                                    data-target="#modalDelete" (click)="seleccionarServicio(serv)"><i
+                                        class="fas fa-trash-alt" style="color: red"></i></button>
+                                <button type="button" class="btn btn-light" (click)="updateServicio(serv)">
+                                    <i class="fas fa-pencil-alt" style="color: green"></i></button>
+                                <button type="button" class="btn btn-light">
+                                    <i class="fas fa-eye" style="color: orange"
+                                        (click)="detailServicio(serv)"></i></button>
+                                <button type="button" class="btn btn-light" data-toggle="modal"
+                                    data-target="#modalFacebook" (click)="seleccionarServicio(serv)">
+                                    <i class="fab fa-facebook-square" style="color: blue;"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="align-items-center">
+                            <td colspan="6">
+                                <mfBootstrapPaginator></mfBootstrapPaginator>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
-        <div class="table-responsive bg-light border-form">
-            <table class="table table-hover table-striped text-center p-0" [mfData]="listaServicios" #mf="mfDataTable"
-                [mfRowsOnPage]="5" id="tableServicios">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">
-                            <mfDefaultSorter by="nombre">Nombre</mfDefaultSorter>
-                        </th>
-                        <th scope="col" style="width: 30%;">Imagen</th>
-                        <th scope="col" style="width: 30%;">Descripción</th>
-                        <th scope="col">Activo</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-light" *ngIf="listaServicios">
-                    <tr *ngIf="!listaServicios.length" class="table-secondary">
-                        <td [attr.colspan]="6" class="text-center">No se encontraron Servicios.</td>
-                    </tr>
-                    <tr *ngFor="let serv of mf.data; let i=index">
-                        <td>{{i + 1}}</td>
-                        <td>{{serv.nombre}}</td>
-                        <td><img src="{{serv.imagen}}" class="img-responsive img-thumbnail img-fluid w-50"
-                                alt="imagen serv" style="height: 120px;"></td>
-                        <td class="text-justify">{{serv.descripcion}}</td>
-                        <td>
-                            <p *ngIf="serv.activo">SI</p>
-                            <p *ngIf="!serv.activo">NO</p>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#modalDelete"
-                                (click)="seleccionarServicio(serv)"><i class="fas fa-trash-alt"
-                                    style="color: red"></i></button>
-                            <button type="button" class="btn btn-light" (click)="updateServicio(serv)">
-                                <i class="fas fa-pencil-alt" style="color: green"></i></button>
-                            <button type="button" class="btn btn-light">
-                                <i class="fas fa-eye" style="color: orange" (click)="detailServicio(serv)"></i></button>
-                            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#modalFacebook"
-                                (click)="seleccionarServicio(serv)">
-                                <i class="fab fa-facebook-square" style="color: blue;"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr class="align-items-center">
-                        <td colspan="6">
-                            <mfBootstrapPaginator></mfBootstrapPaginator>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
 
-    <!-- MODAL DELETE-->
-    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteServicio"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalDeleteServicio">Eliminar Servicio</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Desea eliminar el Servicio {{servicio?.nombre}}?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="button" class="btn btn-primary" (click)="eliminarServicio()">Si</button>
+        <!-- MODAL DELETE-->
+        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteServicio"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalDeleteServicio">Eliminar Servicio</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Desea eliminar el Servicio {{servicio?.nombre}}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" (click)="eliminarServicio()">Si</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- MODAL FACEBOOK-->
-    <div class="modal fade" id="modalFacebook" tabindex="-1" role="dialog" aria-labelledby="modalPublicarFace"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalPublicarFace">Publicar en Facebook</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Desea publicar el Servicio "{{servicio?.nombre}}" en la página de Facebook?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="button" class="btn btn-primary" (click)="postFb()">Si</button>
+        <!-- MODAL FACEBOOK-->
+        <div class="modal fade" id="modalFacebook" tabindex="-1" role="dialog" aria-labelledby="modalPublicarFace"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalPublicarFace">Publicar en Facebook</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Desea publicar el Servicio "{{servicio?.nombre}}" en la página de Facebook?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" (click)="postFb()">Si</button>
+                    </div>
                 </div>
             </div>
         </div>
