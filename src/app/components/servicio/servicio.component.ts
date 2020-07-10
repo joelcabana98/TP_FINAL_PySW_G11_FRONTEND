@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { AfiliadoService } from 'src/app/services/afiliado.service';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { FacebookService, InitParams, LoginResponse } from 'ngx-fb';
+import { ApiMethod } from 'ngx-fb/dist/esm/providers/facebook';
 
 @Component({
   selector: 'app-servicio',
@@ -22,7 +24,9 @@ export class ServicioComponent implements OnInit {
               private servicioService: ServicioService,
               private _toastr: ToastrService,
               private router: Router,
-              private afiliadoService: AfiliadoService) {
+              private afiliadoService: AfiliadoService,
+              private fb: FacebookService) {
+    this.iniciarFb();
     this.servicio = new Servicio();
     this.obtenerServicios();
   }
@@ -231,4 +235,28 @@ export class ServicioComponent implements OnInit {
     doc.save("reporte_servicios");
   }
 
+
+  /**
+   * Métodos para poner un anuncio en la página de Facebook.
+   */
+  public postFb(){
+    var apiMethod: ApiMethod = "post";
+    this.fb.api('/103929938064533/feed', apiMethod, {
+      "message": this.servicio.nombre + "\n\n" + this.servicio.descripcion,
+      "access_token":"EAAD8tWYpkcgBAIrLUs5JWyPycZARnd5v4VyoehiH8WvrIwOAwJIBKUSBvwxKu4sbxZBW6u9euHV8dTC9j5m0TxjUrQvGQKT9dEpTGxZBCKKxga0OfftZBrl18CkdNRhjVMErESNBsi8VmpV9mL8lhvzQsFaQ5iwHNK9vD4J37fTN4wGRAhFOqEpo3qsMEQtbV9ZBjS3sLRQZDZD"
+    });
+    $('#modalFacebook').modal('hide');
+    this._toastr.success('Servicio publicado en Facebook.', 'Exito!!');
+    this.limpiarServicio();
+  }
+  
+  public iniciarFb(){ 
+    let initParams: InitParams = { 
+      appId: '277856033280456',
+      autoLogAppEvents : true,
+      xfbml : true,
+      version : 'v7.0' 
+    };
+    this.fb.init(initParams);
+  }
 }
