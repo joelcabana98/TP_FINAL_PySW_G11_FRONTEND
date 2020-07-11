@@ -19,7 +19,7 @@
                             placeholder="Apellido" #apellido="ngModel" required maxlength="20">
                     </div>
                     <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)" class="">
-                        <p class="text-danger">DNI es requerido</p>
+                        <p class="text-danger">Apellido es requerido</p>
                     </div>
 
                     <!-- NOMBRES -->
@@ -29,7 +29,7 @@
                             placeholder="Nombres" #nombres="ngModel" required maxlength="40">
                     </div>
                     <div *ngIf="nombres.invalid && (nombres.dirty || nombres.touched)" class="">
-                        <p class="text-danger">DNI es requerido</p>
+                        <p class="text-danger">Nombre es requerido</p>
                     </div>
 
                     <!-- DNI -->
@@ -59,7 +59,10 @@
                     <div class="form-group">
                         <label>Teléfono</label>
                         <input type="number" class="form-control" name="telefono" [(ngModel)]="afiliado.telefono"
-                            placeholder="Numero de Telefono">
+                            placeholder="Numero de Telefono" required #telefonoAfil>
+                    </div>
+                    <div *ngIf="telefonoAfil.invalid && (telefonoAfil.dirty || telefonoAfil.touched)" class="">
+                        <p class="text-danger">Telefono es requerido</p>
                     </div>
 
                     <!--CARGA DE IMAGENES-->
@@ -67,8 +70,11 @@
                         <label>Foto</label>
                         <input type="file" alife-file-to-base64 multiple class="form-control" name="imagen"
                             (onFileChanged)="onFileChanges($event)"
-                            accept="image/x-png,image/gif,image/jpeg, image/jpg">
+                            accept="image/x-png,image/gif,image/jpeg, image/jpg" required #imagenAfil>
                         <img [src]="afiliado.imagen" width="800" height="400" class="img-fluid">
+                    </div>
+                    <div *ngIf="imagenAfil.invalid && (imagenAfil.dirty || imagenAfil.touched)" class="">
+                        <p class="text-danger">Una Foto es requerida</p>
                     </div>
                 </form>
             </div>
