@@ -15,6 +15,10 @@ export class NovedadComponent implements OnInit {
 
   novedad: Novedad;
   listaNovedades: Array<Novedad>;
+  listaFiltro: Array<Novedad>;
+
+  fechaDesde: Date;
+  fechaHasta: Date;
 
   constructor(public loginService: LoginService,
               private novedadService: NovedadService,
@@ -24,7 +28,7 @@ export class NovedadComponent implements OnInit {
     // En caso contrario redirecciona a la pagina Home
     if (!this.loginService.userLoggedIn) {
       this.router.navigateByUrl('/home');
-    }            
+    }
     this.novedad = new Novedad();
     if (this.loginService.userIsAdministrativo || this.loginService.userIsAdministrador) {
       this.obtenerNovedades();
@@ -56,6 +60,7 @@ export class NovedadComponent implements OnInit {
   public enviarNovedad() {
     this.novedad.usuario = this.loginService.userLogged;
     this.novedad.estado = 'pendiente';
+    this.novedad.fecha = new Date();
     this.novedadService.addNovedad(this.novedad).subscribe(
       (result) => {
         this._toastr.success('Novedad enviada correctamente.', 'Exito!!');
@@ -81,12 +86,30 @@ export class NovedadComponent implements OnInit {
           Object.assign(vNovedad, element);
           this.listaNovedades.push(vNovedad);
         });
+        this.listaFiltro = new Array<Novedad>();
+        this.listaFiltro = this.listaNovedades;
       },
       (error) => {
         this._toastr.error('Error en obtener las Novedades.', 'Error!!');
         console.log('Error de petición: ' + error);
       }
     );
+  }
+
+  /**
+   * Obtengo las novedad por Fecha
+   */
+  public filtrarPorFecha() {
+    if (this.fechaDesde <= this.fechaHasta) {
+      this.listaFiltro = new Array<Novedad>();
+      this.listaFiltro = this.listaNovedades;
+      this.listaFiltro = this.listaFiltro.filter(
+        novedad => (((novedad.fecha < this.fechaHasta) && (novedad.fecha > this.fechaDesde)) ||
+          (novedad.fecha == this.fechaDesde) || (novedad.fecha == this.fechaHasta))
+      );
+    } else {
+      this._toastr.error("La fecha de inicio debe ser anterior a la de fin.", "Error!!");
+    }
   }
 
   /**

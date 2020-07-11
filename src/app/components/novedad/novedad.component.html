@@ -80,28 +80,54 @@
         <div class="d-md-flex my-3 separadorTituloP">
             <h3 class="flex-md-grow-1 tituloPrincipal text-center p-2 mb-2">Gestión de Novedades</h3>
         </div>
+
+        <div class="form-row align-middle mt-3">
+            <label for="fecha" class="col-md-2 py-1">Filtrar por fecha:</label>
+            <div class="form-group col-md-3">
+                <input [(ngModel)]="fechaDesde" class="form-control" type="date" name="fecha">
+            </div>
+            <div class="form-group col-md-3">
+                <input [(ngModel)]="fechaHasta" class="form-control" type="date" name="fecha">
+            </div>
+            <div class="form-group col-md-1">
+                <button type="button" class="btn btn-primary" (click)="filtrarPorFecha()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="form-group col-md-3 text-right">
+                <button type="button" class="btn btn-primary" (click)="obtenerNovedades()">
+                    Ver todos
+                </button>
+            </div>
+        </div>
         <!-- ====== TABLA DE NOVEDADES ====== -->
         <div class="table-responsive bg-light">
-            <table class="table table-hover table-striped text-center p-0" [mfData]="listaNovedades" #mf="mfDataTable"
-                [mfRowsOnPage]="5">
+            <table class="table table-hover table-striped text-center p-0" [mfData]="listaFiltro" #mf="mfDataTable"
+                [mfRowsOnPage]="10">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">
                             <mfDefaultSorter by="usuario.usuario">Usuario</mfDefaultSorter>
                         </th>
+                        <th scope="col">
+                            <mfDefaultSorter by="usuario.fecha">Fecha</mfDefaultSorter>
+                        </th>
                         <th scope="col" style="width: 30%;">Texto</th>
-                        <th scope="col">Estado</th>
+                        <th scope="col">
+                            <mfDefaultSorter by="usuario.estado">Estado</mfDefaultSorter>
+                        </th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="bg-light" *ngIf="listaNovedades">
                     <tr *ngIf="!listaNovedades.length" class="table-secondary">
-                        <td [attr.colspan]="5" class="text-center">No se encontraron Novedades.</td>
+                        <td [attr.colspan]="6" class="text-center">No se encontraron Novedades.</td>
                     </tr>
                     <tr *ngFor="let nov of mf.data; let i=index">
                         <td>{{i + 1}}</td>
                         <td>{{nov.usuario.usuario}}</td>
+                        <td>{{nov.fecha | date :'dd-MM-yyyy'}}</td>
                         <td class="text-justify">{{nov.texto}}</td>
                         <td [class.text-danger]="nov.estado == 'pendiente'">{{nov.estado | titlecase}}</td>
                         <td>
