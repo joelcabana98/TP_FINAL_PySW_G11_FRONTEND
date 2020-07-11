@@ -62,13 +62,13 @@
             </div>
             <!-- ====== TABLA DE SERVICIOS ====== -->
             <div class="d-md-flex my-2">
-                <h3 class="flex-md-grow-1 tituloPrincipal text-center p-2 mb-2">Lista de Servicios</h3>
+                <h3 class="flex-md-grow-1 tituloPrincipal text-center p-2 mb-2">Gestión de Servicios</h3>
                 <button type="button" class="btn btn-primary estiloBoton float-md-right align-self-end"
                     routerLink="/servicioNew"><i class="fas fa-plus"></i> Nuevo Servicio</button>
                 <button type="button" class="btn btn-warning estiloBoton shadow-lg float-md-right align-self-end ml-2"
                     (click)="generarPDF()"><i class="fas fa-print"></i></button>
             </div>
-            <div class="table-responsive-sm bg-light border-form">
+            <div class="table-responsive-sm bg-light">
                 <table class="table table-hover table-striped text-center p-0" [mfData]="listaServicios"
                     #mf="mfDataTable" [mfRowsOnPage]="10" id="tableServicios">
                     <thead class="thead-dark">

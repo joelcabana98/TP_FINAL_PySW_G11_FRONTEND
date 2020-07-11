@@ -1,37 +1,42 @@
-<section class="row mt-header">
+<section class="mt-header fondoContenido pb-4">
+    <div class="row">
+        <div class="col-md-10 offset-md-1 col-lg-10 offset-lg-1">
+            <h3 class="text-left my-3 font-weight-bolder badge badge-danger">SECCIÓN ADMINISTRATIVA</h3>
 
-    <!-- ====== FORMULARIO DE SERVICIO ====== -->
-    <form class="card col-md-10 offset-md-1 col-lg-8 offset-lg-2 p-0 was-validated 
-        rounded font-weight-bolder" novalidate>
+            <!-- ====== FORMULARIO DE NOVEDAD ====== -->
+            <form class="card p-0 was-validated rounded font-weight-bolder estiloCar" novalidate>
 
-        <h4 class="card-header text-center font-weight-bold">Ver Novedad</h4>
+                <h4 class="card-header text-center font-weight-bold">Ver Novedad</h4>
 
-        <div class="card-body bg-light">
+                <div class="card-body bg-light">
 
-            <div class="row form-group">
-                <label class="col-sm-12 col-md-4" for="nombre">Usuario: </label>
-                <input type="text" class="form-control col-sm-12 col-md-8" id="usuario" name="usuario"
-                    [(ngModel)]="novedad.usuario.usuario" readonly required />
-            </div>
+                    <div class="row form-group">
+                        <label class="col-sm-12 col-md-3" for="nombre">Usuario: </label>
+                        <input type="text" class="form-control col-sm-12 col-md-9" id="usuario" name="usuario"
+                            [(ngModel)]="novedad.usuario.usuario" readonly required />
+                    </div>
 
-            <div class="row form-group">
-                <label class="col-sm-12 col-md-4" for="estado">Estado: </label>
-                <input type="text" class="form-control col-sm-12 col-md-8" id="estado" name="estado"
-                    [(ngModel)]="novedad.estado" readonly required />
-            </div>
+                    <div class="row form-group">
+                        <label class="col-sm-12 col-md-3" for="estado">Estado: </label>
+                        <input type="text" class="form-control col-sm-12 col-md-9" id="estado" name="estado"
+                            [(ngModel)]="novedad.estado" readonly required />
+                    </div>
 
-            <div class="row form-group">
-                <label class="col-sm-12 col-md-4" for="texto">Texto: </label>
-                <textarea class="form-control col-sm-12 col-md-8" id="texto" name="texto" rows="5" maxlength="200"
-                    [(ngModel)]="novedad.texto" readonly required></textarea>
-            </div>
+                    <div class="row form-group">
+                        <label class="col-sm-12 col-md-3" for="texto">Texto: </label>
+                        <textarea class="form-control col-sm-12 col-md-9" id="texto" name="texto" rows="5"
+                            maxlength="200" [(ngModel)]="novedad.texto" readonly required></textarea>
+                    </div>
 
-            <div class="form-group row text-center">
-                <div class="offset-md-2 col-md-10">
-                    <button type="button" class="btn btn-primary" (click)="procesarNovedad()">Confirmado</button>
+                    <div class="form-group row text-center">
+                        <div class="offset-md-2 col-md-10">
+                            <button type="button" class="btn btn-default" routerLink="/novedad">Volver</button>
+                            <button type="button" class="btn btn-primary"(click)="procesarNovedad()">Confirmado</button>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
-
+            </form>
         </div>
-    </form>
+    </div>
 </section>

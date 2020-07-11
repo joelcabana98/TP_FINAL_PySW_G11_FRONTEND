@@ -1,5 +1,6 @@
 <!-- Modal Agregar Afiliado-->
-<div class="modal fade" id="modalAgregarAfiliado" tabindex="-1" role="dialog" aria-labelledby="modalAgregarAfiliado" aria-hidden="true">
+<div class="modal fade" id="modalAgregarAfiliado" tabindex="-1" role="dialog" aria-labelledby="modalAgregarAfiliado"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,7 +15,8 @@
                     <!-- APELLIDO -->
                     <div class="form-group">
                         <label>Apellido</label>
-                        <input type="text" class="form-control" name="apellido" [(ngModel)]="afiliado.apellido" placeholder="Apellido" #apellido="ngModel" required maxlength="20">
+                        <input type="text" class="form-control" name="apellido" [(ngModel)]="afiliado.apellido"
+                            placeholder="Apellido" #apellido="ngModel" required maxlength="20">
                     </div>
                     <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)" class="">
                         <p class="text-danger">DNI es requerido</p>
@@ -23,7 +25,8 @@
                     <!-- NOMBRES -->
                     <div class="form-group">
                         <label>Nombres</label>
-                        <input type="text" class="form-control" name="nombre" [(ngModel)]="afiliado.nombres" placeholder="Nombres" #nombres="ngModel" required maxlength="40">
+                        <input type="text" class="form-control" name="nombre" [(ngModel)]="afiliado.nombres"
+                            placeholder="Nombres" #nombres="ngModel" required maxlength="40">
                     </div>
                     <div *ngIf="nombres.invalid && (nombres.dirty || nombres.touched)" class="">
                         <p class="text-danger">DNI es requerido</p>
@@ -32,7 +35,8 @@
                     <!-- DNI -->
                     <div class="form-group">
                         <label>DNI</label>
-                        <input type="number" class="form-control" name="dni" [(ngModel)]="afiliado.dni" placeholder="D.N.I." #dniAfil="ngModel" required>
+                        <input type="number" class="form-control" name="dni" [(ngModel)]="afiliado.dni"
+                            placeholder="D.N.I." #dniAfil="ngModel" required>
                     </div>
                     <div *ngIf="dniAfil.invalid && (dniAfil.dirty || dniAfil.touched)" class="">
                         <p class="text-danger">DNI es requerido</p>
@@ -41,7 +45,9 @@
                     <!--EMAIL-->
                     <div class="form-group">
                         <label>Correo Electronico</label>
-                        <input type="email" class="form-control" name="email" [(ngModel)]="afiliado.email" placeholder="Ej. ejemplo@email.com" #email="ngModel" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                        <input type="email" class="form-control" name="email" [(ngModel)]="afiliado.email"
+                            placeholder="Ej. ejemplo@email.com" #email="ngModel" required
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                     </div>
                     <div *ngIf="email.invalid && (email.dirty ||email.touched)" class="">
                         <div *ngIf="email.errors.pattern">
@@ -52,107 +58,126 @@
                     <!--TELEFONO-->
                     <div class="form-group">
                         <label>Teléfono</label>
-                        <input type="number" class="form-control" name="telefono" [(ngModel)]="afiliado.telefono" placeholder="Numero de Telefono">
+                        <input type="number" class="form-control" name="telefono" [(ngModel)]="afiliado.telefono"
+                            placeholder="Numero de Telefono">
                     </div>
 
                     <!--CARGA DE IMAGENES-->
                     <div class="form-group">
                         <label>Foto</label>
-                        <input type="file" alife-file-to-base64 multiple class="form-control" name="imagen" (onFileChanged)="onFileChanges($event)" accept="image/x-png,image/gif,image/jpeg, image/jpg">
+                        <input type="file" alife-file-to-base64 multiple class="form-control" name="imagen"
+                            (onFileChanged)="onFileChanges($event)"
+                            accept="image/x-png,image/gif,image/jpeg, image/jpg">
                         <img [src]="afiliado.imagen" width="800" height="400" class="img-fluid">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarAfiliado()">Cancelar</button>
-                <button type="button" class="btn btn-primary" [disabled]="afiliadoForm.invalid" *ngIf="afiliado._id == null" data-dismiss="modal" (click)="agregarAfiliado()">Agregar</button>
-                <button type="button" class="btn btn-primary" [disabled]="afiliadoForm.invalid" *ngIf="afiliado._id != null" data-dismiss="modal" (click)="actualizarAfiliado()">Actualizar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="limpiarAfiliado()">Cancelar</button>
+                <button type="button" class="btn btn-primary" [disabled]="afiliadoForm.invalid"
+                    *ngIf="afiliado._id == null" data-dismiss="modal" (click)="agregarAfiliado()">Agregar</button>
+                <button type="button" class="btn btn-primary" [disabled]="afiliadoForm.invalid"
+                    *ngIf="afiliado._id != null" data-dismiss="modal" (click)="actualizarAfiliado()">Actualizar</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Operaciones CRUD -->
-<div class="row mt-header" *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
-    <div class="col-md-4 col-sm-12 my-1">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarAfiliado">
-            <i class="fas fa-user-plus mr-1"></i><span>Nuevo Afiliado</span>
-        </button>
-        <button type="button" class="btn btn-warning ml-2" (click)="generarPDF()">
-            <i class="far fa-file-pdf"></i>
-</button>
-    </div>
-    <div class="col-md-4 col-sm-12">
-        <form class="row">
-            <div class="form-group col-10">
-                <input type="number" class="form-control" name="dni" [(ngModel)]="dni" placeholder="Buscar D.N.I.">
-            </div>
-            <div class="col-2">
-                <button type="button" class="btn btn-success" (click)="buscarPorDni()">
-                    <i class="fas fa-search"></i>
+<div class="row mt-header fondoContenido pb-4"
+    *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
+    <div class="col-sm-12 col-md-10 offset-md-1">
+        <div class="mt-1">
+            <h3 class="text-left my-3 font-weight-bolder badge badge-danger">SECCIÓN ADMINISTRATIVA</h3>
+        </div>
+        <div class="d-md-flex my-3 separadorTituloP">
+            <h3 class="flex-md-grow-1 tituloPrincipal text-center p-2 mb-2">Gestión de Afiliados</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-12 my-1">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarAfiliado">
+                    <i class="fas fa-user-plus mr-1"></i><span>Nuevo Afiliado</span>
+                </button>
+                <button type="button" class="btn btn-warning ml-2" (click)="generarPDF()">
+                    <i class="far fa-file-pdf"></i>
                 </button>
             </div>
-        </form>
+            <div class="col-md-4 col-sm-12">
+                <form class="row">
+                    <div class="form-group col-10">
+                        <input type="number" class="form-control" name="dni" [(ngModel)]="dni"
+                            placeholder="Buscar D.N.I.">
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-success" (click)="buscarPorDni()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <button type="button" class="btn btn-success" (click)="limpiarBusqueda()" *ngIf="dni != null">
+                    Limpiar Busqueda
+                </button>
+            </div>
+        </div>
+
+        <!-- TABLA DE AFILIADOS-->
+        <div class="table-responsive bg-light" id="tabla">
+            <table class="table table-striped table-bordered table-hover" [mfData]="listaAfiliado" #mf="mfDataTable"
+                [mfRowsOnPage]="5">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Foto</th>
+                        <th scope="col">
+                            <mfDefaultSorter by="apellido">Apellido</mfDefaultSorter>
+                        </th>
+                        <th scope="col">
+                            <mfDefaultSorter by="nombres">Nombres</mfDefaultSorter>
+                        </th>
+                        <th scope="col">
+                            <mfDefaultSorter by="dni">DNI</mfDefaultSorter>
+                        </th>
+                        <th scope="col">
+                            <mfDefaultSorter by="email">email</mfDefaultSorter>
+                        </th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="!mf.data.length" class="table-secondary">
+                        <td [attr.colspan]="8" class="text-center">No se encontraron Afiliados.</td>
+                    </tr>
+                    <tr *ngFor="let item of mf.data; index as i">
+                        <th scope="row"> {{i+1}} </th>
+                        <td>
+                            <img [src]="item.imagen" width="100" height="50" class="img-fluid" />
+                        </td>
+                        <td> {{item.apellido}} </td>
+                        <td> {{item.nombres}} </td>
+                        <td> {{item.dni}} </td>
+                        <td> {{item.email}} </td>
+                        <td> {{item.telefono}} </td>
+                        <td>
+                            <button class="btn btn-danger mr-1" (click)="eliminarAfiliado(item)"><i
+                                    class="far fa-trash-alt"></i></button>
+
+                            <button class="btn btn-warning" (click)="mostrarAfiliado(item)" data-toggle="modal"
+                                data-target="#modalAgregarAfiliado"><i class="fas fa-edit"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
-    <div class="col-md-4 col-sm-12">
-        <button type="button" class="btn btn-success" (click)="limpiarBusqueda()" *ngIf="dni != null">
-            Limpiar Busqueda
-        </button>
-    </div>
-
-
-    <!-- TABLA DE AFILIADOS-->
-    <div class="table-responsive" id="tabla">
-        <table class="table table-striped table-bordered table-hover" [mfData]="listaAfiliado" #mf="mfDataTable" [mfRowsOnPage]="5">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Foto</th>
-                    <th scope="col">
-                        <mfDefaultSorter by="apellido">Apellido</mfDefaultSorter>
-                    </th>
-                    <th scope="col">
-                        <mfDefaultSorter by="nombres">Nombres</mfDefaultSorter>
-                    </th>
-                    <th scope="col">
-                        <mfDefaultSorter by="dni">DNI</mfDefaultSorter>
-                    </th>
-                    <th scope="col">
-                        <mfDefaultSorter by="email">email</mfDefaultSorter>
-                    </th>
-                    <th scope="col">Telefono</th>
-                    <th scope="col">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngIf="!mf.data.length" class="table-secondary">
-                    <td [attr.colspan]="8" class="text-center">No se encontraron Afiliados.</td>
-                </tr>
-                <tr *ngFor="let item of mf.data; index as i">
-                    <th scope="row"> {{i+1}} </th>
-                    <td>
-                        <img [src]="item.imagen" width="100" height="50" class="img-fluid" />
-                    </td>
-                    <td> {{item.apellido}} </td>
-                    <td> {{item.nombres}} </td>
-                    <td> {{item.dni}} </td>
-                    <td> {{item.email}} </td>
-                    <td> {{item.telefono}} </td>
-                    <td>
-                        <button class="btn btn-danger mr-1" (click)="eliminarAfiliado(item)"><i class="far fa-trash-alt"></i></button>
-
-                        <button class="btn btn-warning" (click)="mostrarAfiliado(item)" data-toggle="modal" data-target="#modalAgregarAfiliado"><i class="fas fa-edit"></i></button>
-                    </td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="8">
-                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
-
 </div>

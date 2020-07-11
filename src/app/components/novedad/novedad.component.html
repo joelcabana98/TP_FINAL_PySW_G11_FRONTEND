@@ -1,78 +1,87 @@
 <!-- ====== SECCIÓN QUE SOLO VE EL USUARIO TIPO SOCIO ====== -->
-<section class="row mt-header" *ngIf="loginService.userLoggedIn && loginService.userIsSocio">
+<section class="row mt-header fondoContenido pb-4" *ngIf="loginService.userLoggedIn && loginService.userIsSocio">
 
-    <!-- ====== FORMULARIO DE NOVEDAD ====== -->
-    <form class="card col-md-10 offset-md-1 col-lg-8 offset-lg-2 p-0 was-validated 
-        rounded font-weight-bolder" novalidate (ngSubmit)="enviarNovedad()" #novedadForm="ngForm">
-
-        <h4 class="card-header text-center font-weight-bold">Ingresar una Novedad</h4>
-
-        <div class="card-body bg-light">
-
-            <div class="row form-group">
-                <label class="col-sm-12 col-md-4" for="nombre">Usuario: </label>
-                <input type="text" class="form-control col-sm-12 col-md-8" id="usuario" name="usuario"
-                    [(ngModel)]="loginService.userLogged.usuario" readonly required />
-            </div>
-
-            <div class="row form-group">
-                <label class="col-sm-12 col-md-4" for="texto">Texto: </label>
-                <textarea class="form-control col-sm-12 col-md-8" id="texto" name="texto" rows="5" maxlength="200"
-                    [(ngModel)]="novedad.texto" #textoNovedad="ngModel" required></textarea>
-
-                <!-- Seccion de Error -->
-                <div *ngIf="textoNovedad.invalid && textoNovedad.touched"
-                    class="invalid-feedback row col-md-8 offset-md-4">
-                    <div *ngIf="textoNovedad.errors?.required && textoNovedad.touched">
-                        El texto no puede ser nulo!
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group row text-center">
-                <div class="offset-md-2 col-md-10">
-                    <button type="button" class="btn btn-default" (click)="limpiarNovedad()">Limpiar</button>
-                    <button type="button" class="btn btn-primary ml-2" [disabled]="!novedadForm.form.valid"
-                        data-toggle="modal" data-target="#modalNew">Guardar</button>
-                </div>
-            </div>
-
-            <!-- MODAL DE CONFIRMACIÓN -->
-            <div class="modal fade" id="modalNew" tabindex="-1" role="dialog" aria-labelledby="modalNewNovedad"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalNewNovedad">Confirmar Novedad</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Seguro que desea enviar la Novedad?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                            <button type="submit" class="btn btn-primary">Si</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+    <div class="col-sm-12 col-md-10 offset-md-1">
+        <div class="d-md-flex my-3 separadorTituloP">
+            <h3 class="flex-md-grow-1 tituloPrincipal text-center p-2 mb-2">Formulario de Novedad</h3>
         </div>
-    </form>
+        <p>Por medio del siguiente formulario podrán enviar cualquier consulta o novedad y ponerse en contacto con nosotros.</p>
+
+        <!-- ====== FORMULARIO DE NOVEDAD ====== -->
+        <form class="card p-0 was-validated rounded font-weight-bolder"
+            novalidate (ngSubmit)="enviarNovedad()" #novedadForm="ngForm">
+
+            <h4 class="card-header text-center font-weight-bold">Enviar una Novedad</h4>
+
+            <div class="card-body bg-light">
+
+                <div class="row form-group">
+                    <label class="col-sm-12 col-md-4" for="nombre">Usuario: </label>
+                    <input type="text" class="form-control col-sm-12 col-md-8" id="usuario" name="usuario"
+                        [(ngModel)]="loginService.userLogged.usuario" readonly required />
+                </div>
+
+                <div class="row form-group">
+                    <label class="col-sm-12 col-md-4" for="texto">Texto: </label>
+                    <textarea class="form-control col-sm-12 col-md-8" id="texto" name="texto" rows="5" maxlength="200"
+                        [(ngModel)]="novedad.texto" #textoNovedad="ngModel" required></textarea>
+
+                    <!-- Seccion de Error -->
+                    <div *ngIf="textoNovedad.invalid && textoNovedad.touched"
+                        class="invalid-feedback row col-md-8 offset-md-4">
+                        <div *ngIf="textoNovedad.errors?.required && textoNovedad.touched">
+                            El texto no puede ser nulo!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row text-center">
+                    <div class="offset-md-2 col-md-10">
+                        <button type="button" class="btn btn-default" (click)="limpiarNovedad()">Limpiar</button>
+                        <button type="button" class="btn btn-primary ml-2" [disabled]="!novedadForm.form.valid"
+                            data-toggle="modal" data-target="#modalNew">Guardar</button>
+                    </div>
+                </div>
+
+                <!-- MODAL DE CONFIRMACIÓN -->
+                <div class="modal fade" id="modalNew" tabindex="-1" role="dialog" aria-labelledby="modalNewNovedad"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalNewNovedad">Confirmar Novedad</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Seguro que desea enviar la Novedad?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                <button type="submit" class="btn btn-primary">Si</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
 </section>
 
 <!-- ====== SECCIÓN QUE SOLO VE EL ADMINISTRATIVO Y ADMINISTRADOR ====== -->
-<section class="row my-2"
+<section class="row mt-header fondoContenido pb-4"
     *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
-    <div class="col-md-10 offset-md-1">
-
-        <!-- ====== TABLA DE NOVEDADES ====== -->
-        <div class="d-flex bd-highlight my-2">
-            <h3 class="flex-grow-1 text-center text-dark p-2 mb-2">Lista de Novedades</h3>
+    <div class="col-sm-12 col-md-10 offset-md-1">
+        <div class="mt-1">
+            <h3 class="text-left my-3 font-weight-bolder badge badge-danger">SECCIÓN ADMINISTRATIVA</h3>
         </div>
-        <div class="table-responsive bg-light border-form">
+        <div class="d-md-flex my-3 separadorTituloP">
+            <h3 class="flex-md-grow-1 tituloPrincipal text-center p-2 mb-2">Gestión de Novedades</h3>
+        </div>
+        <!-- ====== TABLA DE NOVEDADES ====== -->
+        <div class="table-responsive bg-light">
             <table class="table table-hover table-striped text-center p-0" [mfData]="listaNovedades" #mf="mfDataTable"
                 [mfRowsOnPage]="5">
                 <thead class="thead-dark">
@@ -94,7 +103,7 @@
                         <td>{{i + 1}}</td>
                         <td>{{nov.usuario.usuario}}</td>
                         <td class="text-justify">{{nov.texto}}</td>
-                        <td [class.text-danger.bold]="nov.estado == 'pendiente'">{{nov.estado}}</td>
+                        <td [class.text-danger]="nov.estado == 'pendiente'">{{nov.estado | titlecase}}</td>
                         <td>
                             <button type="button" class="btn btn-light">
                                 <i class="fas fa-eye" style="color: blue" (click)="procesarNovedad(nov)"></i></button>

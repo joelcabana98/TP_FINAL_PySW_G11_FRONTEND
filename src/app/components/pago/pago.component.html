@@ -1,12 +1,13 @@
 <!-- MODAL PARA CARGAR EL PAGO -->
- <!-- Modal Agregar Pago-->
- <div class="modal fade" id="modalAgregarPago" tabindex="-1" role="dialog" aria-labelledby="modalAgregarPago" aria-hidden="true">
+<!-- Modal Agregar Pago-->
+<div class="modal fade" id="modalAgregarPago" tabindex="-1" role="dialog" aria-labelledby="modalAgregarPago"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <form action="" #formAgregarPago="ngForm">
@@ -14,7 +15,8 @@
                     <!-- dni afiliado -->
                     <div class="form-group">
                         <label>DNI del afiliado:</label>
-                        <input type="number" name="dniSocio" class="form-control" [(ngModel)]="dniAfiliado" required #dniAfil="ngModel" (ngModelChange)="comprobarAfiliado()">
+                        <input type="number" name="dniSocio" class="form-control" [(ngModel)]="dniAfiliado" required
+                            #dniAfil="ngModel" (ngModelChange)="comprobarAfiliado()">
                     </div>
                     <div *ngIf="dniAfil.dirty || dniAfil.touched">
                         <div *ngIf="!pago.afiliado" class="text-danger">
@@ -41,21 +43,22 @@
                     <!-- Corresponde al Mes -->
                     <div class="form-group">
                         <label>Correspondiente al MES:</label>
-                        <select id="mesModal" name="mesModal" class="form-control" [(ngModel)]="pago.mes" #mesModal="ngModel" required>
-                        <option value="" disabled selected>Seleccione el Mes</option>
-                        <option value="1">Enero</option>
-                        <option value="2">Febrero</option>
-                        <option value="3">Marzo</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Mayo</option>
-                        <option value="6">Junio</option>
-                        <option value="7">Julio</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Septiembre</option>
-                        <option value="10">Octubre</option>
-                        <option value="11">Noviembre</option>
-                        <option value="12">Diciembre</option>
-                    </select>
+                        <select id="mesModal" name="mesModal" class="form-control" [(ngModel)]="pago.mes"
+                            #mesModal="ngModel" required>
+                            <option value="" disabled selected>Seleccione el Mes</option>
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
                     </div>
 
                     <!-- Monto -->
@@ -66,8 +69,11 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarPago()">Cancelar</button>
-                <button type="button" class="btn btn-primary" [disabled]="formAgregarPago.invalid || pago.afiliado == null" (click)="agregarPago()">Agregar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="limpiarPago()">Cancelar</button>
+                <button type="button" class="btn btn-primary"
+                    [disabled]="formAgregarPago.invalid || pago.afiliado == null"
+                    (click)="agregarPago()">Agregar</button>
             </div>
         </div>
     </div>
@@ -77,125 +83,148 @@
 <div class="modal fade" id="modalBuscar" tabindex="-1" role="dialog" aria-labelledby="modalBuscar" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="modalBuscar"></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="busqueda" id="exampleRadios1" value="porFecha" checked [(ngModel)]="tipoBusqueda">
-                    <label class="form-check-label" for="exampleRadios1">
-                      Busqueda por Fechas.
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="busqueda" id="exampleRadios2" value="porDni" [(ngModel)]="tipoBusqueda">
-                    <label class="form-check-label" for="exampleRadios2">
-                      Busqueda por DNI de un socio.
-                    </label>
-                  </div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalBuscar"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div *ngIf="tipoBusqueda == 'porFecha'">
+            <div class="modal-body">
                 <div>
-                    Selecciones un rango de fechas para la busqueda.
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="busqueda" id="exampleRadios1"
+                            value="porFecha" checked [(ngModel)]="tipoBusqueda">
+                        <label class="form-check-label" for="exampleRadios1">
+                            Busqueda por Fechas.
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="busqueda" id="exampleRadios2" value="porDni"
+                            [(ngModel)]="tipoBusqueda">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Busqueda por DNI de un socio.
+                        </label>
+                    </div>
                 </div>
-                <form>
-                    <div class="form-group">
-                        <label for="fechaInicioInput">Desde:</label>
-                        <input type="date" id="fechaInicioInput" class="form-control" name="fechaInicio" [(ngModel)]="fechaInicio" required>
+                <div *ngIf="tipoBusqueda == 'porFecha'">
+                    <div>
+                        Selecciones un rango de fechas para la busqueda.
                     </div>
-                    <div class="form-group">
-                        <label for="fechaFinInput">Hasta</label>
-                        <input type="date" id="fechaFinInput" class="form-control" name="fechaFin" [(ngModel)]="fechaFin" required>
-                    </div>
-                </form>
-            </div>
-            <div *ngIf="tipoBusqueda == 'porDni'">
-                <div>
-                    Ingrese el DNI de un socio.
+                    <form>
+                        <div class="form-group">
+                            <label for="fechaInicioInput">Desde:</label>
+                            <input type="date" id="fechaInicioInput" class="form-control" name="fechaInicio"
+                                [(ngModel)]="fechaInicio" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaFinInput">Hasta</label>
+                            <input type="date" id="fechaFinInput" class="form-control" name="fechaFin"
+                                [(ngModel)]="fechaFin" required>
+                        </div>
+                    </form>
                 </div>
-                <form>
-                    <div class="form-group">
-                        <label for="dniInput">N° de DNI</label>
-                        <input type="number" id="dniInput" class="form-control" name="dniSocio" [(ngModel)]="dniBusqueda" required>
+                <div *ngIf="tipoBusqueda == 'porDni'">
+                    <div>
+                        Ingrese el DNI de un socio.
                     </div>
-                </form>
+                    <form>
+                        <div class="form-group">
+                            <label for="dniInput">N° de DNI</label>
+                            <input type="number" id="dniInput" class="form-control" name="dniSocio"
+                                [(ngModel)]="dniBusqueda" required>
+                        </div>
+                    </form>
+                </div>
+
             </div>
-            
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarFechas()">Cancelar</button>
-            <button *ngIf="tipoBusqueda == 'porFecha'" type="button" class="btn btn-primary" data-dismiss="modal" (click)="filtrarPorFechaFront()">Buscar</button>
-            <button *ngIf="tipoBusqueda == 'porDni'" type="button" class="btn btn-primary" data-dismiss="modal" (click)="filtrarPorDniFront()">Buscar</button>
-        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="limpiarFechas()">Cancelar</button>
+                <button *ngIf="tipoBusqueda == 'porFecha'" type="button" class="btn btn-primary" data-dismiss="modal"
+                    (click)="filtrarPorFechaFront()">Buscar</button>
+                <button *ngIf="tipoBusqueda == 'porDni'" type="button" class="btn btn-primary" data-dismiss="modal"
+                    (click)="filtrarPorDniFront()">Buscar</button>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="row mt-header">
-    <!--Boton Agregar Usuario-->
-    <div class="col-12">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarPago">
-            <i class="fas fa-plus"></i>  Nuevo Pago
-        </button>
-        <button type="button" class="btn btn-warning ml-2" (click)="generarPDF()">
-            <i class="far fa-file-pdf"></i> Imprimir
-        </button>
-        <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#modalBuscar">
-            <i class="fas fa-search"></i> Buscar
-        </button>
-        <button type="button" class="btn btn-primary ml-2" (click)="cargarListaPagos()">
-            <i class="fas fa-backspace"></i> Recargar
-        </button>
-       
-        <!--Data Table de Pago-->
-        <table class="table table-striped table-responsive mt-3 " [mfData]="listaPagos" #mf="mfDataTable" [mfRowsOnPage]="5">
-            <thead class="thead-dark">
-                <tr>
-                    <th style="width: 30%">
-                        <mfDefaultSorter by="fecha">Fecha de pago</mfDefaultSorter>
-                    </th>
-                    <th style="width: 20%">
-                        <mfDefaultSorter by="monto">Monto</mfDefaultSorter>
-                    </th>
-                    <th style="width: 10%">
-                        <mfDefaultSorter by="anio">Año</mfDefaultSorter>
-                    </th>
-                    <th style="width: 10%">
-                        <mfDefaultSorter by="mes">Mes</mfDefaultSorter>
-                    </th>
-                    <th style="width: 10%">
-                        <mfDefaultSorter by="dni">DNI Afiliado</mfDefaultSorter>
-                    </th>
-                    <th style="width: 20%">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngIf="!mf.data.length" class="table-secondary">
-                    <td [attr.colspan]="6" class="text-center">No se encontraron Pagos.</td>
-                </tr>
-                <tr *ngFor="let p of mf.data">
-                    <td>{{p.fecha | date: 'dd/MM/yyyy'}}</td>
-                    <td>{{p.monto | currency:'$ ':true:'1.1-2'}}</td>
-                    <td>{{p.anio}}</td>
-                    <td>{{p.mes | mes}}</td>
-                    <td>{{p.afiliado.dni}}</td>
-                    <td>
-                        <button class="btn btn-danger mr-1" (click)="eliminarPago(p)"><i class="far fa-trash-alt"></i></button>
+<div class="row mt-header fondoContenido pb-4">
+    <div class="col-sm-12 col-md-10 offset-md-1">
+        <div class="mt-1">
+            <h3 class="text-left my-3 font-weight-bolder badge badge-danger">SECCIÓN ADMINISTRATIVA</h3>
+        </div>
+        <div class="d-md-flex my-3 separadorTituloP">
+            <h3 class="flex-md-grow-1 tituloPrincipal text-center p-2 mb-2">Gestión de Pagos</h3>
+        </div>
+        <div class="row">
+            <!--Boton Agregar Usuario-->
+            <div class="col-12">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarPago">
+                    <i class="fas fa-plus"></i> Nuevo Pago
+                </button>
+                <button type="button" class="btn btn-warning ml-2" (click)="generarPDF()">
+                    <i class="far fa-file-pdf"></i> Imprimir
+                </button>
+                <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#modalBuscar">
+                    <i class="fas fa-search"></i> Buscar
+                </button>
+                <button type="button" class="btn btn-primary ml-2" (click)="cargarListaPagos()">
+                    <i class="fas fa-backspace"></i> Recargar
+                </button>
 
-                        <button class="btn btn-warning" data-toggle="modal" data-target="#modalAgregarPago"><i class="fas fa-edit"></i></button>
-                    </td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="4">
-                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+                <!--Data Table de Pago-->
+                <div class="table-responsive bg-light mt-3">
+                    <table class="table table-striped table-hover" [mfData]="listaPagos" #mf="mfDataTable" [mfRowsOnPage]="5">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="width: 30%">
+                                    <mfDefaultSorter by="fecha">Fecha de pago</mfDefaultSorter>
+                                </th>
+                                <th style="width: 20%">
+                                    <mfDefaultSorter by="monto">Monto</mfDefaultSorter>
+                                </th>
+                                <th style="width: 10%">
+                                    <mfDefaultSorter by="anio">Año</mfDefaultSorter>
+                                </th>
+                                <th style="width: 10%">
+                                    <mfDefaultSorter by="mes">Mes</mfDefaultSorter>
+                                </th>
+                                <th style="width: 10%">
+                                    <mfDefaultSorter by="dni">DNI Afiliado</mfDefaultSorter>
+                                </th>
+                                <th style="width: 20%">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="!mf.data.length" class="table-secondary">
+                                <td [attr.colspan]="6" class="text-center">No se encontraron Pagos.</td>
+                            </tr>
+                            <tr *ngFor="let p of mf.data">
+                                <td>{{p.fecha | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{p.monto | currency:'$ ':true:'1.1-2'}}</td>
+                                <td>{{p.anio}}</td>
+                                <td>{{p.mes | mes}}</td>
+                                <td>{{p.afiliado.dni}}</td>
+                                <td>
+                                    <button class="btn btn-danger mr-1" (click)="eliminarPago(p)"><i
+                                            class="far fa-trash-alt"></i></button>
+
+                                    <button class="btn btn-warning" data-toggle="modal"
+                                        data-target="#modalAgregarPago"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
+</div>

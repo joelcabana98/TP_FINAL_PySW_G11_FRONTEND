@@ -1,136 +1,161 @@
-<div class="row  mt-header" *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
-    <!--Boton Agregar Usuario-->
-    <div class="col-12">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarUsuario">
-        <i class="fas fa-plus"></i> Nuevo Usuario
-        </button>
-        <button type="button" class="btn btn-warning ml-2" (click)="generarPDF()">
-        <i class="far fa-file-pdf"></i> Imprimir
-        </button>
-        <!--FILTROS -->
-        <div class="form-row mt-3">
-            <div class="form-group col-md-3">
-                <input type="email" class="form-control" placeholder="Ingrese un Email" [(ngModel)]="emailbuscar">
-            </div>
-            <div class="form-group col-md-3">
-                <select class="form-control" [(ngModel)]="perfil">
-                    <option value="" disabled selected>Selecciona un perfil</option>
-                    <option value="socio">Socio</option>
-                    <option value="administrativo">Administrativo</option>
-                    <option value="administrador">Administrador</option>
-                </select>
-            </div>
-            <div class="form-group col-md-1">
-                <button type="button" class="btn btn-primary" (click)="filtro()">
-                    <i class="fas fa-search"></i>
-                  </button>
-            </div>
-            <div class="form-group col-md-4">
-                <button type="button" class="btn btn-primary" (click)="verTodos()">
-                    Ver todos
-                  </button>
-            </div>
+<div class="row mt-header fondoContenido pb-4"
+    *ngIf="loginService.userLoggedIn && (loginService.userIsAdministrador || loginService.userIsAdministrativo)">
+    <div class="col-sm-12 col-md-10 offset-md-1">
+        <div class="mt-1">
+            <h3 class="text-left my-3 font-weight-bolder badge badge-danger">SECCIÓN ADMINISTRATIVA</h3>
         </div>
 
-        <!-- Modal Agregar Usuario-->
-        <div class="modal fade" id="modalAgregarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalAgregarUsuario" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="" #formAgregarUsuario="ngForm">
-                            <div *ngIf="email.invalid && (email.dirty ||email.touched)" class="">
-                                <div *ngIf="email.errors.pattern">
-                                    <p class="text-danger">Formato de Correo Electronico invalido</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" id="email" [(ngModel)]="usuario.usuario" name="email" placeholder="Correo Electronico" #email="ngModel" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
-                            </div>
-                            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="">
-                                <div *ngIf="password.errors.minlength">
-                                    <p class="text-danger">El password tiene que tener mas de 4 caracteres</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control" id="password" [(ngModel)]="usuario.password" name="password" placeholder="Contraseña" #password="ngModel" required minlength="5">
-                            </div>
-                            <div class="form-group">
-                                <select id="categoriaModal" name="categoriaModal" class="form-control" [(ngModel)]="usuario.perfil" #categoriaModal="ngModel" required>
-                                <option value="" disabled selected>Selecciona un perfil</option>
-                                <option value="socio">Socio</option>
-                                <option value="administrativo">Administrativo</option>
-                                <option value="administrador">Administrador</option>
-                            </select>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="activo" [checked]="usuario.activo" (change)="usuario.activo = !usuario.activo">
-                                <label class="form-check-label" for="activo">
-                              Activo
-                            </label>
-                            </div>
-                            <div *ngIf="validacion && ((email.invalid && email.touched) || (password.invalid && password.touched))" class="">
-                                <div *ngIf="email.errors.required || password.errors.required">
-                                    <p class="text-danger"> Hay campos incompletos</p>
-                                </div>
-                            </div>
-                            <div>
-                                <p class="text-danger">{{msj}}</p>
-                            </div>
+        <div class="d-md-flex my-3 separadorTituloP">
+            <h3 class="flex-md-grow-1 tituloPrincipal text-center p-2 mb-2">Gestión de Usuarios</h3>
+        </div>
+        <!--Boton Agregar Usuario-->
+        <div class="col-12">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarUsuario">
+                <i class="fas fa-plus"></i> Nuevo Usuario
+            </button>
+            <button type="button" class="btn btn-warning ml-2" (click)="generarPDF()">
+                <i class="far fa-file-pdf"></i> Imprimir
+            </button>
+            <!--FILTROS -->
+            <div class="form-row mt-3">
+                <div class="form-group col-md-3">
+                    <input type="email" class="form-control" placeholder="Ingrese un Email" [(ngModel)]="emailbuscar">
+                </div>
+                <div class="form-group col-md-3">
+                    <select class="form-control" [(ngModel)]="perfil">
+                        <option value="" disabled selected>Selecciona un perfil</option>
+                        <option value="socio">Socio</option>
+                        <option value="administrativo">Administrativo</option>
+                        <option value="administrador">Administrador</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-1">
+                    <button type="button" class="btn btn-primary" (click)="filtro()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="form-group col-md-4">
+                    <button type="button" class="btn btn-primary" (click)="verTodos()">
+                        Ver todos
+                    </button>
+                </div>
+            </div>
 
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarCampos()">Cancelar</button>
-                        <button type="button" class="btn btn-primary" [disabled]="formAgregarUsuario.invalid" *ngIf="usuario._id != null" (click)="actualizarUsuario()">Actualizar</button>
-                        <button type="button" class="btn btn-primary" [disabled]="formAgregarUsuario.invalid" *ngIf="usuario._id == null" (click)="agregarUsuario()">Agregar</button>
+            <!-- Modal Agregar Usuario-->
+            <div class="modal fade" id="modalAgregarUsuario" tabindex="-1" role="dialog"
+                aria-labelledby="modalAgregarUsuario" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" #formAgregarUsuario="ngForm">
+                                <div *ngIf="email.invalid && (email.dirty ||email.touched)" class="">
+                                    <div *ngIf="email.errors.pattern">
+                                        <p class="text-danger">Formato de Correo Electronico invalido</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" id="email" [(ngModel)]="usuario.usuario"
+                                        name="email" placeholder="Correo Electronico" #email="ngModel" required
+                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                                </div>
+                                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="">
+                                    <div *ngIf="password.errors.minlength">
+                                        <p class="text-danger">El password tiene que tener mas de 4 caracteres</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="password"
+                                        [(ngModel)]="usuario.password" name="password" placeholder="Contraseña"
+                                        #password="ngModel" required minlength="5">
+                                </div>
+                                <div class="form-group">
+                                    <select id="categoriaModal" name="categoriaModal" class="form-control"
+                                        [(ngModel)]="usuario.perfil" #categoriaModal="ngModel" required>
+                                        <option value="" disabled selected>Selecciona un perfil</option>
+                                        <option value="socio">Socio</option>
+                                        <option value="administrativo">Administrativo</option>
+                                        <option value="administrador">Administrador</option>
+                                    </select>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="activo"
+                                        [checked]="usuario.activo" (change)="usuario.activo = !usuario.activo">
+                                    <label class="form-check-label" for="activo">
+                                        Activo
+                                    </label>
+                                </div>
+                                <div *ngIf="validacion && ((email.invalid && email.touched) || (password.invalid && password.touched))"
+                                    class="">
+                                    <div *ngIf="email.errors.required || password.errors.required">
+                                        <p class="text-danger"> Hay campos incompletos</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-danger">{{msj}}</p>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                (click)="limpiarCampos()">Cancelar</button>
+                            <button type="button" class="btn btn-primary" [disabled]="formAgregarUsuario.invalid"
+                                *ngIf="usuario._id != null" (click)="actualizarUsuario()">Actualizar</button>
+                            <button type="button" class="btn btn-primary" [disabled]="formAgregarUsuario.invalid"
+                                *ngIf="usuario._id == null" (click)="agregarUsuario()">Agregar</button>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!--Data Table de Usuarios-->
+            <div class="table-responsive-sm bg-light"> 
+            <table class="table table-hover table-striped" [mfData]="listaFiltrada" 
+                #mf="mfDataTable" [mfRowsOnPage]="10">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="width: 50%">
+                            <mfDefaultSorter by="usuario">Usuario</mfDefaultSorter>
+                        </th>
+                        <th style="width: 20%">
+                            <mfDefaultSorter by="activo">Activo</mfDefaultSorter>
+                        </th>
+                        <th style="width: 10%">
+                            <mfDefaultSorter by="perfil">Perfil</mfDefaultSorter>
+                        </th>
+                        <th style="width: 20%">
+                            <mfDefaultSorter by="acciones">Acciones</mfDefaultSorter>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="!mf.data.length" class="table-secondary">
+                        <td [attr.colspan]="6" class="text-center">No se encontraron Usuarios.</td>
+                    </tr>
+                    <tr *ngFor="let u of mf.data">
+                        <td>{{u.usuario}}</td>
+                        <td>{{u.activo && 'Si' || 'No'}}</td>
+                        <td>{{u.perfil}}</td>
+                        <td> <button class="btn btn-danger mr-1" (click)="eliminarUsuario(u)"><i
+                                    class="far fa-trash-alt"></i></button>
+
+                            <button class="btn btn-info" (click)="seleccionarUsuario(u)" data-toggle="modal"
+                                data-target="#modalAgregarUsuario"><i class="fas fa-edit"></i></button></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <mfBootstrapPaginator [rowsOnPageSet]="[15,20,25]"></mfBootstrapPaginator>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
-
-        <!--Data Table de Usuarios-->
-        <table class="table table-striped table-responsive mt-1 " [mfData]="listaFiltrada" #mf="mfDataTable" [mfRowsOnPage]="10">
-            <thead class="thead-dark">
-                <tr>
-                    <th style="width: 50%">
-                        <mfDefaultSorter by="usuario">Usuario</mfDefaultSorter>
-                    </th>
-                    <th style="width: 20%">
-                        <mfDefaultSorter by="activo">Activo</mfDefaultSorter>
-                    </th>
-                    <th style="width: 10%">
-                        <mfDefaultSorter by="perfil">Perfil</mfDefaultSorter>
-                    </th>
-                    <th style="width: 20%">
-                        <mfDefaultSorter by="acciones">Acciones</mfDefaultSorter>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngIf="!mf.data.length" class="table-secondary">
-                    <td [attr.colspan]="6" class="text-center">No se encontraron Usuarios.</td>
-                </tr>
-                <tr *ngFor="let u of mf.data">
-                    <td>{{u.usuario}}</td>
-                    <td>{{u.activo && 'Si' || 'No'}}</td>
-                    <td>{{u.perfil}}</td>
-                    <td> <button class="btn btn-danger mr-1" (click)="eliminarUsuario(u)"><i class="far fa-trash-alt"></i></button>
-
-                        <button class="btn btn-info" (click)="seleccionarUsuario(u)" data-toggle="modal" data-target="#modalAgregarUsuario"><i class="fas fa-edit"></i></button></td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="4">
-                        <mfBootstrapPaginator [rowsOnPageSet]="[15,20,25]"></mfBootstrapPaginator>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
     </div>
 </div>
