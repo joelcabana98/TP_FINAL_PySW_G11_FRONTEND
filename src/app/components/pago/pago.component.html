@@ -71,13 +71,37 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"
                     (click)="limpiarPago()">Cancelar</button>
-                <button type="button" class="btn btn-primary"
-                    [disabled]="formAgregarPago.invalid || pago.afiliado == null"
+                <button type="button" class="btn btn-primary" *ngIf="pago._id == null"
+                    [disabled]="formAgregarPago.invalid || pago.afiliado == null" data-dismiss="modal"
                     (click)="agregarPago()">Agregar</button>
+                <button type="button" class="btn btn-primary" *ngIf="pago._id != null" data-dismiss="modal"
+                    [disabled]="formAgregarPago.invalid || pago.afiliado == null"
+                    (click)="actualizarPago()">Actualizar</button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal de Confirmacion-->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Solicitud de confirmación</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ¿Seguro que desea ELIMINAR este pago?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="limpiarPago()">No</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="eliminarPago()">Si</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <!-- Modal Buscar pago-->
 <div class="modal fade" id="modalBuscar" tabindex="-1" role="dialog" aria-labelledby="modalBuscar" aria-hidden="true">
@@ -166,11 +190,11 @@
                 <button type="button" class="btn btn-warning ml-2" (click)="generarPDF()">
                     <i class="far fa-file-pdf"></i> Imprimir
                 </button>
-                <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#modalBuscar">
+                <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#modalBuscar" *ngIf="!filtrado">
                     <i class="fas fa-search"></i> Buscar
                 </button>
-                <button type="button" class="btn btn-primary ml-2" (click)="cargarListaPagos()">
-                    <i class="fas fa-backspace"></i> Recargar
+                <button type="button" class="btn btn-primary ml-2" (click)="cargarListaPagos()" *ngIf="filtrado">
+                     Ver Todo
                 </button>
 
                 <!--Data Table de Pago-->
@@ -193,7 +217,7 @@
                                 <th style="width: 10%">
                                     <mfDefaultSorter by="dni">DNI Afiliado</mfDefaultSorter>
                                 </th>
-                                <th style="width: 20%">Acciones</th>
+                                <th style="width: 20%" *ngIf="loginService.userIsAdministrador">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -206,12 +230,13 @@
                                 <td>{{p.anio}}</td>
                                 <td>{{p.mes | mes}}</td>
                                 <td>{{p.afiliado.dni}}</td>
-                                <td>
-                                    <button class="btn btn-danger mr-1" (click)="eliminarPago(p)"><i
+                                <td *ngIf="loginService.userIsAdministrador">
+                                    <button class="btn btn-danger mr-1" (click)="cargarPago(p)" data-toggle="modal"
+                                    data-target="#confirmModal"><i
                                             class="far fa-trash-alt"></i></button>
 
                                     <button class="btn btn-warning" data-toggle="modal"
-                                        data-target="#modalAgregarPago"><i class="fas fa-edit"></i></button>
+                                        data-target="#modalAgregarPago" (click)="cargarPago(p)"><i class="fas fa-edit"></i></button>
                                 </td>
                             </tr>
                         </tbody>

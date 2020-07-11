@@ -161,7 +161,7 @@ export class HomeComponent implements OnInit {
     this.fb.api('/111432347291522/feed', apiMethod,
     {
     "message": this.noticia.titulo+"\n\n\n"+ this.noticia.descripcion,
-    "access_token":"EAADzAWsejKsBAHrQNgtkJooyg3vmjdVbnug3ZBeVEZB9wFsdWZCl2ZCBIWEIB2xm82YOK8C0A57rTx1ggJ5XL5p9FH7nQLCZCw1oK3X3ZBthQE24nSLAFOdZBxzG8RKPIck46mJIxC7UYdeti67ZCyHwuJQLPePSXrABxfgr3ZCRB6z6RGhsJMfJsIvE9kgFqQIbsrz9yyqOphAZDZD"
+    "access_token":"EAADzAWsejKsBAD634aT5GgMueiphZBV4egmSVWwCRxXueJ5f0glSzUDNhcxtkRCPWZBbDnZCI1y242TAj79c499PVWTdIo2kWZCFshPcEMloBw8q0p4AZAPIGWzJHmbpBv0kJ1uQMFsLYsgPCCEC1wxC7Y0TwdFQxuF0pRD3X6XvHf4KWnf3de1nIUeOZC9vIZD"
     });
     this._toastr.success("La noticia ha sido publicada en Facebook","Exito");
     }

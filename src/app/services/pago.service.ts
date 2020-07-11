@@ -39,4 +39,14 @@ export class PagoService {
     };   
     return this._http.delete(this.urlBase + pago._id , httpOptions );
   }
+
+  public updatePago(pago: Pago): Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':'application/json'
+      })
+    };
+    var body = JSON.stringify(pago);
+    return this._http.put(this.urlBase + pago._id, body, httpOptions);
+  }
 }

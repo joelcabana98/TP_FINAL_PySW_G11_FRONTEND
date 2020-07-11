@@ -29,8 +29,9 @@ export class PagoComponent implements OnInit {
   //Filtro de la tabla
   fechaInicio:Date;
   fechaFin:Date;
-  tipoBusqueda:string;
-  dniBusqueda:number;
+  tipoBusqueda:string; //tipo de busqueda puede ser "porFecha" o "porDni"
+  dniBusqueda:number; //dni para realizar busqueda
+  filtrado:boolean = false; //variable para comprobar si se realizo un filtro de busqueda
 
   constructor(private pagoService:PagoService,private _toastr : ToastrService, private afiliadoService:AfiliadoService,private router: Router,public loginService: LoginService) { 
     this.pago = new Pago();
@@ -56,28 +57,36 @@ export class PagoComponent implements OnInit {
           Object.assign(pagoAux,p);
           this.listaPagos.push(pagoAux);
         })
+        this.filtrado = false;
       },
       (error) => { console.log("error");}
     );
   }
 
   comprobarAfiliado(){
-    this.afiliadoService.getAfiliadoByDni(this.dniAfiliado).subscribe(
-      (result) => {
-        if(result.status == 1){
-          //Afiliado existe
-          console.log("Afiliado existe");
-          var afiliado = new Afiliado();
-          Object.assign(afiliado, result["result"]);
-          this.pago.afiliado = afiliado;
+    if (this.dniAfiliado > 999999 && this.dniAfiliado < 99999999){
+      this.afiliadoService.getAfiliadoByDni(this.dniAfiliado).subscribe(
+        (result) => {
+          if(result.status == 1){
+            //Afiliado existe
+            console.log("Afiliado existe");
+            var afiliado = new Afiliado();
+            Object.assign(afiliado, result["result"]);
+            this.pago.afiliado = afiliado;
+          }
+          else{
+            //No existe afiliado
+            this.pago.afiliado = null;
+            console.log("Afiliado no existe");
+          }
         }
-        else{
-          //No existe afiliado
-          this.pago.afiliado = null;
-          console.log("Afiliado no existe");
-        }
-      }
-    );
+      );
+    }
+    else { 
+       //No existe afiliado
+       this.pago.afiliado = null;
+       console.log("Afiliado no existe");
+    }
   }
 
   // Agrega un nuevo pago a la base de datos y actuliza la lista de pagos
@@ -107,14 +116,8 @@ export class PagoComponent implements OnInit {
   //filtra la tabla para mostrar los pagos por rango de fecha
   filtrarPorFechaFront(){
     if(this.fechaInicio < this.fechaFin){
-      let listaAux = new Array<Pago>();
-      this.listaPagos.forEach(p => {
-        if(p.fecha >= this.fechaInicio && p.fecha <= this.fechaFin){
-          listaAux.push(p);
-        }
-      });
-      this.listaPagos = new Array<Pago>();
-      this.listaPagos = listaAux;
+      this.filtrado = true;
+      this.listaPagos = this.listaPagos.filter(pago => (pago.fecha >= this.fechaInicio) && (pago.fecha <= this.fechaFin));
       this.limpiarFechas();
     }
     else{
@@ -124,6 +127,7 @@ export class PagoComponent implements OnInit {
 
   filtrarPorDniFront(){
     if(this.dniBusqueda != null){
+      /*
       let listaAux = new Array<Pago>();
       this.listaPagos.forEach(p =>{
         if(p.afiliado.dni == this.dniBusqueda){
@@ -132,6 +136,9 @@ export class PagoComponent implements OnInit {
       });
       this.listaPagos = new Array<Pago>();
       this.listaPagos = listaAux;
+      */
+      this.filtrado = true;
+      this.listaPagos = this.listaPagos.filter(pago => (pago.afiliado.dni == this.dniBusqueda));
       this.limpiarFechas();
     }
   }
@@ -142,8 +149,8 @@ export class PagoComponent implements OnInit {
     this.dniBusqueda = null;
   }
 
-  eliminarPago(p: Pago){
-    this.pagoService.deletePago(p).subscribe(
+  eliminarPago(){
+    this.pagoService.deletePago(this.pago).subscribe(
       (result) => {
         this._toastr.success("El PAGO se ha eliminado","Exito");
         this.cargarListaPagos();
@@ -152,6 +159,23 @@ export class PagoComponent implements OnInit {
     );
   }
   
+  cargarPago(p: Pago){
+    let aux = new Pago();
+    Object.assign(aux, p);
+    this.pago = aux;
+    this.dniAfiliado = this.pago.afiliado.dni;
+  }
+
+  actualizarPago(){
+    this.pagoService.updatePago(this.pago).subscribe(
+      (result) => {
+        this._toastr.success("El PAGO se ha actualizado","Exito");
+        this.cargarListaPagos();
+      },
+      (error) => {this._toastr.error("Ha ocurrido un error con la solicitud","Error");}
+    )
+  }
+
   generarPDF(){
     var fecha = new Date();
     var fechaString = fecha.getDate()+"/" + (fecha.getMonth()+1) +"/"+fecha.getFullYear();
