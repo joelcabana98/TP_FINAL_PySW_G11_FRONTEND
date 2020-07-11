@@ -21,12 +21,25 @@ export class NovedadService {
     return this._http.get(this.url, httpOptions);
   }
 
-  getNovedadbyId(id): Observable<any>{ 
+  getNovedadbyId(id): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
       }),
-    }   
+    }
     return this._http.get(this.url + id, httpOptions);
+  }
+
+  getNovedadesByDate(fechaDesde: string, fechaHasta: string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+    }
+    let body = JSON.stringify({
+      fechaDesde: fechaDesde,
+      fechaHasta: fechaHasta
+    });
+    return this._http.post(this.url + 'byDate/', body, httpOptions);
   }
 
   addNovedad(novedad: Novedad): Observable<any> {
