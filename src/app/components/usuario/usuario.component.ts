@@ -60,13 +60,8 @@ export class UsuarioComponent implements OnInit {
             this.afiliadoService.getAfiliadoByEmail(this.usuario.usuario).subscribe(
               (result)=>{
                 console.log(result);
-                if(result["status"] ==1){
-                  if(this.existeEmail(this.usuario.usuario) == false){
-                    this.agregar();
-                  }else{
-                    this._toastr.error("El correo electronico ya se ha registrado","Error");
-                  }
-                  
+                if(result["status"] == 1){
+                  this.agregar();
                 }else{
                   this.msj = "El correo electronico no pertence a un afiliado";
                   this._toastr.error("El correo electronico no pertence a un afiliado","Error");
@@ -77,24 +72,20 @@ export class UsuarioComponent implements OnInit {
               }
             );
     }else {
-      if(this.existeEmail(this.usuario.usuario) == false){
-        this.agregar();
+      this.agregar();
       this.usuario = new Usuario();
       this.usuario.activo = false;
       this.msj ="";
-      }else{
-        this._toastr.error("El correo electronico ya se ha registrado","Error");
-      }
     }
   
  }
 
+
  existeEmail(email):boolean{
-     
-   var user : Usuario;
+   var user : Usuario = new Usuario();
    user = this.listaFiltrada.find(usuario=> usuario.usuario === email);
 
-   if(user.usuario != '' ||user.usuario != null ){
+   if(user.usuario != '' || user.usuario != null ){
      return true;
    }else{
      return false;
@@ -158,12 +149,7 @@ export class UsuarioComponent implements OnInit {
       (result)=>{
         console.log(result);
         if(result["status"] ==1){
-          if(this.existeEmail(this.usuario.usuario) == false){
-            this.actualizar();
-          }else{
-            this._toastr.error("El correo electronico ya se ha registrado","Error");
-          }
-         
+          this.actualizar();   
         }else{
           this.msj = "El correo electronico no pertence a un afiliado";
           this._toastr.error("El correo electronico no pertence a un afiliado","Error");
@@ -174,15 +160,10 @@ export class UsuarioComponent implements OnInit {
         }
     );
   }else {
-    if(this.existeEmail(this.usuario.usuario) == false){
-      this.actualizar();
-      this.usuario = new Usuario();
-      this.usuario.activo = false;
-      this.msj ="";
-    }else{
-      this._toastr.error("El correo electronico ya se ha registrado","Error");
-    }
-    
+    this.actualizar();
+    this.usuario = new Usuario();
+    this.usuario.activo = false;
+    this.msj ="";    
     }
  }
 
